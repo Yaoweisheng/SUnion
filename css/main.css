@@ -43,7 +43,11 @@ header h3 {
 }
 .f40 {
 	width:100%;
-	height:3rem
+	height:.88rem
+}
+.page1 .f40 {
+	width:100%;
+	height:3.5rem
 }
 .page1 {
 	width:7.5rem;
@@ -160,9 +164,87 @@ header h3 {
     resize: none;
 }
 .page1 .information .send {
-	height:.5rem;
+	height:.77rem;
 	background-color:#7FCA7F;
 	color:#fff;
 	text-align: center;
-	line-height: .5rem;
+	line-height: .77rem;
+}
+
+.page12 {
+	width:7.5rem;
+	margin-left:auto;
+	margin-right:auto
+}
+.page12 .class {
+	/*margin: 0.4em;*/
+	padding: 0.4em;
+	border-bottom: 1px solid #ccc
+}
+.page12 .class label {
+    color: #7FCA7F;
+    line-height: 0.8rem;
+    text-align: center;
+    float: left;
+    width: 25%;
+    height: 0.8rem;
+    background-color: #fff;
+    font-size: .34rem;;
+    /*border: 1px solid #ccc;*/
+    /*border-top-left-radius: 0.06rem;*/
+    /*border-bottom-left-radius: 0.06rem;*/
+    /*border-right: none;*/
+}
+.page12 .class select {
+    line-height: 0.8rem;
+    height: 0.8rem;
+	width: 75%;
+    /*border-left: none;*/
+    /*border-top-left-radius:0;*/
+    /*border-bottom-left-radius:0;*/
+    outline: none
+}
+.page12 .timetable {
+	text-align: center;
+}
+.page12 .timetable .time{
+	margin: .2rem auto;
+	padding: 0 5%;
+	width: auto;
+}
+.page12 .timetable .time option{
+	text-align: center;
+}
+.page12 .timetable .table{
+	background-color: #eaf0f0;
+}
+.page12 .timetable .table th{
+	text-align: center;
+}
+.page12 .timetable .table td{
+	height: 1.5rem;
+}
+.page12 .timetable .table td.border_none{
+	border: none
+}
+.page12 .timetable .table td.check{
+	background: url("../img/check.jpg") center no-repeat;
+	background-size: 100% 100%;
+}
+.page12 footer {
+	color: #7FCA7F;
+	width:7.5rem;
+	position:fixed;
+	bottom:0;
+	left:50%;
+	z-index:999;
+	background-color:#fff
+	height: .77rem
+}
+.page12 footer .send {
+	height:.77rem;
+	background-color:#7FCA7F;
+	color:#fff;
+	text-align: center;
+	line-height: .77rem;
 }

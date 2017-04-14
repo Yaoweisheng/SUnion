@@ -31,6 +31,14 @@ header {
 	z-index:999;
 	background-color:#7FCA7F
 }
+.fixed {
+	width:7.5rem;
+	position:fixed;
+	left:50%;
+	margin-left:-3.75rem;
+	z-index:999;
+	background-color: #fff;
+}
 header h3 {
 	text-align:center;
 	width:100%;
@@ -65,7 +73,7 @@ header h3 {
     width: 25%;
     height: 0.8rem;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: .01rem solid #ccc;
     border-top-left-radius: 0.06rem;
     border-bottom-left-radius: 0.06rem;
     border-right: none;
@@ -244,10 +252,14 @@ header h3 {
 	margin-left:auto;
 	margin-right:auto
 }
+.page12 .panel {
+    height: 1.8rem;
+}
 .page12 .class {
-	/*margin: 0.4em;*/
-	padding: 0.4em;
-	border-bottom: 1px solid #ccc
+    padding: 0.4em;
+    border-bottom: .03rem solid #ccc;
+    background-color: #fff;
+    top: .88rem;
 }
 .page12 .class label {
     color: #7FCA7F;
@@ -258,7 +270,7 @@ header h3 {
     height: 0.8rem;
     background-color: #fff;
     font-size: .34rem;;
-    /*border: 1px solid #ccc;*/
+    /*border: .1rem solid #ccc;*/
     /*border-top-left-radius: 0.06rem;*/
     /*border-bottom-left-radius: 0.06rem;*/
     /*border-right: none;*/
@@ -272,32 +284,52 @@ header h3 {
     /*border-bottom-left-radius:0;*/
     outline: none
 }
+.page12 .fill01 {
+    width: 100%;
+    height: 1.8rem;
+}
 .page12 .timetable {
 	text-align: center;
 }
-.page12 .timetable .time{
-	margin: .2rem auto;
-	padding: 0 5%;
-	width: auto;
+.page12 .timetable .time {
+    padding: 0.1rem;
+    /*top: 2rem;*/
+    /* width: auto; */
+    /* margin-left: -1.55rem; */
+}
+.page12 .timetable .time select{
+     width: auto;
 }
 .page12 .timetable .time option{
 	text-align: center;
 }
-.page12 .timetable .table{
-	background-color: #eaf0f0;
+.page12 .timetable .table {
+    background-color: #eaf0f0;
+    border-top: none;
+}
+.page12 .timetable .table thead {
+	border-top: .03rem solid #ccc;
+	height: .77rem;
+	/*top: 3rem;*/
 }
 .page12 .timetable .table th{
 	text-align: center;
+	width: 1rem;
 }
-.page12 .timetable .table td{
-	height: 1.5rem;
+.page12 .timetable .table .fill02 {
+    width: 100%;
+    height: .8rem;
 }
-.page12 .timetable .table td.border_none{
-	border: none
+.page12 .timetable .table td {
+    text-align: center;
+    height: 1.5rem;
+    width: .5rem;
+    line-height: 1.25rem;
 }
 .page12 .timetable .table td.check{
-	background: url("../img/check.jpg") center no-repeat;
+	background: #8AF07F center no-repeat;
 	background-size: 100% 100%;
+	border-radius: .1rem;
 }
 .page12 footer {
 	color: #7FCA7F;

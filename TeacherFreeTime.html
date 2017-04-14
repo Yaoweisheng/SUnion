@@ -10,35 +10,40 @@
 	<title>老师空闲时间</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css">
-	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </head>
 
 <body>
 <div class="page12">
-	<header>
-		<h3>空闲时间统计</h3>
-	</header>
-	<div class="h40"></div>
-	<div class="class">
-		<label>发送班级</label>
-		<!-- <div class="line"></div> -->
-		<select>
-			<option>（点击选择班级）</option>
-			<option>（点击选择班级）</option>
-			<option>（点击选择班级）</option>
-		</select>
+	<div class="panel panel-default fixed">
+		<div class="panel-body">
+			<div class="class">
+				<label>发送班级</label>
+				<!-- <div class="line"></div> -->
+				<select>
+					<option>（点击选择班级）</option>
+					<option>（点击选择班级）</option>
+					<option>（点击选择班级）</option>
+				</select>
+			</div>
+			<div class="timetable">
+				<div class="time">
+					<select>
+						<option>第二学期&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp第五周</option>
+						<option>第二学期&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp第五周</option>
+						<option>第二学期&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp第五周</option>
+					</select>
+				</div>
+			</div>
+		</div>
 	</div>
+	<div class="fill01"></div>
 	<div class="timetable">
-		<select class="time">
-			<option>第二学期&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp第五周</option>
-			<option>第二学期&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp第五周</option>
-			<option>第二学期&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp第五周</option>
-		</select>
-		<table class="table table-bordered table-striped">
-		  <thead>
+		<table class="table table-striped">
+		  <thead class="fixed">
 		    <tr>
-		      <th></th>
+		      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 		      <th>日</th>
 		      <th>一</th>
 		      <th>二</th>
@@ -49,6 +54,7 @@
 		    </tr>
 		  </thead>
 		  <tbody>
+		  	<tr class="fill02"></tr>
 		    <tr>
 		      <td>1</td>
 		      <td class="check"></td>

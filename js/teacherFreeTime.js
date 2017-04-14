@@ -2,15 +2,14 @@
 var TeacherFreeTime = React.createClass({
 	render : function(){
 		return (
-			<div className="page12">
-			<Header />
-			<div className="h40"></div>
-			<Class />
-			<TimeTable />
-			<div className="f40"></div>
-			<Send />
+			<div>
+				<Panel />
+				<div className="fill01"></div>
+				<TimeTable />
+				<div className="f40"></div>
+				<Send />
 			</div>
-			);
+		);
 	}
 });
 
@@ -23,6 +22,19 @@ var Header = React.createClass({
 			);
 	}
 });
+
+var Panel = React.createClass({
+	render: function(){
+		return (
+			<div className="panel panel-default fixed">
+				<div className="panel-body">
+					<Class />
+					<Time />
+				</div>
+			</div>
+		)
+	}
+})
 
 var Class = React.createClass({
 	render : function(){
@@ -43,8 +55,7 @@ var TimeTable = React.createClass({
 	render : function(){
 		return (
 			<div className="timetable">
-			<Time />
-			<Table />
+				<Table />
 			</div>
 			);
 	}
@@ -53,21 +64,25 @@ var TimeTable = React.createClass({
 var Time = React.createClass({
 	render : function(){
 		return (
-			<select className="time">
-			<option>第二学期 第五周</option>
-			<option>第二学期  第六周</option>
-			<option>第二学期   第七周</option>
-			</select>
-			);
+			<div className="timetable">
+				<div className="time">
+					<select>
+					<option>第二学期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第五周</option>
+					<option>第二学期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第六周</option>
+					<option>第二学期&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第七周</option>
+					</select>
+				</div>
+			</div>
+		);
 	}
 });
 
 var Table = React.createClass({
 	render : function(){
 		return (
-			<table className="table table-bordered table-striped">
-			<Thead />
-			<Tbodys />
+			<table className="table table-striped">
+				<Thead />
+				<Tbody />
 			</table>
 			);
 	}
@@ -76,7 +91,7 @@ var Table = React.createClass({
 var Thead = React.createClass({
 	render : function(){
 		return (
-			<thead>
+			<thead className="fixed">
 			    <tr>
 			      <th></th>
 			      <th>日</th>
@@ -92,28 +107,29 @@ var Thead = React.createClass({
 	}
 });
 
-var Tbodys = React.createClass({
+var Tbody = React.createClass({
 	render : function(){
 		return (
 			<tbody>
-			<Tbody />
-			<Tbody />
-			<Tbody />
-			<Tbody />
-			<Tbody />
-			<Tbody />
-			<Tbody />
-			<Tbody />
-			<Tbody />
-			<Tbody />
-			<Tbody />
-			<Tbody />
+		  		<tr className="fill02"></tr>
+				<Tr />
+				<Tr />
+				<Tr />
+				<Tr />
+				<Tr />
+				<Tr />
+				<Tr />
+				<Tr />
+				<Tr />
+				<Tr />
+				<Tr />
+				<Tr />
 			</tbody>
 			);
 	}
 }); 
 
-var Tbody = React.createClass({
+var Tr = React.createClass({
 	render : function(){
 		return (
 		    <tr>

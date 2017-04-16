@@ -1,0 +1,123 @@
+<!-- TeacherAddCourse.html -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, 
+                                     initial-scale=1.0, 
+                                     maximum-scale=1.0, 
+                                     user-scalable=no">
+	<title>添加课程</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/weui.css">
+	<link rel="stylesheet" href="css/main.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="page13">
+	<div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">课程名称</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入课程名称"/>
+            </div>
+        </div>
+        <div class="weui-cells__title">&nbsp;</div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">地点</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入课程地点">
+            </div>
+        </div>
+        <!-- <div class="weui-cell">
+            <div class="weui-cell__hd"><label for="" class="weui-label">周数</label></div>
+            <div class="weui-cell__bd">
+            	<span>1-25周</span>
+            </div>
+        </div> -->
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label for="" class="weui-label">节数</label></div>
+            <div class="weui-cell__bd">
+            	<span>
+	            	<select>
+	            		<option>周一</option>
+	            		<option>周二</option>
+	            		<option>周三</option>
+	            	</select> 
+	            	<select>
+	            		<option>第4节</option>
+	            		<option>第5节</option>
+	            		<option>第6节</option>
+	            	</select>
+	            	-
+	            	<select>
+	            		<option>第4节</option>
+	            		<option>第5节</option>
+	            		<option>第6节</option>
+	            	</select>
+	            </span>
+            </div>
+        </div><div class="weui-cells__title">&nbsp;</div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">地点</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入课程地点">
+            </div>
+        </div>
+        <!-- <div class="weui-cell">
+            <div class="weui-cell__hd"><label for="" class="weui-label">周数</label></div>
+            <div class="weui-cell__bd">
+            	<span>1-25周</span>
+            </div>
+        </div> -->
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label for="" class="weui-label">节数</label></div>
+            <div class="weui-cell__bd">
+            	<span>
+	            	<select>
+	            		<option>周一</option>
+	            		<option>周二</option>
+	            		<option>周三</option>
+	            	</select> 
+	            	<select>
+	            		<option>第4节</option>
+	            		<option>第5节</option>
+	            		<option>第6节</option>
+	            	</select>
+	            	-
+	            	<select>
+	            		<option>第4节</option>
+	            		<option>第5节</option>
+	            		<option>第6节</option>
+	            	</select>
+	            </span>
+            </div>
+        </div>
+    </div>
+    <div class="weui-btn-area">
+        <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">添加其他时段</a>
+        <a class="weui-btn weui-btn_plain-primary" href="javascript:" id="showTooltips">保存</a>
+    </div>
+</div>
+<script type="text/javascript">
+	var time = function() {
+		// alert("time")
+		weui.datePicker({
+            start: 1990,
+            end: new Date().getFullYear(),
+            onChange: function (result) {
+                console.log(result);
+            },
+            onConfirm: function (result) {
+                console.log(result);
+            }
+        });
+	}
+</script>
+</body>
+</html>

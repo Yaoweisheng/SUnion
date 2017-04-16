@@ -1,0 +1,40 @@
+<!-- TeacherAddCourseReact.html -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, 
+                                     initial-scale=1.0, 
+                                     maximum-scale=1.0, 
+                                     user-scalable=no">
+	<title>添加课程</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/react.js"></script>
+    <script type="text/javascript" src="js/react-dom.js"></script>
+    <script type="text/javascript" src="js/browser.min.js"></script>
+    <script type="text/javascript" src="js/pubsub.js"></script>
+</head>
+<body>
+<div class="page13">
+</div>
+<script type="text/javascript">
+	var time = function() {
+		// alert("time")
+		weui.datePicker({
+            start: 1990,
+            end: new Date().getFullYear(),
+            onChange: function (result) {
+                console.log(result);
+            },
+            onConfirm: function (result) {
+                console.log(result);
+            }
+        });
+	}
+</script>
+<script type="text/babel" src="js/teacherAddCourse.js"></script>
+</body>
+</html>

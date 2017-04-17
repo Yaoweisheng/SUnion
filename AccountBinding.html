@@ -1,0 +1,58 @@
+<!-- AccountBinding.html -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, 
+                                     initial-scale=1.0, 
+                                     maximum-scale=1.0, 
+                                     user-scalable=no">
+	<title>账户绑定</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/weui.css">
+	<link rel="stylesheet" href="css/main.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="page11">
+	<div class="panel panel-default">
+	    <div class="panel-body">
+			<ul class="nav nav-tabs">
+				<li class="teacher active"><a href="#">我是老师</a></li>
+				<li class="student"><a href="#">我是学生</a></li>
+			</ul>
+			<div class="form weui-cells weui-cells_form">
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">学校</label></div>
+	                <div class="weui-cell__bd">
+	                	<select>
+	                		<option>(请选择)</option>
+	                		<option>浙江理工大学</option>
+	                		<option>浙江理工大学</option>
+	                		<option>浙江理工大学</option>
+	                	</select>
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">学号</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入学号"/>
+	                </div>
+	            </div>
+	            <div class="weui-cell">
+	                <div class="weui-cell__hd"><label class="weui-label">教务密码</label></div>
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="password" placeholder="请输入教务密码"/>
+	                </div>
+	            </div>
+			    <div class="weui-btn-area">
+			        <a class="weui-btn weui-btn_plain-primary" href="javascript:" id="showTooltips">重置</a>
+			        <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">提交</a>
+			    </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+</body>
+</html>

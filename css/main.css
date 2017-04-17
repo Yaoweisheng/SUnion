@@ -247,6 +247,36 @@ header h3 {
     border-bottom: 0.01rem solid #ccc;
     margin-top: 0.1rem;
 }
+.page10 {
+    width:7.5rem;
+    margin-left:auto;
+    margin-right:auto;
+}
+.page10 .username{
+    color: #06AD13;
+    flex: 1;
+}
+.page10 .text{
+    flex: 3;
+}
+.page10 .panel {
+    bottom: 0;
+}
+.page10 .panel span {
+    color: #06AD13;
+}
+.page10 .panel form {
+    margin: 0;
+}
+.page10 .panel textarea {
+    width: 100%;
+    height: 130px;
+    resize: none;
+    outline: none;
+}
+.page10 .fill {
+    height: 204.8px;
+}
 .page11 {
     width:7.5rem;
     margin-left:auto;

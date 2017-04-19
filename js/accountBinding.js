@@ -5,6 +5,7 @@ var AccountBlinding = React.createClass({
 				<div className="panel-body">
 					<Identity />
 					<BlindingInfor />
+					<Tip />
 				</div>
 			</div>
 		);
@@ -399,6 +400,7 @@ var Identification = React.createClass({
 	    },
 	        function(data,status){
 	        // alert("数据: \n" + data + "\n状态: " + status);
+			PubSub.publish('submit_code', data)
 	    });
 	},
 	render :function(){
@@ -411,7 +413,68 @@ var Identification = React.createClass({
 	}
 });
 
-
+var Tip = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    	tips: ['找不到该学生', '找不到该老师', '密码错误', '用户已绑定']
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	success: 1005
+	    };
+	},
+	modif: function(){
+		this.setState({
+			success: 1005
+		})
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('submit_code', function (topic, data) {
+			this.setState({
+				success: data
+			})
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+	},
+	render :function(){
+		switch(this.state.success) {
+			case 1005: {
+				return null
+			}
+			case 1000: {
+				return (
+					    <div>
+					        <div className="weui-mask_transparent"></div>
+					        <div className="weui-toast">
+					            <i className="weui-icon-success-no-circle weui-icon_toast"></i>
+					            <p className="weui-toast__content">绑定成功</p>
+					        </div>
+					    </div>
+					)
+			}
+			default: {
+				return (
+			        <div className="js_dialog">
+			            <div className="weui-mask"></div>
+			            <div className="weui-dialog weui-skin_android">
+			                <div className="weui-dialog__hd"><strong className="weui-dialog__title">提示</strong></div>
+			                <div className="weui-dialog__bd">
+			                    {this.props.tips[this.state.success - 1001]}
+			                </div>
+			                <div className="weui-dialog__ft">
+			                    {/*<a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default">辅助操作</a>*/}
+			                    <a href="javascript:;" onClick={this.modif} className="weui-dialog__btn weui-dialog__btn_primary">修改</a>
+			                </div>
+			            </div>
+			        </div>
+				)
+			}
+		}
+	}
+})
 
 ReactDOM.render(
   <AccountBlinding />,

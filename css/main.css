@@ -418,9 +418,14 @@ header h3 {
     padding: 5px;
 }
 .page12 .timetable .table td.check{
-	background: #8AF07F center no-repeat;
-	background-size: 100% 100%;
-	border-radius: .1rem;
+    background: #8AF07F center no-repeat;
+    background-size: 100% 100%;
+    border-radius: .1rem;
+}
+.page12 .timetable .table td.selected{
+    background: #F0EA7F center no-repeat;
+    background-size: 100% 100%;
+    border-radius: .1rem;
 }
 .page12 footer {
     color: #7FCA7F;
@@ -438,6 +443,9 @@ header h3 {
     color: #fff;
     text-align: center;
     line-height: 60px;
+}
+.page12 .js_dialog select{
+    width: 118px;
 }
 .page13 {
 	width:7.5rem;

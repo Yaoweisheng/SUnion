@@ -22,21 +22,25 @@ var Identity = React.createClass({
 	    	teacher: 1
 	    };
 	},
-	studentClick: function() {
+	studentClick: function(event) {
+		alert(0)
 		this.setState({
 			teacher: 0
 		},
 			function(){
 				PubSub.publish('teacher_change', this.state.teacher)
+				alert("0")
 			}
 		)
 	},
-	teacherClick: function() {
+	teacherClick: function(event) {
+		alert(1)
 		this.setState({
 			teacher: 1
 		},
 			function(){
 				PubSub.publish('teacher_change', this.state.teacher)
+				alert("1")
 			}
 		)
 	},

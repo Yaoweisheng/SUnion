@@ -397,35 +397,41 @@ header h3 {
 }
 .page12 .timetable .table th{
 	text-align: center;
-	width: 1rem;
+	width: 74px;
+    background-color: #f4f8f9;
 }
 .page12 .timetable .table .fill02 {
     width: 100%;
     height: 36px;
 }
-.page12 .timetable .table td.number {
+.page12 .timetable .table .number {
     /* text-align: center; */
     /* height: 1.5rem; */
     /* width: .5rem; */
-    line-height: 83px;
+    width: 45px;
+    line-height: 89px;
+    font-size: 20px;
+    text-align: center;
+    background-color: #f4f8f9;
+    border:none;
 }
 .page12 .timetable .table td {
-    text-align: center;
     height: 100px;
-    width: 70px;
+    width: 74px;
     font-size: 10px;
     line-height: 18px;
     padding: 5px;
+    border-radius: 10px;
 }
 .page12 .timetable .table td.check{
-    background: #8AF07F center no-repeat;
+    background: #aabeff center no-repeat;
     background-size: 100% 100%;
-    border-radius: .1rem;
+    border: 2px solid #fff;
 }
 .page12 .timetable .table td.selected{
-    background: #F0EA7F center no-repeat;
+    background: #e6a5f5 center no-repeat;
     background-size: 100% 100%;
-    border-radius: .1rem;
+    border: 2px solid #fff;
 }
 .page12 footer {
     color: #7FCA7F;

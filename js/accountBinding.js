@@ -395,7 +395,7 @@ var Identification = React.createClass({
 		PubSub.unsubscribe(this.pubsub_token3)
 	},
 	submit: function(){
-		$.post("/user-bind.action",
+		$.post("user-bind.action",
 	    {
 	        identity: this.state.identity,
 	        school: this.state.school,

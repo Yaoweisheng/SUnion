@@ -20,6 +20,7 @@ var TeacherFreeTime = React.createClass({
 				<div className="f40"></div>
 				<Send />
 				<FreeDialog course={this.props.course} />
+				<Tip />
 			</div>
 		);
 	}
@@ -181,7 +182,7 @@ var Thead = React.createClass({
 		return (
 			<thead className="fixed">
 			    <tr>
-			      <th></th>
+			      <th className="number"></th>
 			      {
 			      	weeks.map(function(week, index){
 			      		return <th key={index}>{week}</th>
@@ -325,11 +326,28 @@ var Send = React.createClass({
 	getInitialState: function() {
 	    return {
 	    	cId: null,
-	    	times: []
+	    	cTimes: [],
+	    	times: '',
+	    	tIndex: 0,
 	    };
 	},
 	send: function(){
-		this.setState({times: this.state.times.join('&')})
+		// var times = this.state.times.join('&')
+		this.setState({times: this.state.cTimes.join('&')}, function(){
+			// alert(this.state.times)
+			$.post("tc-spareTime.action",
+		    {
+		        openId: ch.teacher.openId,
+		        cid: this.state.cId,
+		        times: this.state.times,
+		    },
+		        function(data,status){
+		        // alert("数据: \n" + data + "\n状态: " + status);
+				PubSub.publish('submit_code', data)
+		    });
+		    // PubSub.publish('submit_code', 0)
+		}
+		)
 		//Ajax 'tc-spareTime.action':ch.teacher.openId, this.state.cId, this.state.times
 	},
 	componentDidMount: function () {
@@ -338,7 +356,10 @@ var Send = React.createClass({
 		}.bind(this))
 		this.pubsub_token1 = PubSub.subscribe('free_time_change', function (topic, data) {
 			var a = [data.weekIndex, data.index, data.toIndex]
-			this.setState({times: a.join(',')})
+			var cTimes = this.state.cTimes
+			cTimes[this.state.tIndex] = a.join(',')
+			this.setState({cTimes: cTimes, tIndex: this.state.tIndex + 1}, function(){
+			})
 		}.bind(this))
 	},
 	componentWillUnmount: function () {
@@ -384,7 +405,12 @@ var FreeDialog = React.createClass({
 		PubSub.unsubscribe(this.pubsub_token0)
 	},
 	option1Change: function (event) {
-		this.setState({index:event.target.value}, function(){if(this.state.toIndex < this.state.index){this.setState({toIndex: this.state.index})}})
+		this.setState({index:event.target.value}, function(){
+			if(this.state.toIndex*1 < this.state.index){
+				this.setState({toIndex: this.state.index}, 
+					function(){})
+			}
+		})
 	},
 	option2Change: function (event) {
 		this.setState({toIndex:event.target.value})
@@ -484,6 +510,69 @@ var FreeDialog = React.createClass({
         return null
     }
 });
+
+var Tip = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    	tips: ['发送失败请重试']
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	success: 2
+	    };
+	},
+	modif: function(){
+		this.setState({
+			success: 2
+		})
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('submit_code', function (topic, data) {
+			this.setState({
+				success: data
+			})
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+	},
+	render :function(){
+		switch(this.state.success) {
+			case 2: {
+				return null
+			}
+			case 1: {
+				return (
+					    <div>
+					        <div className="weui-mask_transparent"></div>
+					        <div className="weui-toast">
+					            <i className="weui-icon-success-no-circle weui-icon_toast"></i>
+					            <p className="weui-toast__content">发送成功</p>
+					        </div>
+					    </div>
+					)
+			}
+			default: {
+				return (
+			        <div className="js_dialog">
+			            <div className="weui-mask"></div>
+			            <div className="weui-dialog weui-skin_android">
+			                <div className="weui-dialog__hd"><strong className="weui-dialog__title">提示</strong></div>
+			                <div className="weui-dialog__bd">
+			                    {this.props.tips[this.state.success]}
+			                </div>
+			                <div className="weui-dialog__ft">
+			                    {/*<a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default">辅助操作</a>*/}
+			                    <a href="javascript:;" onClick={this.modif} className="weui-dialog__btn weui-dialog__btn_primary">重试</a>
+			                </div>
+			            </div>
+			        </div>
+				)
+			}
+		}
+	}
+})
 
 ReactDOM.render(
 	<TeacherFreeTime />,

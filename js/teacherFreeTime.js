@@ -222,6 +222,7 @@ var Tbody = React.createClass({
 			for(var k = this.props.course.classes[i].index; k < this.props.course.classes[i].toIndex; k++) {
 				array[k][this.props.course.classes[i].week].rowspan = -1;
 			}
+			// alert(array[this.props.course.classes[i].index-1][this.props.course.classes[i].week].cname)
 		}
 	    return {
 	    	cTimeArray: array
@@ -239,8 +240,10 @@ var Tbody = React.createClass({
 			}
 			else {
 				array[data.index][data.weekIndex].selected = false
-				for(var i = data.index ; i <= data.toIndex; i++) {
-					array[i][data.weekIndex].rowspan = 1
+				if(!array[data.index][data.weekIndex].cname) {
+					for(var i = data.index ; i <= data.toIndex; i++) {
+						array[i][data.weekIndex].rowspan = 1
+					}
 				}
 			}
 			this.setState({cTimeArray: array})
@@ -274,14 +277,14 @@ var Tr = React.createClass({
 			if(this.props.showArray[i].rowspan != -1) {
   				cols.push(<td onClick={this.timetableClick.bind(this, i)}
   				 key={i} index={i+1}
-  				  className={this.props.showArray[i].cname?"check":(this.props.showArray[i].selected? "selected" : "")}
+  				  className={this.props.showArray[i].selected? "selected":(this.props.showArray[i].cname?"check":"")}
   				   rowSpan={this.props.showArray[i].rowspan}>
   				   {this.props.showArray[i].cname?this.props.showArray[i].cname:''}
   				   </td>);
 			}
 		}
 	    return {
-	    	cols: cols
+	    	cols: cols,
 	    };
 	},
 	timetableClick: function(index){
@@ -302,9 +305,9 @@ var Tr = React.createClass({
 			if(this.props.showArray[i].rowspan != -1) {
   				cols.push(<td onClick={this.timetableClick.bind(this, i)}
   				 key={i} index={i+1}
-  				  className={this.props.showArray[i].cname?"check":(this.props.showArray[i].selected? "selected" : "")}
+  				  className={this.props.showArray[i].selected? "selected":(this.props.showArray[i].cname?"check" : "")}
   				   rowSpan={this.props.showArray[i].rowspan}>
-  				   {this.props.showArray[i].cname?this.props.showArray[i].cname:''}
+  				   {this.props.showArray[i].selected?'':this.props.showArray[i].cname?this.props.showArray[i].cname:''}
   				   </td>);
 			}
 		}
@@ -334,8 +337,8 @@ var Send = React.createClass({
 	send: function(){
 		// var times = this.state.times.join('&')
 		this.setState({times: this.state.cTimes.join('&')}, function(){
-			// alert(this.state.times)
-			$.post("tc-spareTime.action",
+			alert(this.state.times)
+			/*$.post("tc-spareTime.action",
 		    {
 		        openId: ch.teacher.openId,
 		        cid: this.state.cId,
@@ -344,7 +347,7 @@ var Send = React.createClass({
 		        function(data,status){
 		        // alert("数据: \n" + data + "\n状态: " + status);
 				PubSub.publish('submit_code', data)
-		    });
+		    });*/
 		    // PubSub.publish('submit_code', 0)
 		}
 		)
@@ -355,11 +358,24 @@ var Send = React.createClass({
 			this.setState({cId: cId})
 		}.bind(this))
 		this.pubsub_token1 = PubSub.subscribe('free_time_change', function (topic, data) {
-			var a = [data.weekIndex, data.index, data.toIndex]
-			var cTimes = this.state.cTimes
-			cTimes[this.state.tIndex] = a.join(',')
-			this.setState({cTimes: cTimes, tIndex: this.state.tIndex + 1}, function(){
-			})
+			if(!data.delete) {
+				var a = [data.weekIndex, data.index, data.toIndex]
+				var cTimes = this.state.cTimes
+				cTimes[this.state.tIndex] = a.join(',')
+				this.setState({cTimes: cTimes, tIndex: this.state.tIndex + 1}, function(){
+				})
+			}
+			else {
+				var cTimes = this.state.cTimes
+				for(var i = 0; i < cTimes.length; i++) {
+					var b = cTimes[i].split(',')
+					if(b[0] == data.weekIndex && b[1] == data.index && b[2] == data.toIndex) {
+						cTimes.splice(i, 1)
+						this.setState({cTimes: cTimes, tIndex: this.state.tIndex - 1})
+						break
+					}
+				}
+			}
 		}.bind(this))
 	},
 	componentWillUnmount: function () {
@@ -386,7 +402,8 @@ var FreeDialog = React.createClass({
 	    	index: null,
 	    	toIndex: null,
 	    	weekIndex: null,
-	    	cInfor: {}
+	    	cInfor: {},
+	    	freeTime: true
 	    };
 	},
 	componentDidMount: function () {
@@ -398,7 +415,11 @@ var FreeDialog = React.createClass({
 				weekIndex: data.weekIndex, 
 				show: true, 
 				cInfor: data.cInfor
-			},function(){})
+			},function(){
+				if(this.state.cInfor.cname) {
+					this.setState({freeTime: false})
+				}
+			})
 		}.bind(this))
 	},
 	componentWillUnmount: function () {
@@ -422,16 +443,11 @@ var FreeDialog = React.createClass({
 		})
 	},
 	affirm: function() {
-		if(!this.state.cInfor.cname && !this.state.cInfor.selected) {
+		if(this.state.freeTime && !this.state.cInfor.selected) {
 			this.setState({show: false}, function(){
 				var data = {index: this.state.index, toIndex: this.state.toIndex, weekIndex: this.state.weekIndex, delete: 0}
 				PubSub.publish('free_time_change', data)
 			})
-		}
-		else if(this.state.cInfor.cname) {
-			var cInfor = this.state.cInfor
-			cInfor.cname = null
-			this.setState({cInfor: cInfor})
 		}
 		else if(this.state.cInfor.selected) {
 			var cInfor = this.state.cInfor
@@ -441,9 +457,12 @@ var FreeDialog = React.createClass({
 				PubSub.publish('free_time_change', data)
 			})
 		}
+		else if(this.state.cInfor.cname) {
+			this.setState({freeTime: true}) 
+		}
 	},
 	render: function(){
-		if(!this.state.cInfor.selected && !this.state.cInfor.cname && this.state.show) {
+		if(!this.state.cInfor.selected && this.state.freeTime && this.state.show) {
 			var options1 = [];
 			for(var i = 0; i < this.props.course.total; i++) {
 	  			options1.push(<option key={i} value={i}>第{i+1}节</option>);
@@ -474,7 +493,22 @@ var FreeDialog = React.createClass({
 	        </div>
 	        )
 		}
-		else if(this.state.cInfor.cname && this.state.show) {
+		else if(this.state.cInfor.selected && this.state.show) {
+			return (
+			        <div className="js_dialog" id="iosDialog1">
+			            <div className="weui-mask"></div>
+			            <div className="weui-dialog">
+			                <div className="weui-dialog__hd"><strong className="weui-dialog__title">空闲时间</strong></div>
+			                <div className="weui-dialog__bd">{weeks[this.state.weekIndex]}&nbsp;第{this.state.index+1}节&nbsp;-&nbsp;第{this.state.toIndex+1}节<br/>是否删除空余时间？</div>
+			                <div className="weui-dialog__ft">
+			                    <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default" onClick={this.cancel}>取消</a>
+			                    <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_primary" onClick={this.affirm}>确定</a>
+			                </div>
+			            </div>
+			        </div>
+		        )
+		}
+		else if(!this.state.freeTime && this.state.show) {
 			return (
 			    <div className="js_dialog" id="androidDialog1">
 			        <div className="weui-mask"></div>
@@ -491,21 +525,6 @@ var FreeDialog = React.createClass({
 			        </div>
 			    </div>
 			)
-		}
-		else if(this.state.cInfor.selected && this.state.show) {
-			return (
-			        <div className="js_dialog" id="iosDialog1">
-			            <div className="weui-mask"></div>
-			            <div className="weui-dialog">
-			                <div className="weui-dialog__hd"><strong className="weui-dialog__title">空闲时间</strong></div>
-			                <div className="weui-dialog__bd">{weeks[this.state.weekIndex]}&nbsp;第{this.state.index+1}节&nbsp;-&nbsp;第{this.state.toIndex+1}节<br/>是否删除空余时间？</div>
-			                <div className="weui-dialog__ft">
-			                    <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default" onClick={this.cancel}>取消</a>
-			                    <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_primary" onClick={this.affirm}>确定</a>
-			                </div>
-			            </div>
-			        </div>
-		        )
 		}
         return null
     }

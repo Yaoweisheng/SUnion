@@ -453,6 +453,19 @@ header h3 {
 .page12 .js_dialog select{
     width: 118px;
 }
+/*student*/
+.page12 .center {
+    text-align: center;
+}
+.page12 .weui-flex {
+    border-bottom: 1px solid #ccc;
+}
+.page12 .panel.stu {
+    height: 77px;
+}
+.page12 .fill01.stu {
+    height: 77px;
+}
 .page13 {
 	width:7.5rem;
 	margin-left:auto;

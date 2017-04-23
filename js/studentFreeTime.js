@@ -4,9 +4,7 @@ var weeks = ["星期日","星期一","星期二","星期三","星期四","星期
 var StudentFreeTime = React.createClass({
 	getDefaultProps: function() {
 	    return {
-	    	// course: {"total":12,"times":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":8,"cname":"算法设计基础121212121","week":5,"index":3,"toIndex":5},{"id":9,"cname":"算法设计基础12321312","week":3,"index":6,"toIndex":8},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
-	    	// tId:
-	    	spareTimes: {"total": 12, "tname":"刘晓庆","courseName":"算法设计基础", "times":[{"cweek":"4","cindex":"11","toIndex":"12"},{"cweek":"4","cindex":"3","toIndex":"5"},{"cweek":"3","cindex":"1","toIndex":"2"},{"cweek":"5","cindex":"10","toIndex":"12"}]}
+	    	spareTimes:ch.teacher.spareTimes
 	    };
 	},
 	getInitialState: function() {
@@ -17,7 +15,7 @@ var StudentFreeTime = React.createClass({
 	render : function(){
 		return (
 			<div>
-				<Panel teacher={this.props.spareTimes.tname} course={this.props.spareTimes.courseName} />
+				<Panel teacher={this.props.spareTimes.tname} course="算法理论基础" />
 				<div className="fill01 stu"></div>
 				<TimeTable course={this.props.spareTimes} />
 				<div className="f40"></div>
@@ -312,17 +310,16 @@ var Send = React.createClass({
 	send: function(){
 		// var times = this.state.times.join('&')
 		this.setState({times: this.state.cTimes.join('&')}, function(){
-			alert(this.state.times)
-			/*$.post("stu-backSpareTime.action",
+			//alert(this.state.times)
+			$.post("stu-backSpareTime.action",
 		    {
 		        openId: ch.teacher.openId,
-		        cid: this.state.cId,
-		        spareTimes: this.state.times,
+		        spareTimes: this.state.times
 		    },
 		        function(data,status){
 		        // alert("数据: \n" + data + "\n状态: " + status);
 				PubSub.publish('submit_code', data)
-		    });*/
+		    });
 		    // PubSub.publish('submit_code', 0)
 		}
 		)

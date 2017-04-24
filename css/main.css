@@ -401,7 +401,7 @@ header h3 {
 }
 .page12 .timetable .table thead {
     border-top: 1px solid #ccc;
-    height: 56px;
+    height: 36px;
     /* top: 3rem; */
 }
 .page12 .timetable .table .add {
@@ -415,7 +415,7 @@ header h3 {
 }
 .page12 .timetable .table .fill02 {
     width: 100%;
-    height: 56px;
+    height: 36px;
 }
 .page12 .timetable .table .number {
     /* text-align: center; */
@@ -426,7 +426,7 @@ header h3 {
     font-size: 20px;
     text-align: center;
     background-color: #f4f8f9;
-    border:none;
+    border: none;
 }
 .page12 .timetable .table td {
     height: 100px;
@@ -434,17 +434,18 @@ header h3 {
     font-size: 10px;
     line-height: 18px;
     padding: 5px;
-    border-radius: 10px;
 }
 .page12 .timetable .table td.check{
     background: #aabeff center no-repeat;
     background-size: 100% 100%;
     border: 2px solid #fff;
+    border-radius: 10px;
 }
 .page12 .timetable .table td.selected{
     background: #e6a5f5 center no-repeat;
     background-size: 100% 100%;
     border: 2px solid #fff;
+    border-radius: 10px;
 }
 .page12 footer {
     color: #7FCA7F;

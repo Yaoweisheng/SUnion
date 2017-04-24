@@ -2,7 +2,8 @@ var weeks = ["星期日","星期一","星期二","星期三","星期四","星期
 var TeacherFreeTime = React.createClass({
 	getDefaultProps: function() {
 	    return {
-	    	course: ch.teacher.classes
+	    	course: {"total":12,"classes":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
+	    	// course: ch.teacher.classes
 	    };
 	},
 	getInitialState: function() {
@@ -151,7 +152,8 @@ var Time = React.createClass({
 var Table = React.createClass({
 	getDefaultProps: function() {
 	    return {
-	    	classes: ch.teacher.classes
+	    	// classes: {"total":12,"classes":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
+	    	// classes: ch.teacher.classes
 	    };
 	},
 	getInitialState: function() {
@@ -436,7 +438,7 @@ var FreeDialog = React.createClass({
 		this.setState({toIndex:event.target.value})
 	},
 	cancel: function(){
-		this.setState({show: false}, function(){
+		this.setState({show: false, freeTime: true}, function(){
 			/*PubSub.publish('course_time_change', this.state.index)
 			PubSub.publish('class_change', this.state.index)*/
 		})

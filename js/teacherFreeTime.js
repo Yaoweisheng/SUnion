@@ -1,9 +1,8 @@
-/*teacherfreeTime.js*/
 var weeks = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
 var TeacherFreeTime = React.createClass({
 	getDefaultProps: function() {
 	    return {
-	    	course: {"total":12,"classes":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":8,"cname":"算法设计基础121212121","week":5,"index":3,"toIndex":5},{"id":9,"cname":"算法设计基础12321312","week":3,"index":6,"toIndex":8},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
+	    	course: ch.teacher.classes
 	    };
 	},
 	getInitialState: function() {
@@ -152,7 +151,7 @@ var Time = React.createClass({
 var Table = React.createClass({
 	getDefaultProps: function() {
 	    return {
-	    	classes: [{id : 2, cname: '”算法设计基础”',week: '”星期一”',time: '“08:00 ”'},{id : 4,cname: '”算法实践”',week: '”星期二”',time: '“13:30”'}]
+	    	classes: ch.teacher.classes
 	    };
 	},
 	getInitialState: function() {
@@ -337,8 +336,8 @@ var Send = React.createClass({
 	send: function(){
 		// var times = this.state.times.join('&')
 		this.setState({times: this.state.cTimes.join('&')}, function(){
-			alert(this.state.times)
-			/*$.post("tc-spareTime.action",
+			//alert(this.state.times)
+			$.post("tc-spareTime.action",
 		    {
 		        openId: ch.teacher.openId,
 		        cid: this.state.cId,
@@ -347,7 +346,7 @@ var Send = React.createClass({
 		        function(data,status){
 		        // alert("数据: \n" + data + "\n状态: " + status);
 				PubSub.publish('submit_code', data)
-		    });*/
+		    });
 		    // PubSub.publish('submit_code', 0)
 		}
 		)

@@ -1,4 +1,3 @@
-//sendInformation.js
 var weeks = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
 var SendInformation = React.createClass({
     render: function(){
@@ -33,7 +32,7 @@ var Course = React.createClass({
 var Select = React.createClass({
     getDefaultProps: function() {
         return {
-            course: {"total":12,"classes":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
+            course:ch.teacher.classes
         };
     },
     getInitialState: function() {
@@ -48,16 +47,17 @@ var Select = React.createClass({
                 cId: event.target.value
             },
             function(){
+        	var cId = this.state.cId;
                 if(this.state.cId != -1) {
                     $.post("tc-getStuOfCid.action",
-                    {
+                   {
                         cid: this.state.cId
-                    },
+                   },
                     function(data,status){
+                       alert(cId+'++')
                         var data2 = {
-                            cId: this.state.id,
-                            // students: [{"id":"1","sname":"张三",snumber:"2014339960011","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/1"},{"id":"2","sname":"李四","snumber":"2014339960015","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/2"},{"id":"3","sname":"张三",snumber:"2014339960011","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/1"},{"id":"4","sname":"李四","snumber":"2014339960015","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/2"},{"id":"5","sname":"张三",snumber:"2014339960011","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/1"},{"id":"6","sname":"李四","snumber":"2014339960015","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/2"}],
-                            students: data.classes
+                            cId: cId,
+                            students: data
                         }
                         PubSub.publish('class_change', data2)
                     });
@@ -210,7 +210,6 @@ var NumberCheck = React.createClass({
     checkChange: function(){
     },
     checkAll: function(){
-        // alert(this.state.checkAll)
         this.setState({checkAll: !this.state.checkAll}, function(){
             if(this.state.checkAll) {
                 this.setState({studentNumber: this.state.students.length})
@@ -218,7 +217,6 @@ var NumberCheck = React.createClass({
             else {
                 this.setState({studentNumber: 0})
             }
-            // this.refs.checkAll.click()
             PubSub.publish('check_all', this.state.checkAll)
         })
     },
@@ -285,10 +283,12 @@ var InformationContent = React.createClass({
         this.setState({content: event.target.value})
     },
     send: function(){
+	alert(this.state.cId)
         if(this.state.cId != -1) {
+                       
             var s = this.state.idArray.join(',')
             this.setState({ids:s}, function() {
-                // alert(this.state.ids)
+                 alert(this.state.ids)
                 $.post("tc-sendNotice.action",
                 {
                     openId:ch.teacher.openId,
@@ -296,7 +296,6 @@ var InformationContent = React.createClass({
                     content: this.state.content
                 },
                     function(data,status){
-                     //alert("数据: \n" + data + "\n状态: " + status); 
                     PubSub.publish('submit_code', data);
                 });
             })

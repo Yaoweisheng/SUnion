@@ -1,8 +1,13 @@
 /*main.css*/
 *:focus {outline: none} 
 body {
+<<<<<<< HEAD
     background:#fff
     color: #ccc;
+=======
+	background:#fff
+	color: #ccc;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
 }
 *:focus {outline: none} 
 a,address,article,aside,audio,blockquote,body,button,canvas,caption,dd,details,div,dl,dt,fieldset,figcaption,figure,footer,h1,h2,h3,h4,h5,h6,header,hgroup,iframe,input,legend,li,main,nav,ol,p,pre,progress,section,select,label,summary,table,td,textarea,th,ul,video {
@@ -409,8 +414,13 @@ header h3 {
     background-size: 100% 100%;
 }
 .page12 .timetable .table th{
+<<<<<<< HEAD
     text-align: center;
     width: 74px;
+=======
+	text-align: center;
+	width: 74px;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
     background-color: #f4f8f9;
 }
 .page12 .timetable .table .fill02 {
@@ -426,7 +436,11 @@ header h3 {
     font-size: 20px;
     text-align: center;
     background-color: #f4f8f9;
+<<<<<<< HEAD
     border:none;
+=======
+    border: none;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
 }
 .page12 .timetable .table td {
     height: 100px;
@@ -440,11 +454,19 @@ header h3 {
     background: #aabeff center no-repeat;
     background-size: 100% 100%;
     border: 2px solid #fff;
+<<<<<<< HEAD
+=======
+    border-radius: 10px;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
 }
 .page12 .timetable .table td.selected{
     background: #e6a5f5 center no-repeat;
     background-size: 100% 100%;
     border: 2px solid #fff;
+<<<<<<< HEAD
+=======
+    border-radius: 10px;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
 }
 .page12 footer {
     color: #7FCA7F;

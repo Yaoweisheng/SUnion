@@ -69,7 +69,7 @@ var BlindingInfor = React.createClass({
 var Province = React.createClass({
 	getDefaultProps: function() {
 	    return {
-	    	provinces:  ['“浙江省”','”安徽省”','”福建省”']
+	    	provinces:  ch.bind.province
 	    };
 	},
 	getInitialState: function() {
@@ -119,10 +119,7 @@ var City = React.createClass({
 	},
 	componentDidMount: function () {
 		this.pubsub_token = PubSub.subscribe('province_change', function (topic, province) {
-			/*this.setState({
-		      	  citys: ['1', '2', '3']
-		    })*/
-		    // alert(province)
+			
 			this.citysRequest = $.get('sch-getCityOfProvince.action?province=' + province, function (result) {
 		      this.setState({
 		      	  citys: result
@@ -175,7 +172,7 @@ var District = React.createClass({
 	},
 	componentDidMount: function () {
 		this.pubsub_token = PubSub.subscribe('city_change', function (topic, city) {
-			this.districtsRequest = $.get('sch-getDistrictOfCity.action?province=' + city, function (result) {
+			this.districtsRequest = $.get('sch-getDistrictOfCity.action?city=' + city, function (result) {
 		      this.setState({
 		      	  districts: result
 		      })
@@ -228,7 +225,7 @@ var School = React.createClass({
 	},
 	componentDidMount: function () {
 		this.pubsub_token = PubSub.subscribe('districts_change', function (topic, district) {
-			this.districtsRequest = $.get('sch-getSchoolOfDistrict.action?province=' + district, function (result) {
+			this.districtsRequest = $.get('sch-getSchoolOfDistrict.action?district=' + district, function (result) {
 		      this.setState({
 		      	  schools: result
 		      })
@@ -365,7 +362,7 @@ var Identification = React.createClass({
 	componentDidMount: function () {
 		this.pubsub_token0 = PubSub.subscribe('teacher_change', function (topic, data) {
 			this.setState({
-				numberIndex: data
+			    identity: data
 			})
 		}.bind(this))
 		this.pubsub_token1 = PubSub.subscribe('school_change', function (topic, data) {
@@ -391,22 +388,27 @@ var Identification = React.createClass({
 		PubSub.unsubscribe(this.pubsub_token3)
 	},
 	submit: function(){
-		$.post("/user-bind.action",
+		$.post("user-bind.action",
 	    {
-	        identity: this.state.identity,
+	        openId:ch.teacher.openId,
+	        code:ch.code,
+		identity: this.state.identity,
 	        school: this.state.school,
 	        number: this.state.number,
 	        password: this.state.password,
 	    },
 	        function(data,status){
-	        // alert("数据: \n" + data + "\n状态: " + status);
-			PubSub.publish('submit_code', data)
+	         //alert("数据: \n" + data + "\n状态: " + status); 
+		PubSub.publish('submit_code', data);
 	    });
 	},
 	render :function(){
 		return (
 			    <div className="weui-btn-area">
-			        {/*<a className="weui-btn weui-btn_plain-primary" href="javascript:" id="showTooltips">重置</a>*/}
+			        {/*
+				     * <a className="weui-btn
+				     * weui-btn_plain-primary"
+				     * href="javascript:" id="showTooltips">重置</a>*/}
 			        <a className="weui-btn weui-btn_primary" onClick={this.submit} href="javascript:" id="showTooltips">提交</a>
 			    </div>
 			);
@@ -465,7 +467,10 @@ var Tip = React.createClass({
 			                    {this.props.tips[this.state.success - 1001]}
 			                </div>
 			                <div className="weui-dialog__ft">
-			                    {/*<a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default">辅助操作</a>*/}
+			                    {/*/*
+						 * <a href="javascript:;"
+						 * className="weui-dialog__btn
+						 * weui-dialog__btn_default">辅助操作</a>*/}
 			                    <a href="javascript:;" onClick={this.modif} className="weui-dialog__btn weui-dialog__btn_primary">修改</a>
 			                </div>
 			            </div>

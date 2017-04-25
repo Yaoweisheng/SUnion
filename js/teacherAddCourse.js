@@ -3,7 +3,7 @@ var AddCourse = React.createClass({
 		return (
 			<div >
 				<CourseAdd />
-				<Other />
+				<Save />
 			</div>
 			);
 	}
@@ -13,7 +13,7 @@ var CourseAdd = React.createClass({
 	render :function(){
 		return (
 			<div className="weui-cells weui-cells_form">
-				<CourseName />
+				{/*<CourseName />*/}
 				<Course />
 				<Course />
 			</div>
@@ -38,7 +38,7 @@ var Course = React.createClass({
 	render :function(){
 		return (
 			<div className="weui-cells weui-cells_form">
-				<div className="weui-cells__title">&nbsp;</div>
+				{/*<div className="weui-cells__title">&nbsp;</div>*/}
 				<CoursePlace />
 				<CourseNumber />
 			</div>
@@ -91,7 +91,7 @@ var CourseNumber = React.createClass({
 	}
 });
 
-var Other = React.createClass({
+var Save = React.createClass({
 	render :function(){
 		return (
 		    <div className="weui-btn-area">

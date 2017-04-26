@@ -32,7 +32,8 @@ var Course = React.createClass({
 var Select = React.createClass({
     getDefaultProps: function() {
         return {
-            course:ch.teacher.classes
+            // course:ch.teacher.classes
+            course: {"total":12,"classes":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
         };
     },
     getInitialState: function() {
@@ -47,20 +48,25 @@ var Select = React.createClass({
                 cId: event.target.value
             },
             function(){
-        	var cId = this.state.cId;
+        	    var cId = this.state.cId;
                 if(this.state.cId != -1) {
-                    $.post("tc-getStuOfCid.action",
+                    /*$.post("tc-getStuOfCid.action",
                    {
                         cid: this.state.cId
                    },
                     function(data,status){
-                       alert(cId+'++')
+
                         var data2 = {
                             cId: cId,
                             students: data
                         }
                         PubSub.publish('class_change', data2)
-                    });
+                    });*/
+                    var data2 = {
+                        cId: cId,
+                        students: [{"id":"2","sname":"张三","snumber":"2014339960011","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/1"},{"id":"6","sname":"李四","snumber":"2014339960015","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/2"}]
+                    }
+                    PubSub.publish('class_change', data2)
                 }
             }
         )
@@ -71,7 +77,7 @@ var Select = React.createClass({
                 <option value="-1">（点击选择课程）</option>
                 {
                     this.props.course.classes.map(function (c, index) {
-                    return <option key={index} value={c.id}>{c.cname}</option>
+                    return <option key={index} value={c.id}>{c.cname + " " + weeks[c.week] + " 第" + c.index + "节 - 第" + c.toIndex + "节"}</option>
                     })
                 }
             </select> 
@@ -171,7 +177,8 @@ var Student = React.createClass({
         return(
             <div className="student">
                 <div className="stu" onClick={this.studentClick}>
-                    <div className="student_img" style={{backgroundImage: 'url(' + this.props.stu.headimageUrl + ')'}}></div>
+                    {/*<div className="student_img" style={{backgroundImage: 'url(' + this.props.stu.headimageUrl + ')'}}></div>*/}
+                    <div className="student_img"></div>
                     <div className="student_name">学生姓名：{this.props.stu.sname}</div>
                     
                     <div className="student_number">学号：{this.props.stu.snumber}</div>
@@ -291,7 +298,7 @@ var InformationContent = React.createClass({
                  alert(this.state.ids)
                 $.post("tc-sendNotice.action",
                 {
-                    openId:ch.teacher.openId,
+                    // openId:ch.teacher.openId,
                     ids:this.state.ids,
                     content: this.state.content
                 },

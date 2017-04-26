@@ -101,10 +101,14 @@ header h3 {
     height: 95px;
 }
 .page1 .students .student .student_img {
+    margin-top: 4px;
     width: 90px;
     height: 90px;
     background: url(../img/student_img.png) center no-repeat;
+    background-size: 100% 100%;
     float: left;
+    border-radius: 45px;
+    border: 1px solid transparent;
 }
 .page1 .students .student .student_name {
     color: #7FCA7F;

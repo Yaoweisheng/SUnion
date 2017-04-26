@@ -32,8 +32,8 @@ var Course = React.createClass({
 var Select = React.createClass({
     getDefaultProps: function() {
         return {
-            // course:ch.teacher.classes
-            course: {"total":12,"classes":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
+            course:ch.teacher.classes
+            // course: {"total":12,"classes":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
         };
     },
     getInitialState: function() {
@@ -50,7 +50,7 @@ var Select = React.createClass({
             function(){
         	    var cId = this.state.cId;
                 if(this.state.cId != -1) {
-                    /*$.post("tc-getStuOfCid.action",
+                    $.post("tc-getStuOfCid.action",
                    {
                         cid: this.state.cId
                    },
@@ -61,12 +61,12 @@ var Select = React.createClass({
                             students: data
                         }
                         PubSub.publish('class_change', data2)
-                    });*/
-                    var data2 = {
+                    });
+                    /*var data2 = {
                         cId: cId,
                         students: [{"id":"2","sname":"张三","snumber":"2014339960011","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/1"},{"id":"6","sname":"李四","snumber":"2014339960015","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/2"}]
                     }
-                    PubSub.publish('class_change', data2)
+                    PubSub.publish('class_change', data2)*/
                 }
             }
         )

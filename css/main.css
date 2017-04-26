@@ -1,52 +1,57 @@
 /*main.css*/
 *:focus {outline: none} 
 body {
+<<<<<<< HEAD
+    background:#fff
+    color: #ccc;
+=======
 	background:#fff
 	color: #ccc;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
 }
 *:focus {outline: none} 
 a,address,article,aside,audio,blockquote,body,button,canvas,caption,dd,details,div,dl,dt,fieldset,figcaption,figure,footer,h1,h2,h3,h4,h5,h6,header,hgroup,iframe,input,legend,li,main,nav,ol,p,pre,progress,section,select,label,summary,table,td,textarea,th,ul,video {
-	margin:0;
-	padding:0;
-	font-weight:400;
-	font-style:normal;
-	font-family:inherit;
-	-moz-box-sizing:border-box;
-	-webkit-box-sizing:border-box;
-	box-sizing:border-box
+    margin:0;
+    padding:0;
+    font-weight:400;
+    font-style:normal;
+    font-family:inherit;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box
 }
 footer, header {
-	margin-left:-3.75rem
+    margin-left:-3.75rem
 }
 header,header h3 {
-	font-size:.36rem
+    font-size:.36rem
 }
 header {
-	width:7.5rem;
-	height:.88rem;
-	position:fixed;
-	top:0;
-	left:50%;
-	z-index:999;
-	background-color:#7FCA7F
+    width:7.5rem;
+    height:.88rem;
+    position:fixed;
+    top:0;
+    left:50%;
+    z-index:999;
+    background-color:#7FCA7F
 }
 .fixed {
-	width:7.5rem;
-	position:fixed;
-	left:50%;
-	margin-left:-3.75rem;
-	z-index:999;
-	background-color: #fff;
+    width:7.5rem;
+    position:fixed;
+    left:50%;
+    margin-left:-3.75rem;
+    z-index:999;
+    background-color: #fff;
 }
 header h3 {
-	text-align:center;
-	width:100%;
-	line-height:.88rem;
-	color:#fff
+    text-align:center;
+    width:100%;
+    line-height:.88rem;
+    color:#fff
 }
 .h40 {
-	width:100%;
-	height:.88rem
+    width:100%;
+    height:.88rem
 }
 .f40 {
     width: 100%;
@@ -56,9 +61,9 @@ header h3 {
     height: 222px;
 }
 .page1 {
-	width:7.5rem;
-	margin-left:auto;
-	margin-right:auto
+    width:7.5rem;
+    margin-left:auto;
+    margin-right:auto
 }
 .page1 .course {
     margin: 10px;
@@ -142,13 +147,13 @@ header h3 {
     margin-top: 5px;
 }
 .page1 .information {
-	color: #7FCA7F;
-	width:7.5rem;
-	position:fixed;
-	bottom:0;
-	left:50%;
-	z-index:999;
-	background-color:#fff
+    color: #7FCA7F;
+    width:7.5rem;
+    position:fixed;
+    bottom:0;
+    left:50%;
+    z-index:999;
+    background-color:#fff
 }
 .page1 .information .number_check {
     height: 20px;
@@ -193,12 +198,12 @@ header h3 {
     line-height: 50px;
 }
 .page2 {
-	width:7.5rem;
-	margin-left:auto;
-	margin-right:auto
+    width:7.5rem;
+    margin-left:auto;
+    margin-right:auto
 }
 .page2 .time {
-	margin: 0.4em;
+    margin: 0.4em;
 }
 .page2 .time select {
     line-height: 0.8rem;
@@ -207,7 +212,7 @@ header h3 {
     outline: none;
 }
 .page2 .time .search {    
-	line-height: 0.8rem;
+    line-height: 0.8rem;
     height: 0.8rem;
     width: 65%;
     border-top-left-radius: 0;
@@ -217,15 +222,15 @@ header h3 {
     margin: 0;
 }
 .page2 .time .search .text {
-	height:0.8rem;
-	width: 83%;
-	border-radius:.1rem;
+    height:0.8rem;
+    width: 83%;
+    border-radius:.1rem;
     outline: none;
 }
 .page2 .time .search .submit {
-	height:0.8rem;
-	width:15%;
-	border-radius:.1rem;
+    height:0.8rem;
+    width:15%;
+    border-radius:.1rem;
     outline: none;
 }
 .page2 .students .student .student_img {
@@ -694,9 +699,9 @@ header h3 {
     line-height: 50px;
 }
 .page12 {
-	width:7.5rem;
-	margin-left:auto;
-	margin-right:auto
+    width:7.5rem;
+    margin-left:auto;
+    margin-right:auto
 }
 .page12 .panel {
     height: 118px;
@@ -735,7 +740,7 @@ header h3 {
     height: 118px;
 }
 .page12 .timetable {
-	text-align: center;
+    text-align: center;
 }
 .page12 .timetable .time {
     padding: 0.1rem;
@@ -747,7 +752,7 @@ header h3 {
      width: auto;
 }
 .page12 .timetable .time option{
-	text-align: center;
+    text-align: center;
 }
 .page12 .timetable .table {
     background-color: #eaf0f0;
@@ -755,21 +760,26 @@ header h3 {
 }
 .page12 .timetable .table thead {
     border-top: 1px solid #ccc;
-    height: 36px;
+    height: 56px;
     /* top: 3rem; */
 }
 .page12 .timetable .table .add {
-	background: url("../img/add.jpg") no-repeat center;
-	background-size: 100% 100%;
+    background: url("../img/add.jpg") no-repeat center;
+    background-size: 100% 100%;
 }
 .page12 .timetable .table th{
+<<<<<<< HEAD
+    text-align: center;
+    width: 74px;
+=======
 	text-align: center;
 	width: 74px;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
     background-color: #f4f8f9;
 }
 .page12 .timetable .table .fill02 {
     width: 100%;
-    height: 36px;
+    height: 56px;
 }
 .page12 .timetable .table .number {
     /* text-align: center; */
@@ -780,7 +790,11 @@ header h3 {
     font-size: 20px;
     text-align: center;
     background-color: #f4f8f9;
+<<<<<<< HEAD
+    border:none;
+=======
     border: none;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
 }
 .page12 .timetable .table td {
     height: 100px;
@@ -788,18 +802,25 @@ header h3 {
     font-size: 10px;
     line-height: 18px;
     padding: 5px;
+    border-radius: 10px;
 }
 .page12 .timetable .table td.check{
     background: #aabeff center no-repeat;
     background-size: 100% 100%;
     border: 2px solid #fff;
+<<<<<<< HEAD
+=======
     border-radius: 10px;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
 }
 .page12 .timetable .table td.selected{
     background: #e6a5f5 center no-repeat;
     background-size: 100% 100%;
     border: 2px solid #fff;
+<<<<<<< HEAD
+=======
     border-radius: 10px;
+>>>>>>> 93d3c848137001573eb724d8cc246eaaa2bd5a1d
 }
 .page12 footer {
     color: #7FCA7F;
@@ -835,28 +856,28 @@ header h3 {
     height: 77px;
 }
 .page13 {
-	width:7.5rem;
-	margin-left:auto;
-	margin-right:auto
+    width:7.5rem;
+    margin-left:auto;
+    margin-right:auto
 }
 .page13 label{
-	font-size: 17px;
-	height: 23px;
-	line-height: 23px;
-	position: relative;
+    font-size: 17px;
+    height: 23px;
+    line-height: 23px;
+    position: relative;
 }
 .page13 .weui-cell__hd{
-	height: 23px;
+    height: 23px;
 }
 .page13 .weui-cell__bd {
-	height: 23px;
+    height: 23px;
 }
 .page13 input {
-	font-size: 17px;
-	height: 23px;
-	line-height: 23px;
-	outline: none;
+    font-size: 17px;
+    height: 23px;
+    line-height: 23px;
+    outline: none;
 }
 .page13 select {
-	width: 60px;
+    width: 60px;
 }

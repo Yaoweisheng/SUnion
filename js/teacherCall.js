@@ -12,7 +12,7 @@ var TeacherCall = React.createClass({
 	},
 	render: function(){
 		//初始化配置
-		/*wx.config({
+		wx.config({
 
 	    debug : false,
 
@@ -26,12 +26,13 @@ var TeacherCall = React.createClass({
 
 	    jsApiList : [ 'getLocation' ]
 
-		});*/
+		});
 		return (
 			<div >
 				<Classes />
 				<div className="f40"></div>
 				<Send />
+				<Tip />
 			</div>);
 	}
 });
@@ -122,6 +123,29 @@ var Send = React.createClass({
 		// this.setState({check: !this.state.check})
 		// alert(this.state.cId)
 		if(this.state.cId != -1){
+		    //微信API获取当前用户位置
+
+			var longitude;
+
+			var latitude;
+
+			wx.getLocation({
+
+			    type : 'wgs84',
+
+			    success : function(res) {
+
+					alert('r :' + res.latitude);
+
+					alert('r :' + res.longitude);
+
+					latitude = res.latitude;
+
+					longitude = res.longitude;
+
+			    }
+
+			});
 			$.ajax({
 
 			    cache : false,
@@ -146,7 +170,8 @@ var Send = React.createClass({
 
 				success : function(data) {
 
-					alert(data);
+					// alert(data);
+					PubSub.publish("submit_code", data)
 
 				}
 		});
@@ -172,6 +197,68 @@ var Send = React.createClass({
 	}
 });
 
+var Tip = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    	tips: ['发送失败请重试']
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	success: -1
+	    };
+	},
+	modif: function(){
+		this.setState({
+			success: -1
+		})
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('submit_code', function (topic, data) {
+			this.setState({
+				success: data
+			})
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+	},
+	render :function(){
+		switch(this.state.success) {
+			case -1: {
+				return null
+			}
+			case 4000: {
+				return (
+					    <div>
+					        <div className="weui-mask_transparent"></div>
+					        <div className="weui-toast">
+					            <i className="weui-icon-success-no-circle weui-icon_toast"></i>
+					            <p className="weui-toast__content">发起点名成功</p>
+					        </div>
+					    </div>
+					)
+			}
+			default: {
+				return (
+			        <div className="js_dialog">
+			            <div className="weui-mask"></div>
+			            <div className="weui-dialog weui-skin_android">
+			                <div className="weui-dialog__hd"><strong className="weui-dialog__title">提示</strong></div>
+			                <div className="weui-dialog__bd">
+			                    {this.props.tips[0]}
+			                </div>
+			                <div className="weui-dialog__ft">
+			                    {/*<a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default">辅助操作</a>*/}
+			                    <a href="javascript:;" onClick={this.modif} className="weui-dialog__btn weui-dialog__btn_primary">重试</a>
+			                </div>
+			            </div>
+			        </div>
+				)
+			}
+		}
+	}
+})
 ReactDOM.render(
   <TeacherCall />,
   document.getElementsByClassName("page4")[0]

@@ -91,11 +91,11 @@ var Message = React.createClass({
 		this.setState({
 			show: !this.state.show
 		}, function(){
-			var s = {
-				show: this.state.show,
-				index: index
-			}
-			PubSub.publish("show", s)
+			// var s = {
+			// 	show: this.state.show,
+			// 	index: index
+			// }
+			// PubSub.publish("show", s)
 		})
 	},
 	render :function(){
@@ -105,7 +105,7 @@ var Message = React.createClass({
 					<div className="student_name">{this.props.message.time}</div>
 					<div className="message">发送内容:{this.props.message.content}</div>
 					{
-						!this.state.show?<div className="student_detail">查看详情</div>:null
+						<div className={!this.state.show?"student_detail show":"student_detail"}>查看详情</div>
 					}
 				</div>
 				<Detail show={this.state.show} index={this.props.index} detail={this.props.message.students} />
@@ -116,31 +116,30 @@ var Message = React.createClass({
 });
 var Detail = React.createClass({
 	getDefaultProps: function() {
-	    return {
-	    	
+	    return {	    	
 	    };
 	},
 	getInitialState: function() {
 	    return {
-	    	height: "0px",
+	    	// height: "0px",
 	    	h2: this.props.detail.length * 45,
 	    };
 	},
 	componentDidMount: function () {
-		this.pubsub_token = PubSub.subscribe('show', function (topic, s) {
+		/*this.pubsub_token = PubSub.subscribe('show', function (topic, s) {
 			if(this.props.index == s.index) {
 				this.setState({height: s.show?(this.state.h2 + "px"):"0px"})
 			}
-		}.bind(this))
+		}.bind(this))*/
 	},
 	componentWillUnmount: function () {
-		PubSub.unsubscribe(this.pubsub_token)
+		// PubSub.unsubscribe(this.pubsub_token)
 	},
 	render: function(){
 		
 		// if(this.props.show) {
 			return(
-				<div className="weui-cells" style={{height:this.state.height}}>
+				<div className="weui-cells" style={{height:this.props.show?(this.state.h2 + "px"):"0px"}}>
 				{
 					this.props.detail.map(function(stu, index) {
 						// alert(stu.id)

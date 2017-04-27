@@ -298,12 +298,19 @@ header h3 {
     /* margin-top: .15rem; */
     width: 1.5rem;
     text-align: center;
-    height: 0.4rem;
+    height: 0;
     line-height: 0.4rem;
     border: .02rem solid #ccc;
     border-radius: .05rem;
     font-size: .2rem;
     color: #999;
+    transition:all 2s;
+    -moz-transition:all 2s; /* Firefox 4 */
+    -webkit-transition:all 2s; /* Safari and Chrome */
+    -o-transition:all 2s; /* Opera */
+}.page2 .students .student .student_detail.show {
+    height: 0.4rem;
+    border: .02rem solid #ccc;
 }
 .page2 .students .student .student_number {
     padding-left: .1rem;

@@ -204,17 +204,16 @@ header h3 {
     margin-right:auto
 }
 .page2 .time {
-    margin: 0.4em;
+    margin: 3px;
 }
 .page2 .time select {
-    line-height: 0.8rem;
-    height: 0.8rem;
+    height: 30px;
     width: 30%;
     outline: none;
 }
-.page2 .time .search {    
-    line-height: 0.8rem;
-    height: 0.8rem;
+.page2 .time .search {
+    line-height: 30px;
+    height: 30px;
     width: 70%;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -224,9 +223,9 @@ header h3 {
 }
 .page2 .time .search .text {
     margin-left: 0.1rem;
-    height:0.8rem;
-    width:80%;
-    border-radius:.1rem;
+    height: 30px;
+    width: 80%;
+    border-radius: .1rem;
     font-size: 16px;
     min-height: 32px;
     outline: none;
@@ -244,9 +243,9 @@ header h3 {
     vertical-align: middle;
 }
 .page2 .time .search .submit {
-    height:0.8rem;
-    width:15%;
-    border:none;
+    height: 30px;
+    width: 15%;
+    border: none;
     background-color: #fff;
     color: #7FCA7F;
     font-size: 16px;
@@ -264,11 +263,11 @@ header h3 {
 }
 .page2 .weui-cells {
     width: 100%;
-    transition: all 2s;
-    transition: all 2s;
-    -moz-transition: height 2s; /* Firefox 4 */
-    -webkit-transition: height 2s; /* Safari and Chrome */
-    -o-transition: height 2s; /* Opera */
+    transition: all .5s;
+    transition: all .5s;
+    -moz-transition: height .5s; /* Firefox 4 */
+    -webkit-transition: height .5s; /* Safari and Chrome */
+    -o-transition: height .5s; /* Opera */
 }
 .page2 .weui-cells.show {
     height: auto;
@@ -297,18 +296,18 @@ header h3 {
     width: 112px;
     text-align: center;
     height: 0;
-    line-height: 30px;
+    line-height: 25px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 15px;
     color: #999;
-    transition:all 2s;
-    -moz-transition:all 2s; /* Firefox 4 */
-    -webkit-transition:all 2s; /* Safari and Chrome */
-    -o-transition:all 2s; /* Opera */
+    transition: all .5s;
+    -moz-transition: all .5s;
+    -webkit-transition: all .5s;
+    -o-transition: all .5s;
 }
 .page2 .students .student .student_detail.show {
-    height: 30px;
+    height: 25px;
     border: 1px solid #ccc;
 }
 .page2 .students .student .student_number {
@@ -320,7 +319,7 @@ header h3 {
     margin-left: 10px;
     margin-top: 10px;
     line-height: 25px;
-    font-size: 17px;
+    font-size: 15px;
     /* margin-bottom: .15rem; */
 }
 .page2 .students .student .line {
@@ -336,16 +335,18 @@ header h3 {
     float: left;
     border: 1px solid #fff;
     border-radius: 50%;
-    height: 16px;
-    width: 16px
+    height: 25px;
+    width: 25px;
+    margin: -7px;
+    margin-right: 10px;
 }
 .page2 .name {
-    height: 16px;
-    line-height: 16px;
-    font-size: 16px;
+    /* height: 16px; */
+    line-height: 12px;
+    font-size: 12px;
 }
 .page2 .weui-cell__ft {
-    font-size: 16px
+    font-size: 12px;
 }
 .page3 {
     width:7.5rem;

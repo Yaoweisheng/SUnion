@@ -122,7 +122,7 @@ var Detail = React.createClass({
 	getInitialState: function() {
 	    return {
 	    	// height: "0px",
-	    	h2: this.props.detail.length * 41.82,
+	    	h2: this.props.detail.length * 36.36,
 	    };
 	},
 	componentDidMount: function () {

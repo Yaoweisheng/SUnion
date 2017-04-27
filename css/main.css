@@ -835,7 +835,33 @@ header h3 {
     line-height: 60px;
 }
 .page12 .js_dialog select{
-    width: 118px;
+    width: 110px;
+    float: left;
+    padding: 0 2%;
+    margin: 0;
+}
+.page12 .js_dialog select.sel01{
+    width: 178px;
+}
+.page12 .js_dialog select.sel02{
+    width: 80px;
+}
+.page12 .js_dialog select option{
+    text-align: center;
+}
+.page12 .js_dialog span{
+    width: 15px;
+    float: left;
+}
+.page12 .js_dialog label{
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+.page12 .js_dialog input{
+    float: left;
+    width: 178px;
+    height: 30px;
 }
 /*student*/
 .page12 .center {

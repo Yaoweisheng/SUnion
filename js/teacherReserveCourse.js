@@ -19,7 +19,7 @@ var TeacherFreeTime = React.createClass({
 				<TimeTable course={this.props.course} />
 				<div className="f40"></div>
 				<Send />
-				<FreeDialog course={this.props.course} />
+				<CourseDialog course={this.props.course} />
 				<Tip />
 			</div>
 		);
@@ -235,6 +235,8 @@ var Tbody = React.createClass({
 			if(!data.delete) {
 				array[data.index][data.weekIndex].selected = true
 				array[data.index][data.weekIndex].rowspan = data.toIndex - data.index + 1
+				array[data.index][data.weekIndex].cname2 = data.name + " @" + data.position + (data.description?(" (" + data.description + ")"):"")
+				// alert(array[data.index][data.weekIndex].cname2)
 				for(var i = data.index + 1; i <= data.toIndex; i++) {
 					array[i][data.weekIndex].rowspan = -1
 				}
@@ -256,7 +258,7 @@ var Tbody = React.createClass({
 	render : function(){
 		var rows = [];
 		for(var i = 0; i < this.props.course.total; i++) {
-  			rows.push(<Tr key={i} index={i} showArray={this.state.cTimeArray[i]} />);
+			rows.push(<Tr key={i} index={i} showArray={this.state.cTimeArray[i]} />);
   		}
 		return (
 			<tbody>
@@ -280,7 +282,7 @@ var Tr = React.createClass({
   				 key={i} index={i+1}
   				  className={this.props.showArray[i].selected? "selected":(this.props.showArray[i].cname?"check":"")}
   				   rowSpan={this.props.showArray[i].rowspan}>
-  				   {this.props.showArray[i].cname?this.props.showArray[i].cname:''}
+  				   {this.props.showArray[i].cname?this.props.showArray[i].cname:""}
   				   </td>);
 			}
 		}
@@ -308,7 +310,7 @@ var Tr = React.createClass({
   				 key={i} index={i+1}
   				  className={this.props.showArray[i].selected? "selected":(this.props.showArray[i].cname?"check" : "")}
   				   rowSpan={this.props.showArray[i].rowspan}>
-  				   {this.props.showArray[i].selected?'':this.props.showArray[i].cname?this.props.showArray[i].cname:''}
+  				   {this.props.showArray[i].selected?this.props.showArray[i].cname2:(this.props.showArray[i].cname?this.props.showArray[i].cname:"")}
   				   </td>);
 			}
 		}
@@ -329,29 +331,35 @@ var Send = React.createClass({
 	},
 	getInitialState: function() {
 	    return {
-	    	cId: null,
-	    	cTimes: [],
-	    	times: '',
-	    	tIndex: 0,
+	    	cId: -1,
+	    	cweek: -1,
+	    	cindex: -1,
+	    	toIndex: -1,
+	    	classroom: "",
+	    	cname: "",
+	    	describtion: ""
 	    };
 	},
 	send: function(){
-		// var times = this.state.times.join('&')
-		this.setState({times: this.state.cTimes.join('&')}, function(){
-			//alert(this.state.times)
-			$.post("tc-spareTime.action",
+		// alert(this.state.cId)
+		// alert(this.state.classroom)
+		if(this.state.cid != -1 && this.state.cindex != -1) {
+			$.post("tc-classAppo.action",
 		    {
 		        openId: ch.teacher.openId,
 		        cid: this.state.cId,
-		        times: this.state.times,
+		        cweek: this.state.cweek,
+		        cindex: this.state.cindex,
+		        toIndex: this.state.toIndex,
+		        classroom: this.state.classroom,
+		        cname: this.state.cname,
+		        describ: this.state.describtion
 		    },
 		        function(data,status){
 		        // alert("数据: \n" + data + "\n状态: " + status);
 				PubSub.publish('submit_code', data)
 		    });
-		    // PubSub.publish('submit_code', 0)
 		}
-		)
 		//Ajax 'tc-spareTime.action':ch.teacher.openId, this.state.cId, this.state.times
 	},
 	componentDidMount: function () {
@@ -360,22 +368,13 @@ var Send = React.createClass({
 		}.bind(this))
 		this.pubsub_token1 = PubSub.subscribe('free_time_change', function (topic, data) {
 			if(!data.delete) {
-				var a = [data.weekIndex, data.index, data.toIndex]
-				var cTimes = this.state.cTimes
-				cTimes[this.state.tIndex] = a.join(',')
-				this.setState({cTimes: cTimes, tIndex: this.state.tIndex + 1}, function(){
+				// alert(data.position)
+				this.setState({cweek: data.weekIndex, cindex: data.index, toIndex: data.toIndex, classroom: data.position, describtion: data.describtion}, function(){
+				
 				})
 			}
 			else {
-				var cTimes = this.state.cTimes
-				for(var i = 0; i < cTimes.length; i++) {
-					var b = cTimes[i].split(',')
-					if(b[0] == data.weekIndex && b[1] == data.index && b[2] == data.toIndex) {
-						cTimes.splice(i, 1)
-						this.setState({cTimes: cTimes, tIndex: this.state.tIndex - 1})
-						break
-					}
-				}
+				this.setState({cweek: -1, cindex: -1, toIndex: -1, classroom: "", describtion: ""})
 			}
 		}.bind(this))
 	},
@@ -391,11 +390,11 @@ var Send = React.createClass({
 		);
 	}
 });
-var FreeDialog = React.createClass({
+var CourseDialog = React.createClass({
 	getDefaultProps: function() {
 	    return {
-
-	    };
+		
+		};
 	},
 	getInitialState: function() {
 	    return {
@@ -404,7 +403,11 @@ var FreeDialog = React.createClass({
 	    	toIndex: null,
 	    	weekIndex: null,
 	    	cInfor: {},
-	    	freeTime: true
+	    	freeTime: true,
+	    	courseName: "",
+	    	coursePosition: "",
+	    	courseDescription: "",
+	    	only: false
 	    };
 	},
 	componentDidMount: function () {
@@ -437,6 +440,18 @@ var FreeDialog = React.createClass({
 	option2Change: function (event) {
 		this.setState({toIndex:event.target.value})
 	},
+	nameChange: function(event) {
+		this.setState({courseName: event.target.value})
+	},
+	weekChange: function(event) {
+		this.setState({weekIndex: event.target.value})
+	},
+	positionChange: function(event) {
+		this.setState({coursePosition: event.target.value})
+	},
+	descriptionChange: function(event) {
+		this.setState({courseDescription: event.target.value})
+	},
 	cancel: function(){
 		this.setState({show: false, freeTime: true}, function(){
 			/*PubSub.publish('course_time_change', this.state.index)
@@ -445,15 +460,25 @@ var FreeDialog = React.createClass({
 	},
 	affirm: function() {
 		if(this.state.freeTime && !this.state.cInfor.selected) {
-			this.setState({show: false}, function(){
-				var data = {index: this.state.index, toIndex: this.state.toIndex, weekIndex: this.state.weekIndex, delete: 0}
-				PubSub.publish('free_time_change', data)
-			})
+			if(this.state.courseName != "" && this.state.coursePosition != "") {
+				this.setState({show: false, only: true}, function(){
+					var data = {
+						index: this.state.index, 
+						toIndex: this.state.toIndex, 
+						weekIndex: this.state.weekIndex, 
+						delete: 0,
+						name: this.state.courseName,
+						position: this.state.coursePosition,
+						description: this.state.courseDescription
+					}
+					PubSub.publish('free_time_change', data)
+				})
+			}
 		}
 		else if(this.state.cInfor.selected) {
 			var cInfor = this.state.cInfor
 			cInfor.selected = false
-			this.setState({cInfor: cInfor, show: false}, function(){
+			this.setState({cInfor: cInfor, show: false, only: false}, function(){
 				var data = {index: this.state.index, toIndex: this.state.toIndex, weekIndex: this.state.weekIndex, delete: 1}
 				PubSub.publish('free_time_change', data)
 			})
@@ -463,7 +488,20 @@ var FreeDialog = React.createClass({
 		}
 	},
 	render: function(){
-		if(!this.state.cInfor.selected && this.state.freeTime && this.state.show) {
+		if(!this.state.cInfor.selected && this.state.only && this.state.show) {
+			return (
+			    <div className="js_dialog" id="iosDialog2">
+		            <div className="weui-mask"></div>
+		            <div className="weui-dialog">
+		                <div className="weui-dialog__bd">只能选择一个时间段</div>
+		                <div className="weui-dialog__ft">
+		                    <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_primary" onClick={this.cancel}>知道了</a>
+		                </div>
+		            </div>
+		        </div>
+			)
+		}
+		else if(!this.state.cInfor.selected && this.state.freeTime && this.state.show) {
 			var options1 = [];
 			for(var i = 0; i < this.props.course.total; i++) {
 	  			options1.push(<option key={i} value={i}>第{i+1}节</option>);
@@ -477,15 +515,36 @@ var FreeDialog = React.createClass({
 	        <div className="js_dialog" id="iosDialog1">
 	            <div className="weui-mask"></div>
 	            <div className="weui-dialog">
-	                <div className="weui-dialog__hd"><strong className="weui-dialog__title">选择时间段</strong></div>
+	                <div className="weui-dialog__hd"><strong className="weui-dialog__title">填写课程信息</strong></div>
 	                <div className="weui-dialog__bd">
-			            	<select value={this.state.index} onChange={this.option1Change}>
+			            <label htmlFor="courseName">课程名称</label><input type="text" name="courseName" placeholder="请输入课程名称" onChange={this.nameChange} />
+			        </div>
+			        <div className="weui-dialog__bd">
+			            <label>课程时间</label>
+	            		<select className="sel01" value={this.state.weekIndex} onChange={this.weekChange}>	
+			            {
+			            	weeks.map(function(week, index){
+			      				return <option key={index} value={index}>{week}</option>
+			      			})
+			            }
+	            		</select>
+			        </div>
+	                <div className="weui-dialog__bd">
+	                		<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			            	<select className="sel02" value={this.state.index} onChange={this.option1Change}>
 			            		{options1}
 			            	</select>
-			            	&nbsp;-&nbsp;
-			            	<select value={this.state.toIndex} onChange={this.option2Change}>
+			            	<span>&nbsp;-&nbsp;</span>
+			            	<select className="sel02" value={this.state.toIndex} onChange={this.option2Change}>
 			            		{options2}
-			            	</select></div>
+			            	</select>
+			        </div>
+			        <div className="weui-dialog__bd">
+			            <label htmlFor="coursePosition">课程地点</label><input type="text" name="coursePosition" placeholder="请输入课程地点" onChange={this.positionChange} />
+			        </div>
+			        <div className="weui-dialog__bd">
+			            <label htmlFor="courseDescription">课程备注</label><input type="text" name="courseDescription" placeholder="请输入课程备注" onChange={this.descriptionChange} />
+			        </div>
 	                <div className="weui-dialog__ft">
 	                    <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default" onClick={this.cancel}>取消</a>
 	                    <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_primary" onClick={this.affirm}>确定</a>
@@ -496,17 +555,20 @@ var FreeDialog = React.createClass({
 		}
 		else if(this.state.cInfor.selected && this.state.show) {
 			return (
-			        <div className="js_dialog" id="iosDialog1">
-			            <div className="weui-mask"></div>
-			            <div className="weui-dialog">
-			                <div className="weui-dialog__hd"><strong className="weui-dialog__title">空闲时间</strong></div>
-			                <div className="weui-dialog__bd">{weeks[this.state.weekIndex]}&nbsp;第{this.state.index+1}节&nbsp;-&nbsp;第{this.state.toIndex+1}节<br/>是否删除空余时间？</div>
-			                <div className="weui-dialog__ft">
-			                    <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default" onClick={this.cancel}>取消</a>
-			                    <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_primary" onClick={this.affirm}>确定</a>
-			                </div>
+			    <div className="js_dialog" id="androidDialog1">
+			        <div className="weui-mask"></div>
+			        <div className="weui-dialog weui-skin_android">
+			            <div className="weui-dialog__hd"><strong className="weui-dialog__title">{this.state.cInfor.cname2}</strong></div>
+			            <div className="weui-dialog__bd">
+			            	{weeks[this.state.weekIndex]}&nbsp;第{this.state.index+1}节&nbsp;-&nbsp;第{this.state.toIndex+1}节<br/>
+			                需要进行课程替换吗？
+			            </div>
+			            <div className="weui-dialog__ft">
+			                <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default" onClick={this.cancel}>取消</a>
+			                <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_primary" onClick={this.affirm}>确定</a>
 			            </div>
 			        </div>
+			    </div>
 		        )
 		}
 		else if(!this.state.freeTime && this.state.show) {
@@ -517,7 +579,7 @@ var FreeDialog = React.createClass({
 			            <div className="weui-dialog__hd"><strong className="weui-dialog__title">{this.state.cInfor.cname}</strong></div>
 			            <div className="weui-dialog__bd">
 			            	{weeks[this.state.weekIndex]}&nbsp;第{this.state.index+1}节&nbsp;-&nbsp;第{this.state.toIndex+1}节<br/>
-			                需要空闲时间进行替换吗？
+			                需要进行课程替换吗？
 			            </div>
 			            <div className="weui-dialog__ft">
 			                <a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default" onClick={this.cancel}>取消</a>
@@ -539,12 +601,12 @@ var Tip = React.createClass({
 	},
 	getInitialState: function() {
 	    return {
-	    	success: 2
+	    	success: -1
 	    };
 	},
 	modif: function(){
 		this.setState({
-			success: 2
+			success: -1
 		})
 	},
 	componentDidMount: function () {
@@ -559,16 +621,16 @@ var Tip = React.createClass({
 	},
 	render :function(){
 		switch(this.state.success) {
-			case 2: {
+			case -1: {
 				return null
 			}
-			case 1: {
+			case 2000: {
 				return (
 					    <div>
 					        <div className="weui-mask_transparent"></div>
 					        <div className="weui-toast">
 					            <i className="weui-icon-success-no-circle weui-icon_toast"></i>
-					            <p className="weui-toast__content">发送成功</p>
+					            <p className="weui-toast__content">预定成功</p>
 					        </div>
 					    </div>
 					)
@@ -580,7 +642,7 @@ var Tip = React.createClass({
 			            <div className="weui-dialog weui-skin_android">
 			                <div className="weui-dialog__hd"><strong className="weui-dialog__title">提示</strong></div>
 			                <div className="weui-dialog__bd">
-			                    {this.props.tips[this.state.success]}
+			                    {this.props.tips[0]}
 			                </div>
 			                <div className="weui-dialog__ft">
 			                    {/*<a href="javascript:;" className="weui-dialog__btn weui-dialog__btn_default">辅助操作</a>*/}

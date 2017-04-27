@@ -13,8 +13,7 @@ var CourseAdd = React.createClass({
 	render :function(){
 		return (
 			<div className="weui-cells weui-cells_form">
-				{/*<CourseName />*/}
-				<Course />
+				<CourseName />
 				<Course />
 			</div>
 			);
@@ -41,6 +40,7 @@ var Course = React.createClass({
 				{/*<div className="weui-cells__title">&nbsp;</div>*/}
 				<CoursePlace />
 				<CourseNumber />
+				<Describe />
 			</div>
 			);
 	}
@@ -51,7 +51,7 @@ var CoursePlace = React.createClass({
 		return (
 	        <div className="weui-cell">
 	            <div className="weui-cell__hd">
-	                <label className="weui-label">地点</label>
+	                <label className="weui-label">课程地点</label>
 	            </div>
 	            <div className="weui-cell__bd">
 	                <input className="weui-input" type="text" placeholder="请输入课程地点" />
@@ -65,7 +65,7 @@ var CourseNumber = React.createClass({
 	render :function(){
 		return (
 	        <div className="weui-cell">
-	            <div className="weui-cell__hd"><label for="" className="weui-label">节数</label></div>
+	            <div className="weui-cell__hd"><label for="" className="weui-label">课程时间</label></div>
 	            <div className="weui-cell__bd">
 	            	<span>
 		            	<select>
@@ -91,12 +91,27 @@ var CourseNumber = React.createClass({
 	}
 });
 
+var Describe = React.createClass({
+	render :function(){
+		return (
+	        <div className="weui-cell">
+	            <div className="weui-cell__hd">
+	                <label className="weui-label">课程备注</label>
+	            </div>
+	            <div className="weui-cell__bd">
+	                <input className="weui-input" type="text" placeholder="请输入课程备注" />
+	            </div>
+	        </div>
+			);
+	}
+});
+
 var Save = React.createClass({
 	render :function(){
 		return (
 		    <div className="weui-btn-area">
-		        <a className="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">添加其他时段</a>
-		        <a className="weui-btn weui-btn_plain-primary" href="javascript:" id="showTooltips">保存</a>
+		        <a className="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">保存</a>
+		        {/*<a className="weui-btn weui-btn_plain-primary" href="javascript:" id="showTooltips">保存</a>*/}
 		    </div>
 			);
 	}

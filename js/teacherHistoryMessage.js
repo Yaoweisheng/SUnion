@@ -103,7 +103,7 @@ var Message = React.createClass({
 			<div className={this.state.show?"student show":"student"}>
 				<div className="stu" onClick={this.showChange.bind(this, this.props.index)}>
 					<div className="student_name">{this.props.message.time}</div>
-					<div className="message">发送内容:{this.props.message.content}</div>
+					<div className="message">{this.props.message.content}</div>
 					{
 						<div className={!this.state.show?"student_detail show":"student_detail"}>查看详情</div>
 					}
@@ -122,7 +122,7 @@ var Detail = React.createClass({
 	getInitialState: function() {
 	    return {
 	    	// height: "0px",
-	    	h2: this.props.detail.length * 45,
+	    	h2: this.props.detail.length * 41.82,
 	    };
 	},
 	componentDidMount: function () {
@@ -136,7 +136,6 @@ var Detail = React.createClass({
 		// PubSub.unsubscribe(this.pubsub_token)
 	},
 	render: function(){
-		
 		// if(this.props.show) {
 			return(
 				<div className="weui-cells" style={{height:this.props.show?(this.state.h2 + "px"):"0px"}}>
@@ -144,7 +143,7 @@ var Detail = React.createClass({
 					this.props.detail.map(function(stu, index) {
 						// alert(stu.id)
 							return (
-					            <div className="weui-cell" key={index}>
+					            <div className="weui-cell" ref="cell" key={index}>
 					                <div className="weui-cell__bd">
 					                    <img src={stu.headimageUrl}/> <p className="name">{stu.sname}</p>
 					                </div>

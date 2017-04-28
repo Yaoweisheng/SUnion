@@ -1,4 +1,4 @@
-var weeks = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+var weeks = ["周日","周一","周二","周三","周四","周五","周六"];
 var TeacherFreeTime = React.createClass({
 	getDefaultProps: function() {
 	    return {
@@ -337,21 +337,23 @@ var Send = React.createClass({
 	},
 	send: function(){
 		// var times = this.state.times.join('&')
-		this.setState({times: this.state.cTimes.join('&')}, function(){
-			//alert(this.state.times)
-			$.post("tc-spareTime.action",
-		    {
-		        openId: ch.teacher.openId,
-		        cid: this.state.cId,
-		        times: this.state.times,
-		    },
-		        function(data,status){
-		        // alert("数据: \n" + data + "\n状态: " + status);
-				PubSub.publish('submit_code', data)
-		    });
-		    // PubSub.publish('submit_code', 0)
+		if(this.state.cId != null) {
+			this.setState({times: this.state.cTimes.join('&')}, function(){
+				//alert(this.state.times)
+				$.post("tc-spareTime.action",
+			    {
+			        openId: ch.teacher.openId,
+			        cid: this.state.cId,
+			        times: this.state.times,
+			    },
+			        function(data,status){
+			        // alert("数据: \n" + data + "\n状态: " + status);
+					PubSub.publish('submit_code', data)
+			    });
+			    // PubSub.publish('submit_code', 0)
+			}
+			)
 		}
-		)
 		//Ajax 'tc-spareTime.action':ch.teacher.openId, this.state.cId, this.state.times
 	},
 	componentDidMount: function () {

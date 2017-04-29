@@ -330,6 +330,7 @@ body {
 	width: 100%;
 	border: 1px solid;
 	table-layout:fixed;
+	word-break:break-all
 }
 .page05 .content .time table thead {
 	/*width: 100%;*/

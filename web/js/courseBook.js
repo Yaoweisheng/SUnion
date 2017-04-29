@@ -187,6 +187,8 @@ var Lessons = React.createClass({
 	},
 	componentDidMount: function () {
 		this.pubsub_token = PubSub.subscribe('free_time_change', function (topic, data) {
+			data.index /= 1
+			data.toIndex /= 1
 			var array = this.state.cTimeArray;
 			if(!data.delete) {
 				array[data.index][data.weekIndex].selected = true
@@ -205,7 +207,8 @@ var Lessons = React.createClass({
 					}
 				}
 			}
-			this.setState({cTimeArray: array})
+			this.setState({cTimeArray: array},function(){
+			})
 		}.bind(this))
 	},
 	componentWillUnmount: function () {
@@ -298,18 +301,35 @@ var Infor = React.createClass({
 	    	courseDescription: "",
 	    };
 	},
+	delete: function(){
+		if(this.state.weekIndex != -1 && this.state.index != -1 && this.state.toIndex != -1) { 
+			var data2 = {
+				index: this.state.index, 
+				toIndex: this.state.toIndex, 
+				weekIndex: this.state.weekIndex, 
+				delete: 1
+			}
+			PubSub.publish('free_time_change', data2)
+		}
+	},
+	add: function() {
+		if(this.state.weekIndex != -1 && this.state.index != -1 && this.state.toIndex != -1) {
+			var data3 = {
+				index: this.state.index, 
+				toIndex: this.state.toIndex, 
+				weekIndex: this.state.weekIndex, 
+				delete: 0,
+				name: this.state.courseName,
+				position: this.state.coursePosition,
+				description: this.state.courseDescription
+			}
+			PubSub.publish('free_time_change', data3)
+		}
+	},
 	componentDidMount: function () {
 		this.pubsub_token0 = PubSub.subscribe('free_time_click', function (topic, data) {
 			// alert(data.courseIndex)
-			if(this.state.index != -1 && this.state.toIndex != -1) { 
-				var data2 = {
-					index: this.state.index, 
-					toIndex: this.state.toIndex, 
-					weekIndex: this.state.weekIndex, 
-					delete: 1
-				}
-				PubSub.publish('free_time_change', data2)
-			}
+			this.delete()
 			this.setState({
 				index: data.courseIndex, 
 				toIndex: (data.cInfor.cname || data.cInfor.selected) ? data.courseIndex + data.cInfor.rowspan - 1: data.courseIndex + 1, 
@@ -318,19 +338,12 @@ var Infor = React.createClass({
 				cInfor: data.cInfor
 			},function(){
 				if(this.state.cInfor.cname) {
-					this.setState({freeTime: false})
+					this.setState({freeTime: false}, function(){
+						this.add()
+					})
 				}
-				if(this.state.index != -1 && this.state.toIndex != -1) { 
-					var data3 = {
-						index: this.state.index, 
-						toIndex: this.state.toIndex, 
-						weekIndex: this.state.weekIndex, 
-						delete: 0,
-						name: this.state.courseName,
-						position: this.state.coursePosition,
-						description: this.state.courseDescription
-					}
-					PubSub.publish('free_time_change', data3)
+				else {
+					this.add()
 				}
 			})
 		}.bind(this))
@@ -343,158 +356,44 @@ var Infor = React.createClass({
 		PubSub.unsubscribe(this.pubsub_token1)
 	},
 	option1Change: function (event) {
-		if(this.state.index != -1 && this.state.toIndex != -1) { 
-			var data2 = {
-				index: this.state.index, 
-				toIndex: this.state.toIndex, 
-				weekIndex: this.state.weekIndex, 
-				delete: 1
-			}
-			PubSub.publish('free_time_change', data2)
-		}
+		this.delete()
 		this.setState({index:event.target.value}, function(){
 			if(this.state.toIndex*1 < this.state.index){
 				this.setState({toIndex: this.state.index}, 
 				function(){
-					if(this.state.index != -1 && this.state.toIndex != -1) { 
-						var data3 = {
-							index: this.state.index, 
-							toIndex: this.state.toIndex, 
-							weekIndex: this.state.weekIndex, 
-							delete: 0,
-							name: this.state.courseName,
-							position: this.state.coursePosition,
-							description: this.state.courseDescription
-						}
-						PubSub.publish('free_time_change', data3)
-					}
+					this.add()
 				})
+			}
+			else {
+				this.add()
 			}
 		})
 	},
 	option2Change: function (event) {
-		if(this.state.index != -1 && this.state.toIndex != -1) { 
-			var data2 = {
-				index: this.state.index, 
-				toIndex: this.state.toIndex, 
-				weekIndex: this.state.weekIndex, 
-				delete: 1
-			}
-			PubSub.publish('free_time_change', data2)
-		}
+		this.delete()
 		this.setState({toIndex:event.target.value}, function(){
-			if(this.state.index != -1 && this.state.toIndex != -1) { 
-				var data3 = {
-					index: this.state.index, 
-					toIndex: this.state.toIndex, 
-					weekIndex: this.state.weekIndex, 
-					delete: 0,
-					name: this.state.courseName,
-					position: this.state.coursePosition,
-					description: this.state.courseDescription
-				}
-				PubSub.publish('free_time_change', data3)
-			}
+			this.add()
 		})
 	},
 	nameChange: function(event) {
-		if(this.state.index != -1 && this.state.toIndex != -1) { 
-			var data2 = {
-				index: this.state.index, 
-				toIndex: this.state.toIndex, 
-				weekIndex: this.state.weekIndex, 
-				delete: 1
-			}
-			PubSub.publish('free_time_change', data2)
-		}
 		this.setState({courseName: event.target.value}, function(){
-			if(this.state.index != -1 && this.state.toIndex != -1) { 
-				var data3 = {
-					index: this.state.index, 
-					toIndex: this.state.toIndex, 
-					weekIndex: this.state.weekIndex, 
-					delete: 0,
-					name: this.state.courseName,
-					position: this.state.coursePosition,
-					description: this.state.courseDescription
-				}
-				PubSub.publish('free_time_change', data3)
-			}
+			this.add()
 		})
 	},
 	weekChange: function(event) {
-		if(this.state.index != -1 && this.state.toIndex != -1) { 
-			var data2 = {
-				index: this.state.index, 
-				toIndex: this.state.toIndex, 
-				weekIndex: this.state.weekIndex, 
-				delete: 1
-			}
-			PubSub.publish('free_time_change', data2)
-		}
+		this.delete()
 		this.setState({weekIndex: event.target.value}, function(){
-			if(this.state.index != -1 && this.state.toIndex != -1) { 
-				var data3 = {
-					index: this.state.index, 
-					toIndex: this.state.toIndex, 
-					weekIndex: this.state.weekIndex, 
-					delete: 0,
-					name: this.state.courseName,
-					position: this.state.coursePosition,
-					description: this.state.courseDescription
-				}
-				PubSub.publish('free_time_change', data3)
-			}
+			this.add()
 		})
 	},
 	positionChange: function(event) {
-		if(this.state.index != -1 && this.state.toIndex != -1) { 
-			var data2 = {
-				index: this.state.index, 
-				toIndex: this.state.toIndex, 
-				weekIndex: this.state.weekIndex, 
-				delete: 1
-			}
-			PubSub.publish('free_time_change', data2)
-		}
 		this.setState({coursePosition: event.target.value}, function(){
-			if(this.state.index != -1 && this.state.toIndex != -1) { 
-				var data3 = {
-					index: this.state.index, 
-					toIndex: this.state.toIndex, 
-					weekIndex: this.state.weekIndex, 
-					delete: 0,
-					name: this.state.courseName,
-					position: this.state.coursePosition,
-					description: this.state.courseDescription
-				}
-				PubSub.publish('free_time_change', data3)
-			}
+			this.add()
 		})
 	},
 	descriptionChange: function(event) {
-		if(this.state.index != -1 && this.state.toIndex != -1) { 
-			var data2 = {
-				index: this.state.index, 
-				toIndex: this.state.toIndex, 
-				weekIndex: this.state.weekIndex, 
-				delete: 1
-			}
-			PubSub.publish('free_time_change', data2)
-		}		
 		this.setState({courseDescription: event.target.value}, function(){
-			if(this.state.index != -1 && this.state.toIndex != -1) { 
-				var data3 = {
-					index: this.state.index, 
-					toIndex: this.state.toIndex, 
-					weekIndex: this.state.weekIndex, 
-					delete: 0,
-					name: this.state.courseName,
-					position: this.state.coursePosition,
-					description: this.state.courseDescription
-				}
-				PubSub.publish('free_time_change', data3)
-			}
+			this.add()
 		})
 	},
 	send: function(){

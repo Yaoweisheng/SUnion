@@ -33,9 +33,9 @@ var Navbar = React.createClass({
 					<div className="logo"></div>
 					<ul className="nav">
 						<li>发送消息</li>
-						<li>上课点名</li>
+						<li className="active">上课点名</li>
 						<li>课程预定</li>
-						<li className="active">学生信息查询</li>
+						<li>学生信息查询</li>
 						<li>空余时间</li>
 						<li>弹幕发送</li>
 					</ul>

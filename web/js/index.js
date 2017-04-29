@@ -1,5 +1,13 @@
 /*index.js*/
 var Index = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    };
+	},
 	render:function(){
 		return (
 			<div >
@@ -15,49 +23,69 @@ var Index = React.createClass({
 });
 
 var Top = React.createClass({
+	componentDidMount: function () {
+    	window.addEventListener('scroll', this.handleScroll);
+	},
+	componentWillUnmount: function () {
+    	window.removeEventListener('scroll', this.handleScroll);
+	},
+	handleScroll: function (e) {
+		PubSub.publish("top_scroll", document.body.scrollTop > this.refs.top.clientHeight)
+  	},
 	render:function(){
 		return (
-			<div className="top">
-				<User />
-				<UserName />
+			<div className="top" ref="top">
+				<div className="teacher">SUnion&nbsp;•&nbsp;老师</div>
+				<div className="teacherName">
+					<div>用户名：高娟娟</div>
+					<div>2017年4月29日</div>
+				</div>
 			</div>
 			);
 	}
 });
 
-	var User = React.createClass({
-		render:function(){
-			return (
-					<div className="teacher">SUnion&nbsp;•&nbsp;老师</div>
-				);
-		}
-	});
-
-	var UserName = React.createClass({
-		render:function(){
-			return (
-					<div className="teacherName">
-						<div>用户名：高娟娟</div>
-						<div>2017年4月29日</div>
-					</div>
-				);
-		}
-	});
-
 var Navbar = React.createClass({
-	render:function(){
+	getDefaultProps: function() {
+	    return {
+	    	navTitles: ["发送消息", "上课点名", "课程预定", "学生信息查询", "空余时间", "弹幕发送"]
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	fixed: false,
+	    	active: 0
+	    };
+	},
+	activeClick: function(index, event) {
+		this.setState({active: index})
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('top_scroll', function (topic, scroll) {
+			if(this.state.fixed != scroll) {
+				this.setState({fixed: scroll})
+			}
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+	},
+	render:function(){ 
+		for(var i = 0; i < this.props.navTitles.length; i++) {
+			lis.push(
+				<li key={i} className={this.state.active==i?"active":""} onClick={this.activeClick.bind(this, i)}>{this.props.navTitles[i]}</li>
+			)
+		}
 		return (
-				<div className="navbar">
+			<div>
+				<div className={this.state.fixed?"navbar fixed": "navbar"}>
 					<div className="logo"></div>
 					<ul className="nav">
-						<li>发送消息</li>
-						<li>上课点名</li>
-						<li>课程预定</li>
-						<li className="active">学生信息查询</li>
-						<li>空余时间</li>
-						<li>弹幕发送</li>
+						{lis}
 					</ul>
 				</div>
+				<div className="fill01" style={{height:this.state.fixed?"50px":"0px"}}></div>
+			</div>
 			);
 	}
 });
@@ -189,8 +217,8 @@ var SendInfor = React.createClass({
 				<li>
 					<div className="img img1"></div>
 					<div>
-						<div className="header">接收上课提醒</div>
-						<div className="content">学生可以在微信端接收上课提醒(上课时间和上课地点)。</div>
+						<div className="header">向学生发送消息</div>
+						<div className="content">老师可以通过微信客户端或者web端向选择具体课程的学生发送消息。</div>
 					</div>
 				</li>
 			);
@@ -203,8 +231,8 @@ var FreeTime = React.createClass({
 				<li>
 					<div className="img img1"></div>
 					<div>
-						<div className="header">接收上课提醒</div>
-						<div className="content">学生可以在微信端接收上课提醒(上课时间和上课地点)。</div>
+						<div className="header">空闲时间统计</div>
+						<div className="content">老师在微信端按空闲时间统计按钮，进入网页，指定待选空闲时间段。</div>
 					</div>
 				</li>
 			);
@@ -217,8 +245,8 @@ var Barrage = React.createClass({
 				<li>
 					<div className="img img1"></div>
 					<div>
-						<div className="header">接收上课提醒</div>
-						<div className="content">学生可以在微信端接收上课提醒(上课时间和上课地点)。</div>
+						<div className="header">发送弹幕消息</div>
+						<div className="content">老师上课时可以选择在web端开启弹幕消息，开启之后会给学生发送开启通知。</div>
 					</div>
 				</li>
 			);
@@ -280,7 +308,7 @@ var Footer = React.createClass({
 					<li>SUnoin&nbsp;·&nbsp;老师</li>
 				</ul>
 			</div>
-			);
+		);
 	}
 });
 

@@ -5,7 +5,7 @@ body {
 }
 .top {
     width: 100%;
-    height: 100px;
+    height: 70px;
     background-color: #34393f;
     color: #fff;
     position: relative;
@@ -18,15 +18,15 @@ body {
     /*width: 50%;*/
     position: absolute;
     left: 20px;
-    top: 50px;
+    top: 25px;
 }
 .top .teacherName {
 	position: absolute;
 	right: 15px;
-	top: 23px;
+	top: 20px;
 }
 .fill01 {
-	height: 100px;
+	height: 50px;
 	width: 100%;
 }
 .navbar {
@@ -35,6 +35,14 @@ body {
 	margin: 0;
 	position: relative;
 	color: #34393f;
+	background: #fff;
+}
+.navbar.fixed {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 50px;
+	z-index: 999;
 }
 .navbar .logo {
 	width: 10%;
@@ -321,28 +329,39 @@ body {
 .page05 .content .time table {
 	width: 100%;
 	border: 1px solid;
+	table-layout:fixed;
 }
 .page05 .content .time table thead {
 	/*width: 100%;*/
 }
 .page05 .content .time table thead th {
 	text-align: center;
+    background-color: #f4f8f9;
 }
 .page05 .content .time table tbody {
 	
 }
 .page05 .content .time table tbody td {
 	height: 30px;
+	cursor: pointer;
+}
+.page05 .content .time table tbody td:hover {
+	background-color: #ccc;
 }
 .page05 .content .time table tbody td.number {
 	height: 30px;
 	line-height: 30px;
 	text-align: center;
+    background-color: #f4f8f9;
 }
 .page05 .content .time table tbody td.check {
     background: #aabeff;
     border-radius: 10px;
     border: 1px solid #fff;
+}
+.page05 .content .time table tbody td.check:hover {
+    background: #e6a5f5;
+    color: #fff;
 }
 .page05 .content .time .table td.selected{
     background: #e6a5f5;

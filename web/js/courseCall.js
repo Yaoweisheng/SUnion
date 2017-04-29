@@ -13,9 +13,18 @@ var Index = React.createClass({
 });
 
 var Top = React.createClass({
-	render : function(){
+	componentDidMount: function () {
+    	window.addEventListener('scroll', this.handleScroll);
+	},
+	componentWillUnmount: function () {
+    	window.removeEventListener('scroll', this.handleScroll);
+	},
+	handleScroll: function (e) {
+		PubSub.publish("top_scroll", document.body.scrollTop > this.refs.top.scrollTop)
+  	},
+	render:function(){
 		return (
-			<div className="top">
+			<div className="top" ref="top">
 				<div className="teacher">SUnion&nbsp;•&nbsp;老师</div>
 				<div className="teacherName">
 					<div>用户名：高娟娟</div>
@@ -27,19 +36,46 @@ var Top = React.createClass({
 });
 
 var Navbar = React.createClass({
-	render:function(){
+	getDefaultProps: function() {
+	    return {
+	    	navTitles: ["发送消息", "上课点名", "课程预定", "学生信息查询", "空余时间", "弹幕发送"]
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	fixed: false,
+	    	active: 0
+	    };
+	},
+	activeClick: function(index, event) {
+		this.setState({active: index})
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('top_scroll', function (topic, scroll) {
+			if(this.state.fixed != scroll) {
+				this.setState({fixed: scroll})
+			}
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+	},
+	render:function(){ 
+		var active = this.state.active
+		var activeClick = this.activeClick
 		return (
-				<div className="navbar">
+			<div>
+				<div className={this.state.fixed?"navbar fixed": "navbar"}>
 					<div className="logo"></div>
 					<ul className="nav">
-						<li>发送消息</li>
-						<li className="active">上课点名</li>
-						<li>课程预定</li>
-						<li>学生信息查询</li>
-						<li>空余时间</li>
-						<li>弹幕发送</li>
+						{
+							this.props.navTitles.map(function(t, index) {
+							return <li key={index} className={active==index?"active":""} onClick={activeClick.bind(this, index)}>{t}</li>})
+						}
 					</ul>
 				</div>
+				<div className="fill01" style={{height:this.state.fixed?"50px":"0px"}}></div>
+			</div>
 			);
 	}
 });

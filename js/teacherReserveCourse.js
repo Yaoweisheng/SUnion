@@ -97,12 +97,8 @@ var TimeTable = React.createClass({
 	    };
 	},
 	componentDidMount: function () {
-		this.pubsub_token = PubSub.subscribe('province_change', function (topic, province) {
-			
-		}.bind(this))
 	},
 	componentWillUnmount: function () {
-		PubSub.unsubscribe(this.pubsub_token)
 	},
 	render : function(){
 		return (
@@ -161,12 +157,8 @@ var Table = React.createClass({
 	    };
 	},
 	componentDidMount: function () {
-		this.pubsub_token = PubSub.subscribe('province_change', function (topic, province) {
-			
-		}.bind(this))
 	},
 	componentWillUnmount: function () {
-		PubSub.unsubscribe(this.pubsub_token)
 	},
 	render : function(){
 		return (

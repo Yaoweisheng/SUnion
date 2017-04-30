@@ -305,7 +305,7 @@ var Infor = React.createClass({
 				<CourseTimes course={this.props.course} />
 				<div className="btn">发送</div>
 			</div>
-			);
+		);
 	}
 });
 
@@ -354,26 +354,151 @@ var CourseTimes = React.createClass({
 	    };
 	},
 	getInitialState: function() {
+		var array = new Array(20)
+		for(var i = 0; i < array.length; i++) {
+			array[i] = {index: -1, toIndex: -1, weekIndex: -1}
+		}
 	    return {
-	    	indexArray: []
+	    	indexArray: array,
+	    	index: 0
 	    };
 	},
 	componentDidMount: function () {
-		this.pubsub_token0 = PubSub.subscribe('add', function (topic, data) {
+		/*this.pubsub_token0 = PubSub.subscribe('add', function (topic, data) {
 			var iArray = this.state.indexArray
-			iArray[data.i] = {index: data.index, toIndex: data.toIndex, weekIndex: data.weekIndex}
-			this.setState({indexArray: iArray})
+			if(data.i != -1) {
+				iArray[data.i] = {index: data.index, toIndex: data.toIndex, weekIndex: data.weekIndex}
+			}
+			else {
+				iArray[this.state.index] = {index: data.index, toIndex: data.toIndex, weekIndex: data.weekIndex}
+				this.setState({index: this.state.index+1})
+			}
+			this.setState({indexArray: iArray}, function(){
+				alert(data.i)
+				// alert(this.state.indexArray.length)
+			})
 		}.bind(this))
+		this.pubsub_token1 = PubSub.subscribe('delete', function (topic, data) {
+			var iArray = this.state.indexArray
+			// iArray.splice(data, 1)
+			iArray[data] = {index: -1, toIndex: -1, weekIndex: -1}
+			this.setState({indexArray: iArray})
+		}.bind(this))*/
 	},
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(this.pubsub_token0)
+		PubSub.unsubscribe(this.pubsub_token1)
+	},
+	// add: function(index) {
+	// 	if(this.state.index == index && this.state.indexArray[index].index != -1 && this.state.indexArray[index].toIndex != -1 && this.state.indexArray[index].weekIndex != -1) {
+	// 		var iArray = this.state.indexArray
+
+	// 	}
+	// },
+	delete: function(index) {
+		// alert(this.props.index + "！！")
+		// PubSub.publish("delete", this.props.index)
+		var iArray = this.state.indexArray
+		iArray[index].index = -1
+		iArray[index].toIndex = -1
+		iArray[index].weekIndex = -1
+		setState({indexArray: iArray})
+	},
+	weekChange: function(index, event) {
+		var iArray = this.state.indexArray
+		alert(event.target.value)
+		iArray[index].weekIndex = event.target.value
+		this.setState({indexArray: iArray}, function(){
+			// this.add(index)
+		})
+	},
+	option1Change: function (index, event) {
+		var iArray = this.state.indexArray
+		iArray[index].index = event.target.value
+		if(iArray[index].toIndex*1 < iArray[index].index){
+			iArray[index].toIndex = iArray[index].index
+		}
+		this.setState({indexArray: iArray}, function(){
+			// this.add()
+		})
+	},
+	option2Change: function (index, event) {
+		var iArray = this.state.indexArray
+		iArray[index].toIndex = event.target.value
+		this.setState({indexArray: iArray}, function(){
+			// this.add()
+		})
 	},
 	render : function(){
 		var lis = []
 		for(var i = 0; i < this.state.indexArray.length; i++) {
-			lis.push(<CourseTime key={i} course={this.props.course} index={i} data={this.state.indexArray[i]} />)
+			// alert(i + this.state.indexArray[i].index)
+			// alert(this.props.indexArray[i].index)
+			if(this.state.indexArray[i].index != -1) {
+				var options1 = []
+		  		options1.push(<option key={-1} value="-1">起始节</option>)
+				for(var i = 0; i < this.props.course.total; i++) {
+		  			options1.push(<option key={i} value={i}>第{i+1}节</option>)
+		  		}
+				var options2 = []
+		  		options2.push(<option key={-1} value="-1">结束节</option>)
+				var index = this.state.indexArray[i].index != -1? this.state.index: 0
+				for(var i = index; i < this.props.course.total; i++) {
+					i /= 1;//声明i是数字
+		  			options2.push(<option key={i} value={i}>第{i+1}节</option>)
+		  		}
+				lis.push(<li key={i}>
+				<select className="sel01" value={this.state.indexArray[i].weekIndex} onChange={this.weekChange.bind(this, i)}>	
+		            <option value="-1">星期</option>
+		            {
+		            	weeks.map(function(week, index){
+		      				return <option key={index} value={index}>{week}</option>
+		      			})
+		            }
+        		</select>&nbsp;
+				<select className="sel02" value={this.state.indexArray[i].index} onChange={this.option1Change.bind(this, i)}>
+            		{options1}
+            	</select>
+            	<span>-</span>
+				<select className="sel02" value={this.state.indexArray[i].toIndex} onChange={this.option2Change.bind(this, i)}>
+            		{options2}
+            	</select>
+				{<div className="btn" onClick={this.delete}>删除</div>}
+			</li>)
+			}
 		}
-		lis.push(<CourseTime key={-1} course={this.props.course} index={this.state.indexArray.length} data={{index: -1, toIndex: -1, weekIndex: -1}} />)
+		var options1 = []
+  		options1.push(<option key={-1} value="-1">起始节</option>)
+		for(var i = 0; i < this.props.course.total; i++) {
+  			options1.push(<option key={i} value={i}>第{i+1}节</option>)
+  		}
+		var options2 = []
+  		options2.push(<option key={-1} value="-1">结束节</option>)
+		var index = this.state.indexArray[i].index != -1? this.state.index: 0
+		for(var i = index; i < this.props.course.total; i++) {
+			i /= 1;//声明i是数字
+  			options2.push(<option key={i} value={i}>第{i+1}节</option>)
+  		}
+		lis.push(
+			<li key={-1}>
+				<select className="sel01" value={-1} onChange={this.weekChange}>	
+		            <option value="-1">星期</option>
+		            {
+		            	weeks.map(function(week, index){
+		      				return <option key={index} value={index}>{week}</option>
+		      			})
+		            }
+        		</select>&nbsp;
+				<select className="sel02" value={-1} onChange={this.option1Change}>
+            		{options1}
+            	</select>
+            	<span>-</span>
+				<select className="sel02" value={-1} onChange={this.option2Change}>
+            		{options2}
+            	</select>
+			</li>)
+		// lis.push(<CourseTime key={-1} course={this.props.course} index={-1} data={{index:-1, toIndex:-1, weekIndex:-1}} />)
+		// lis.push(<CourseTime key={-1} course={this.props.course} index={this.state.indexArray.length} data={{index: -1, toIndex: -1, weekIndex: -1}} />)
 		return (
 			<div className="course_time">
 					<label>上课时间</label>
@@ -402,74 +527,11 @@ var CourseTime = React.createClass({
 	componentDidMount: function () {
 	},
 	componentWillUnmount: function () {
-	},
-	add: function() {
-		if(this.state.index != -1 && this.state.toIndex != -1 && this.state.weekIndex != -1) {
-			var data = {
-				index: this.state.index,
-				toIndex: this.state.toIndex,
-				weekIndex: this.state.weekIndex,
-				i: this.props.index
-			}
-			PubSub.publish("add", data)
-			this.setState({delete: true})
-		}
-	},
-	weekChange: function(event) {
-		this.setState({weekIndex: event.target.value}, function(){
-			this.add()
-		})
-	},
-	option1Change: function (event) {
-		this.setState({index:event.target.value}, function(){
-			if(this.state.toIndex*1 < this.state.index){
-				this.setState({toIndex: this.state.index}, 
-				function(){
-					this.add()
-				})
-			}
-			else {
-				this.add()
-			}
-		})
-	},
-	option2Change: function (event) {
-		this.setState({toIndex:event.target.value}, function(){
-			this.add()
-		})
+		// alert(this.props.index + "！")
 	},
 	render : function(){
-		var options1 = [];
-  		options1.push(<option key={-1} value="-1">起始节</option>);
-		for(var i = 0; i < this.props.course.total; i++) {
-  			options1.push(<option key={i} value={i}>第{i+1}节</option>);
-  		}
-		var options2 = [];
-  		options2.push(<option key={-1} value="-1">结束节</option>);
-		var index = this.state.index != -1? this.state.index: 0
-		for(var i = index; i < this.props.course.total; i++) {
-			i /= 1;//声明i是数字
-  			options2.push(<option key={i} value={i}>第{i+1}节</option>);
-  		}
-		return (
-			<li>
-				<select className="sel01" value={this.state.weekIndex} onChange={this.weekChange}>	
-		            <option value="-1">星期</option>
-		            {
-		            	weeks.map(function(week, index){
-		      				return <option key={index} value={index}>{week}</option>
-		      			})
-		            }
-        		</select>&nbsp;
-				<select className="sel02" value={this.state.index} onChange={this.option1Change}>
-            		{options1}
-            	</select>
-            	<span>-</span>
-				<select className="sel02" value={this.state.toIndex} onChange={this.option2Change}>
-            		{options2}
-            	</select>
-				{this.state.delete?<div className="btn">删除</div>:null}
-			</li>
+		return ( 
+				null
 			);
 	}
 });

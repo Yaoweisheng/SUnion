@@ -11,22 +11,6 @@ var TeacherCall = React.createClass({
 	    };
 	},
 	render: function(){
-		//初始化配置
-		wx.config({
-
-	    debug : false,
-
-	    appId : ch.appId,
-
-	    timestamp : ch.timestamp,
-
-	    nonceStr : ch.nonceStr,
-
-	    signature : ch.signature,   
-
-	    jsApiList : [ 'getLocation' ]
-
-		});
 		return (
 			<div >
 				<Classes />
@@ -78,13 +62,14 @@ var Class = React.createClass({
 	},
 	classClick: function() {
 		// alert(this.state.check)
-		this.setState({check: !this.state.check},function(){
-			PubSub.publish("class_click", this.props.c.id)
-		})
+		if(this.state.check == false) {
+			this.setState({check: !this.state.check},function(){
+				PubSub.publish("class_click", this.props.c.id)
+			})
+		}
 	},
 	componentDidMount: function () {
 		this.pubsub_token = PubSub.subscribe('class_click', function (topic, cId) {
-			
 			if(this.props.c.id != cId) {
 				this.setState({check: false})
 			}
@@ -124,57 +109,6 @@ var Send = React.createClass({
 		// alert(this.state.cId)
 		if(this.state.cId != -1){
 		    //微信API获取当前用户位置
-
-			var longitude;
-
-			var latitude;
-
-			wx.getLocation({
-
-			    type : 'wgs84',
-
-			    success : function(res) {
-
-					alert('r :' + res.latitude);
-
-					alert('r :' + res.longitude);
-
-					latitude = res.latitude;
-
-					longitude = res.longitude;
-
-			    }
-
-			});
-			$.ajax({
-
-			    cache : false,
-
-			    type : 'POST',
-
-			    dataType : 'json',
-
-			    url : 'tc-callRoll.action',
-
-			    data : {
-
-					'cid' : this.state.cId,
-
-					'longitude' : longitude,
-
-					'latitude' : latitude,
-
-					'openId' : ch.teacher.openId
-
-				},
-
-				success : function(data) {
-
-					// alert(data);
-					PubSub.publish("submit_code", data)
-
-				}
-		});
 		}
 		
 	},

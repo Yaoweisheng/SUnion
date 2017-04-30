@@ -1,4 +1,7 @@
 /*courseCall.js*/
+// var weeks = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+var weeks = ["周日","周一","周二","周三","周四","周五","周六"];
+
 var Index = React.createClass({
 	render : function(){
 		return (
@@ -8,7 +11,7 @@ var Index = React.createClass({
 				<Content />
 				<Footer />
 			</div>
-			);
+		);
 	}
 });
 
@@ -31,7 +34,7 @@ var Top = React.createClass({
 					<div>2017年4月29日</div>
 				</div>
 			</div>
-			);
+		);
 	}
 });
 
@@ -44,7 +47,7 @@ var Navbar = React.createClass({
 	getInitialState: function() {
 	    return {
 	    	fixed: false,
-	    	active: 0
+	    	active: 1
 	    };
 	},
 	activeClick: function(index, event) {
@@ -82,38 +85,119 @@ var Navbar = React.createClass({
 });
 
 var Content = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    	courses: {"total":12,"classes":[{"totalStu":98,"croom":"2n219","id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"totalStu":98,"croom":"2n219","id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    };
+	},
 	render : function(){
 		return (
 			<div className="content">
 				<div className="ul_top"></div>
 					<ul>
-						<Course />
-						<Course />
-						<Course />
-						<Course />
+					{
+						this.props.courses.classes.map(function(c, index) {
+							return <Course key={index} c={c} />
+						})
+					}
 					</ul>
 				<div className="ul_bottom"></div>
-				<div>
-					<div className="course_name">已选班级：数据结构周一345节</div>
-					<div className="btn">发起点名</div>
-				</div>
+				<Send />
 			</div>
 			);
 	}
 });
 
 var Course = React.createClass({
+	getInitialState: function() {
+	    return {
+	    	check: false
+	    };
+	},
+	classClick: function() {
+		// alert(this.state.check)
+		if(!this.state.check) {
+			this.setState({check: !this.state.check},function(){
+				var data = {
+					id: this.props.c.id,
+					cname: this.props.c.cname,
+					index: this.props.c.index,
+					toIndex: this.props.c.toIndex,
+					week: this.props.c.week
+				}
+				PubSub.publish("class_click", data)
+			})
+		}
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('class_click', function (topic, data) {
+			if(this.props.c.id != data.id) {
+				this.setState({check: false})
+			}
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+	},
 	render : function(){
 		return (
-				<li>
-					<div>课程名称：数据结构</div>
-					<div>课程时间：周一345节</div>
-					<div>68人</div>
+				<li className={this.state.check?"check":""} onClick={this.classClick}>
+					<div>课程名称：{this.props.c.cname}</div>
+					<div>课程时间：{weeks[this.props.c.week] + " 第" + this.props.c.index + "节-第" + this.props.c.toIndex + "节"}</div>
+					<div>课程地点：{this.props.c.croom}</div>
+					<div>{this.props.c.totalStu}人</div>
 				</li>
 			);
 	}
 });
 
+var Send = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    	// courses: {"total":12,"classes":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	cId: -1,
+	    	cname: '',
+	    	index: null,
+	    	toIndex: null,
+	    	weekIndex: null
+	    };
+	},
+	send: function() {
+		// alert(this.state.check)
+		// this.setState({check: !this.state.check})
+		// alert(this.state.cId)
+		if(this.state.cId != -1){
+		    //微信API获取当前用户位置
+		}
+		
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('class_click', function (topic, data) {
+			this.setState({cId: data.id, cname: data.cname, index: data.index, toIndex: data.toIndex, weekIndex: data.week}, function(){
+				// alert(this.state.cId)
+			})
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+	},
+	render: function(){
+		return (
+				<div>
+					<div className="course_name">已选班级：{this.state.cname?(this.state.cname + weeks[this.state.weekIndex] + " 第" + this.state.index + "节-第" + this.state.toIndex + "节"):""}</div>
+					<div className="btn" onClick={this.send}>发起点名</div>
+				</div>
+		);
+	}
+});
 var Footer = React.createClass({
 	render:function(){
 		return (

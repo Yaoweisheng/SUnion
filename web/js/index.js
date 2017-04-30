@@ -41,7 +41,7 @@ var Top = React.createClass({
 					<div>2017年4月29日</div>
 				</div>
 			</div>
-			);
+		);
 	}
 });
 
@@ -71,6 +71,7 @@ var Navbar = React.createClass({
 		PubSub.unsubscribe(this.pubsub_token)
 	},
 	render:function(){ 
+		var lis = []
 		for(var i = 0; i < this.props.navTitles.length; i++) {
 			lis.push(
 				<li key={i} className={this.state.active==i?"active":""} onClick={this.activeClick.bind(this, i)}>{this.props.navTitles[i]}</li>
@@ -86,7 +87,7 @@ var Navbar = React.createClass({
 				</div>
 				<div className="fill01" style={{height:this.state.fixed?"50px":"0px"}}></div>
 			</div>
-			);
+		);
 	}
 });
 

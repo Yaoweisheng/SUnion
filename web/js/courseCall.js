@@ -20,7 +20,7 @@ var Top = React.createClass({
     	window.removeEventListener('scroll', this.handleScroll);
 	},
 	handleScroll: function (e) {
-		PubSub.publish("top_scroll", document.body.scrollTop > this.refs.top.scrollTop)
+		PubSub.publish("top_scroll", document.body.scrollTop > this.refs.top.clientHeight)
   	},
 	render:function(){
 		return (
@@ -61,17 +61,18 @@ var Navbar = React.createClass({
 		PubSub.unsubscribe(this.pubsub_token)
 	},
 	render:function(){ 
-		var active = this.state.active
-		var activeClick = this.activeClick
+		var lis = []
+		for(var i = 0; i < this.props.navTitles.length; i++) {
+			lis.push(
+				<li key={i} className={this.state.active==i?"active":""} onClick={this.activeClick.bind(this, i)}>{this.props.navTitles[i]}</li>
+			)
+		}
 		return (
 			<div>
 				<div className={this.state.fixed?"navbar fixed": "navbar"}>
 					<div className="logo"></div>
 					<ul className="nav">
-						{
-							this.props.navTitles.map(function(t, index) {
-							return <li key={index} className={active==index?"active":""} onClick={activeClick.bind(this, index)}>{t}</li>})
-						}
+						{lis}
 					</ul>
 				</div>
 				<div className="fill01" style={{height:this.state.fixed?"50px":"0px"}}></div>
@@ -79,7 +80,6 @@ var Navbar = React.createClass({
 			);
 	}
 });
-
 
 var Content = React.createClass({
 	render : function(){

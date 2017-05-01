@@ -79,7 +79,7 @@ var Panel = React.createClass({
 	    };
 	},
 	componentDidMount: function () {
-		this.pubsub_token0 = PubSub.subscribe('identity', function (topic, data) {
+		this.pubsub_token = PubSub.subscribe('identity', function (topic, data) {
 			this.setState({
 			    identity: data
 			})
@@ -107,78 +107,11 @@ var User = React.createClass({
 	},
 	getInitialState: function() {
 	    return {
-	    	province: -1,
-	    	citys: [],
-	    	city: -1,
-	    	districts: [],
-	    	district: -1,
-	    	schools: [],
 	    	school: -1,
 	    	number: '',
 	    	password: '',
 	    	identity: 0
 	    };
-	},
-	provinceChange: function(event) {
-		this.setState(
-			{
-				province: event.target.value
-			},
-			function(){
-				$.get('sch-getCityOfProvince.action?province=' + this.state.province, function (result) {
-			      this.setState({
-			      	  citys: result
-			      })
-			    })
-			    /*this.setState({
-			      	  citys: ["杭州市", "湖州市", "宁波市"]
-			    })*/
-			}
-		)
-	},
-	cityChange: function(event) {
-		this.setState(
-			{
-				city: event.target.value
-			},
-			function(){
-				$.get('sch-getDistrictOfCity.action?city=' + this.state.city, function (result) {
-					this.setState({
-						  districts: result
-					})
-			    })
-			    /*this.setState({
-					  districts: ["江干区","下城区","拱墅区"]
-				})*/
-			}
-		)
-	},
-	districtsChange: function(event) {
-		this.setState(
-			{
-				district: event.target.value
-			},
-			function(){
-    			$.get('sch-getSchoolOfDistrict.action?district=' + this.state.district, function (result) {
-			      	this.setState({
-			      		schools: result
-			      	})
-			    })
-			    /*this.setState({
-		      		schools: ["浙江理工大学","杭州电子科技大学"]
-		      	})*/
-			    
-    		}
-		)
-	},
-	schoolsChange: function(event) {
-		this.setState(
-			{
-				school: event.target.value
-			},
-			function(){
-			}
-		)
 	},
 	passwordChange: function(event) {
 		this.setState({
@@ -236,9 +169,16 @@ var User = React.createClass({
 				}
 			})
 		}.bind(this))
+		this.pubsub_token1 = PubSub.subscribe('school_change', function (topic, data) {
+			this.setState({
+				school: data
+			})
+		}.bind(this))
+
 	},
 	componentWillUnmount: function () {
-		PubSub.unsubscribe(this.pubsub_token)
+		PubSub.unsubscribe(this.pubsub_token0)
+		PubSub.unsubscribe(this.pubsub_token1)
 	},
 	render : function(){
 		return (
@@ -246,38 +186,10 @@ var User = React.createClass({
 				<ul>
 				{!this.state.identity?
 				<li>
-                	<select value={this.state.province} onChange={this.provinceChange}>
-            		<option value={-1}>选择省</option>
-            		{
-            			this.props.provinces.map(function (province, index) {
-    						return <option key={index} value={province}>{province}</option>
-  						})
-            		}
-                	</select>
-					<select value={this.state.city} onChange={this.cityChange}>
-            		<option value={-1}>选择市</option>
-            		{
-            			this.state.citys.map(function (city, index) {
-    						return <option key={index} value={city}>{city}</option>
-  						})
-            		}
-            		</select>
-					<select value={this.state.district} onChange={this.districtsChange}>
-            		<option value={-1}>选择区</option>
-            		{
-            			this.state.districts.map(function (district, index) {
-    						return <option key={index} value={district}>{district}</option>
-  						})
-            		}
-                	</select>
-					<select className="school" value={this.state.school} onChange={this.schoolsChange} >
-            		<option value={-1}>选择学校</option>
-            		{
-            			this.state.schools.map(function (school, index) {
-    						return <option key={index} value={school}>{school}</option>
-  						})
-            		}
-            	</select>
+					<Province />
+					<City />
+					<District />
+					<School />
 				</li>
             	:<li></li>}
 				<li>
@@ -296,6 +208,185 @@ var User = React.createClass({
 			<div className="btn" onClick={this.submit}>登录</div>
 		</div>
 		);
+	}
+});
+var Province = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    	provinces:  ch.bind.province
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	province: ''
+	    };
+	},
+	provinceChange: function(event) {
+		this.setState(
+			{
+				province: event.target.value
+			},
+			function(){
+    			PubSub.publish('province_change', this.state.province)
+			}
+		)
+	},
+	render :function(){
+		return (
+            	
+            	<select value={this.state.province} onChange={this.provinceChange}>
+        		<option value={-1}>选择省</option>
+        		{
+        			this.props.provinces.map(function (province, index) {
+						return <option key={index} value={province}>{province}</option>
+					})
+        		}
+            	</select>
+			);
+	}
+});
+
+var City = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	citys: [],
+	    	city: ''
+	    };
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('province_change', function (topic, province) {
+			
+			this.citysRequest = $.get('sch-getCityOfProvince.action?province=' + province, function (result) {
+		      this.setState({
+		      	  citys: result
+		      })
+		    }.bind(this))
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+    	this.citysRequest.abort()
+	},
+	cityChange: function(event) {
+		this.setState(
+			{
+				city: event.target.value
+			},
+			function(){
+    			PubSub.publish('city_change', this.state.city)
+			}
+		)
+	},
+	render :function(){
+		return (
+	            <select value={this.state.city} onChange={this.cityChange}>
+	        		<option value={-1}>选择市</option>
+            		{
+            			this.state.citys.map(function (city, index) {
+    						return <option key={index} value={city}>{city}</option>
+  						})
+            		}
+            	</select>
+			);
+	}
+});
+var District = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	districts: [],
+	    	district: ''
+	    };
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('city_change', function (topic, city) {
+			this.districtsRequest = $.get('sch-getDistrictOfCity.action?city=' + city, function (result) {
+		      this.setState({
+		      	  districts: result
+		      })
+		    }.bind(this))
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+    	this.districtsRequest.abort()
+	},
+	districtsChange: function(event) {
+		this.setState(
+			{
+				district: event.target.value
+			},
+			function(){
+    			PubSub.publish('districts_change', this.state.district)
+			}
+		)
+	},
+	render :function(){
+		return (
+	            <select value={this.state.district} onChange={this.districtsChange}>
+            		<option value={-1}>选择区</option>
+            		{
+            			this.state.districts.map(function (district, index) {
+    						return <option key={index} value={district}>{district}</option>
+  						})
+            		}
+                </select>
+			);
+	}
+});
+
+var School = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	schools: [],
+	    	school: ''
+	    };
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('districts_change', function (topic, district) {
+			this.districtsRequest = $.get('sch-getSchoolOfDistrict.action?district=' + district, function (result) {
+		      this.setState({
+		      	  schools: result
+		      })
+		    }.bind(this))
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+    	this.districtsRequest.abort()
+	},
+	schoolsChange: function(event) {
+		this.setState(
+			{
+				school: event.target.value
+			},
+			function(){
+    			PubSub.publish('school_change', this.state.school)
+			}
+		)
+	},
+	render :function(){
+		return (
+	            <select className="school" value={this.state.school} onChange={this.schoolsChange} >
+            		<option value={-1}>选择学校</option>
+            		{
+            			this.state.schools.map(function (school, index) {
+    						return <option key={index} value={school}>{school}</option>
+  						})
+            		}
+            	</select>
+			);
 	}
 });
 

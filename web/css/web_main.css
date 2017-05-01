@@ -53,6 +53,9 @@ select, input, textarea {
 	background: #34393f;
 	float: left;
 }
+.navbar .logo.active {
+	background: #fff;
+}
 .navbar ul {
 	position: relative;
 	height: 100%;
@@ -609,6 +612,9 @@ select, input, textarea {
 .page07 .login .panel .form ul li {
 	height: 40px;
 }
+.page07 .login .panel .form ul li.rem {
+	height: 20px;
+}
 .page07 .login .panel .form ul li select {
 	width: 78px;
 	color: #858484;
@@ -640,7 +646,7 @@ select, input, textarea {
 }
 .page07 .login .panel .btn {
 	border-radius:0;
-	margin: 0 161.5px;
+	margin: -10px 161.5px;
 	font-weight: 600;
 	width: 35%;
 	height: 30px;

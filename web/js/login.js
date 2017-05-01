@@ -288,7 +288,7 @@ var User = React.createClass({
 					<label>密码</label>
 					<input type="password" name="" onChange={this.passwordChange} placeholder="请输入教务密码" />
 				</li>
-				<li>
+				<li className="rem">
 					<div className="rem_pass">记住密码</div>
 					<input className="rem_pass" type="checkbox" name="" />
 				</li>

@@ -3,6 +3,9 @@ body {
     font-family: 黑体;
     color: #34393f;
 }
+select, input, textarea {
+	outline: none;
+}
 .top {
     width: 100%;
     height: 70px;
@@ -497,12 +500,23 @@ body {
 	position: relative;
 	background-color: #9f9f9f;
 }
-.page07 .bg1 {
+.page07 .bg2 {
 	width: 60%;
     height: 0;
 	position: fixed;
     border-top: 700px solid #fff;
     border-right: 500px solid transparent;
+}
+.page07 .bg1 {
+	position: fixed;
+	width: 50px;
+	height: 50px;
+	top: 116px;
+	right: 98px;
+	background-color: #34393f;
+	border: 1px solid #34393f;
+	border-radius: 50%;
+	box-shadow: 3px -3px 5px #888888;
 }
 .page07 .sun {
 	position: fixed;
@@ -550,6 +564,7 @@ body {
 	background-color: #9f9f9f;
 	color: #fff;
 	cursor: pointer;
+	float: right;
 }
 .page07 .login ul li.active {
 	background-color: #34393f;
@@ -559,11 +574,12 @@ body {
 }
 .page07 .login ul li.student {
 	/*z-index: 888;*/
-	margin-left: -20px;
+    margin-left: -10px;
 }
 .page07 .login ul li.system {
-	/*z-index: 777;*/
-	margin-left: -20px;
+    /* z-index: 777; */
+    margin-left: -10px;
+    margin-right: 220px;
 }
 .page07 .login .panel {
 	width: 500px;
@@ -585,21 +601,25 @@ body {
 	text-align: center;
 }
 .page07 .login .panel .form ul {
-	list-style: none;
-	width: 335px;
-	margin-top: 20px;
-	margin-left: 82.5px;
+    list-style: none;
+    width: 406px;
+    margin-top: 20px;
+    margin-left: 48px;
+}
+.page07 .login .panel .form ul li {
+	height: 40px;
 }
 .page07 .login .panel .form ul li select {
-	width: 95px;
+	width: 78px;
 	color: #858484;
 	font-weight: 600;
+	outline: 0;
 }
 .page07 .login .panel .form ul li select option {
 	color: #3f3f3f;
 }
 .page07 .login .panel .form ul li select.school {
-	width: 130px;
+	width: 172px;
 }
 .page07 .login .panel .form ul li label {
 	float: left;
@@ -609,7 +629,7 @@ body {
 	margin-right: 20px;
 }
 .page07 .login .panel .form ul li input[type="password"], .page07 .login .panel .form ul li input[type="text"] {
-	width: 265px;
+	width: 336px;
 }
 .page07 .login .panel .form ul li .rem_pass {
 	float: right;
@@ -620,7 +640,7 @@ body {
 }
 .page07 .login .panel .btn {
 	border-radius:0;
-	margin: 30px 161.5px 0;
+	margin: 0 161.5px;
 	font-weight: 600;
 	width: 35%;
 	height: 30px;

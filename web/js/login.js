@@ -101,8 +101,7 @@ var Panel = React.createClass({
 var User = React.createClass({
 	getDefaultProps: function() {
 	    return {
-	    	// provinces:  ch.bind.province
-	    	provinces: ["浙江省","安徽省","山东省"]
+
 	    };
 	},
 	getInitialState: function() {
@@ -213,7 +212,8 @@ var User = React.createClass({
 var Province = React.createClass({
 	getDefaultProps: function() {
 	    return {
-	    	provinces:  ch.bind.province
+	    	// provinces:  ch.login.province
+	    	provinces: ["浙江省","安徽省","山东省"]
 	    };
 	},
 	getInitialState: function() {
@@ -259,17 +259,16 @@ var City = React.createClass({
 	},
 	componentDidMount: function () {
 		this.pubsub_token = PubSub.subscribe('province_change', function (topic, province) {
-			
-			this.citysRequest = $.get('sch-getCityOfProvince.action?province=' + province, function (result) {
+			/*this.citysRequest = $.get('sch-getCityOfProvince.action?province=' + province, function (result) {
 		      this.setState({
 		      	  citys: result
 		      })
-		    }.bind(this))
+		    }.bind(this))*/
 		}.bind(this))
 	},
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(this.pubsub_token)
-    	this.citysRequest.abort()
+    	// this.citysRequest.abort()
 	},
 	cityChange: function(event) {
 		this.setState(
@@ -316,7 +315,7 @@ var District = React.createClass({
 	},
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(this.pubsub_token)
-    	this.districtsRequest.abort()
+    	// this.districtsRequest.abort()
 	},
 	districtsChange: function(event) {
 		this.setState(
@@ -364,7 +363,7 @@ var School = React.createClass({
 	},
 	componentWillUnmount: function () {
 		PubSub.unsubscribe(this.pubsub_token)
-    	this.districtsRequest.abort()
+    	// this.districtsRequest.abort()
 	},
 	schoolsChange: function(event) {
 		this.setState(

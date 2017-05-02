@@ -16,8 +16,14 @@ var SendBarrage = React.createClass({
 	componentDidMount: function () {
 		// this.refs.bottom.click()
 		func(this.state.index)
+        this.pubsub_token = PubSub.subscribe('func', function (topic, data) {
+            // alert("get")
+            // alert(data)
+            this.refs.bottom.click()
+        }.bind(this))
 	},
 	componentWillUnmount: function () {
+        PubSub.unsubscribe(this.pubsub_token)
 	},
 	click: function() {
 		this.setState({
@@ -29,7 +35,7 @@ var SendBarrage = React.createClass({
 	render: function(){
 		return (
 			<div >
-				<a ref="bottom" href="#bottom" className="toBottom" onClick={this.click} >bottom</a>
+				<a ref="bottom" href="#bottom" className="toBottom" onClick={this.click} ></a>
 				<Barrages />
 				<div className="fill01"></div>
 				{/*<div className="fill02" id="bottom"></div>*/}
@@ -90,13 +96,18 @@ var UserName = React.createClass({
 });
 
 var Text = React.createClass({
+	getInitialState: function() {
+	    return {
+	    	color: 'rgb' + '(' + (Math.floor(0+Math.random()*200)) + ',' + (Math.floor(0+Math.random()*200)) + ',' + (Math.floor(0+Math.random()*200)) + ')'
+	    };
+	},
     componentDidMount: function () {
-    	this.refs.ba.style.backgroundColor = (rand(125, 255), rand(125, 255), rand(125, 255))
     },
 	render: function(){
+		// alert(this.state.color)
 		return (
 			<div className="weui-cell__bd text">
-				<p ref="ba">{this.props.ba}</p>
+				<p style={{color:this.state.color}}>{this.props.ba}</p>
 			</div>);
 	}
 });
@@ -109,6 +120,9 @@ var Text = React.createClass({
 });*/
 
 var Edit = React.createClass({
+	send: function() {
+		//send
+	},
 	render: function(){
 		return (
 			<div className="panel panel-default fixed">
@@ -117,7 +131,7 @@ var Edit = React.createClass({
 			    	<div>
 			    		<form>
 			    			<textarea></textarea>
-							<a className="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">提交</a>
+							<a className="weui-btn weui-btn_primary" href="javascript:" id="showTooltips" onClick={this.send}>提交</a>
 			    		</form>
 			    	</div>
 			    </div>

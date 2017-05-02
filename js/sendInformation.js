@@ -1,4 +1,11 @@
 var weeks = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
+var numStr = function(i, j) {
+    var str = ""
+    for(; i <= j; i++) {
+        str += i + " "
+    }
+    return str
+}
 var SendInformation = React.createClass({
     render: function(){
       return(
@@ -20,12 +27,48 @@ var Line = React.createClass({
 });
 
 var Search = React.createClass({
+    getDefaultProps: function() {
+        return {
+
+        };
+    },
+    getInitialState: function() {
+        return {
+            input: ""
+        };
+    },
+    componentDidMount: function () {
+        this.pubsub_token = PubSub.subscribe('class_change', function (topic, data) {
+            this.setState({
+                input: ""
+            }, function(){
+            })
+        }.bind(this))
+    },
+    componentWillUnmount: function () {
+        PubSub.unsubscribe(this.pubsub_token)
+    },
+    inputChange: function(event) {
+        this.setState({input: event.target.value})
+    },
+    stuSearch: function() {
+        /*$.post(".action",
+        {
+            openId: request.teacher.openId,
+            studentName: this.state.stuName,
+        },
+            function(data,status){
+                PubSub.publish('stu_search', data)
+        });*/
+        var data = [{"id":1,"sname":"曹辉","snumber":"1","colloge":"启新学院","clazz":"14电子信息实验班","headimageUrl":"img/student_img.png","inClasses":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}]
+        PubSub.publish('stu_search', data)
+    },
     render: function() {
         return (
             <div className="search">
-                <input type="text" placeholder="请输入学生姓名" />
+                <input type="text" placeholder="请输入学生姓名" value={this.state.input} onChange={this.inputChange} />
                 <div className="button-sp-area">
-                    <a href="javascript:;" className="weui-btn weui-btn_mini weui-btn_primary">搜索</a>
+                    <a href="javascript:;" className="weui-btn weui-btn_mini weui-btn_primary" onClick={this.stuSearch}>搜索</a>
                 </div>
             </div>
         )
@@ -56,6 +99,16 @@ var Select = React.createClass({
             cId: -1
         };
     },
+    componentDidMount: function () {
+        this.pubsub_token = PubSub.subscribe('stu_search', function (topic, data) {
+            this.setState({cId: -1}, function(){
+
+            })
+        }.bind(this))
+    },
+    componentWillUnmount: function () {
+        PubSub.unsubscribe(this.pubsub_token)
+    },
     classChange: function(event){
         this.setState(
             {
@@ -78,8 +131,9 @@ var Select = React.createClass({
                     });*/
                     var data2 = {
                         cId: cId,
-                        students: [{"id":"2","sname":"张三","snumber":"2014339960011","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/1"},{"id":"6","sname":"李四","snumber":"2014339960015","headimageUrl":"http://ndsoacndoanco.csaiocms/picture/2"}]
+                        students: [{"id":"2","sname":"张三","snumber":"2014339960011","headimageUrl":"img/student_img.png"},{"id":"6","sname":"李四","snumber":"2014339960015","headimageUrl":"img/student_img.png"}]
                     }
+                    // alert(data2.cId)
                     PubSub.publish('class_change', data2)
                 }
             }
@@ -91,7 +145,7 @@ var Select = React.createClass({
                 <option value="-1">（点击选择课程）</option>
                 {
                     this.props.course.classes.map(function (c, index) {
-                    return <option key={index} value={c.id}>{c.cname + " " + weeks[c.week] + " 第" + c.index + "节 - 第" + c.toIndex + "节"}</option>
+                    return <option key={index} value={c.id}>{c.cname + " " + weeks[c.week] + numStr(c.index, c.toIndex)+ "节"}</option>
                     })
                 }
             </select> 
@@ -107,21 +161,38 @@ var Students = React.createClass({
     },
     getInitialState: function() {
         return {
+            // students: [{"id":1,"sname":"曹辉","snumber":"1","colloge":"启新学院","clazz":"14电子信息实验班","headimageUrl":"img/student_img.png","inClasses":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}],
             students: [],
-            cId: -1,
+            cId: -1
         };
     },
     componentDidMount: function () {
-        this.pubsub_token = PubSub.subscribe('class_change', function (topic, data) {
+        this.pubsub_token0 = PubSub.subscribe('class_change', function (topic, data) {
             this.setState({
                 cId: data.cId,
-                students: data.students
+                students: data.students,
             }, function(){
+            })
+        }.bind(this))
+        this.pubsub_token1 = PubSub.subscribe('stu_search', function (topic, data) {
+            this.setState({students: data}, function(){
             })
         }.bind(this))
     },
     componentWillUnmount: function () {
-        PubSub.unsubscribe(this.pubsub_token)
+        PubSub.unsubscribe(this.pubsub_token0)
+        PubSub.unsubscribe(this.pubsub_token1)
+    },
+    studentClick: function(data) {
+        this.setState({
+            check: !this.state.check
+        }, function(){
+            var stu = {
+                check: this.state.check,
+                id: id
+            }
+            PubSub.publish("check_one", stu)
+        })
     },
     render:function(){
         return (
@@ -132,9 +203,27 @@ var Students = React.createClass({
                 })
             }
             </div>
-        );
+        )
     }
 });
+
+var Classes = React.createClass({
+    render: function() {
+        var inClasses = []
+        for(var index = 0; index < this.props.inClasses.length; index++) {
+            var c = this.props.inClasses[index]
+            inClasses.push(<li key={index}>{c.cname + " " + weeks[c.week] + numStr(c.index, c.toIndex) + "节"}</li>)
+        }
+        return (
+            <li>
+                <div className="course">课程：</div>
+                <ul className="cou">
+                    {inClasses}
+                </ul>
+            </li>
+        )
+    }
+})
 
 var Student = React.createClass({
     getDefaultProps: function() {
@@ -143,11 +232,11 @@ var Student = React.createClass({
     },
     getInitialState: function() {
         return {
-            check: true,
+            check: true
         };
     },
     componentDidMount: function () {
-        this.pubsub_token = PubSub.subscribe('check_all', function (topic, checkAll) {
+        this.pubsub_token0 = PubSub.subscribe('check_all', function (topic, checkAll) {
             // alert(checkAll)
             if(checkAll){
                 if(this.state.check == false) {
@@ -166,9 +255,21 @@ var Student = React.createClass({
                 }
             }
         }.bind(this))
+        this.pubsub_token1 = PubSub.subscribe('class_change', function (topic, data) {
+            this.setState({
+                check: true
+            }, function(){
+            })
+        }.bind(this))
+        this.pubsub_token2 = PubSub.subscribe('stu_search', function (topic, data) {
+            this.setState({check: true}, function(){
+            })
+        }.bind(this))
     },
     componentWillUnmount: function () {
-        PubSub.unsubscribe(this.pubsub_token)
+        PubSub.unsubscribe(this.pubsub_token0)
+        PubSub.unsubscribe(this.pubsub_token1)
+        PubSub.unsubscribe(this.pubsub_token2)
     },
     detail: function() {
 
@@ -188,6 +289,25 @@ var Student = React.createClass({
         })
     },
     render: function(){
+        if(this.props.stu.colloge) {
+            return (
+                <ul>
+                    <li onClick={this.studentClick}>
+                        <input type="checkbox" name="" onClick={this.studentClick} onChange={this.change} checked={this.state.check?"checked":""} />
+                        <img src={this.props.stu.headimageUrl} />
+                        <div>姓名：{this.props.stu.sname}</div>
+                        <div>学号：{this.props.stu.snumber}</div>
+                        <div className="det">
+                            <ul>
+                                <li>学院：{this.props.stu.colloge}</li>
+                                <li>班级：{this.props.stu.clazz}</li>
+                                <Classes inClasses={this.props.stu.inClasses} />
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                )
+        }
         return(
             <div className="student">
                 <div className="stu" onClick={this.studentClick}>
@@ -250,7 +370,12 @@ var NumberCheck = React.createClass({
             }, function(){
             })
         }.bind(this))
-        this.pubsub_token1 = PubSub.subscribe('check_one', function (topic, stu) {
+        this.pubsub_token1 = PubSub.subscribe('stu_search', function (topic, data) {
+            this.setState({students: data, checkAll: true, studentNumber: data.length}, function(){
+
+            })
+        }.bind(this))
+        this.pubsub_token2 = PubSub.subscribe('check_one', function (topic, stu) {
             if(stu.check){
                 this.setState({studentNumber: this.state.studentNumber+1}, function(){
                     // alert(this.state.studentNumber)
@@ -272,6 +397,7 @@ var NumberCheck = React.createClass({
     componentWillUnmount: function () {
         PubSub.unsubscribe(this.pubsub_token0)
         PubSub.unsubscribe(this.pubsub_token1)
+        PubSub.unsubscribe(this.pubsub_token2)
     },
 	render :function(){
 		return (
@@ -304,13 +430,13 @@ var InformationContent = React.createClass({
         this.setState({content: event.target.value})
     },
     send: function(){
-	alert(this.state.cId)
-        if(this.state.cId != -1) {
+	// alert(this.state.cId)
+        // if(this.state.cId != -1) {
                        
             var s = this.state.idArray.join(',')
             this.setState({ids:s}, function() {
                  alert(this.state.ids)
-                $.post("tc-sendNotice.action",
+                /*$.post("tc-sendNotice.action",
                 {
                     // openId:ch.teacher.openId,
                     ids:this.state.ids,
@@ -318,9 +444,9 @@ var InformationContent = React.createClass({
                 },
                     function(data,status){
                     PubSub.publish('submit_code', data);
-                });
+                });*/
             })
-        }
+        // }
     },
     componentDidMount: function () {
         this.pubsub_token0 = PubSub.subscribe('class_change', function (topic, data) {
@@ -330,6 +456,19 @@ var InformationContent = React.createClass({
                 var a = this.state.idArray
                 for(var i = 0; i < data.students.length; i++) {
                     a[i] = data.students[i].id
+                }
+                this.setState({idArray: a, index: a.length})
+            })
+        }.bind(this))
+        this.pubsub_token3 = PubSub.subscribe('stu_search', function (topic, data) {
+            // alert(data[0].id)
+            this.setState({
+                students: data
+            }, function() {
+                // alert(data[0].id)
+                var a = this.state.idArray
+                for(var i = 0; i < data.length; i++) {
+                    a[i] = data[i].id
                 }
                 this.setState({idArray: a, index: a.length})
             })
@@ -369,6 +508,7 @@ var InformationContent = React.createClass({
         PubSub.unsubscribe(this.pubsub_token0)
         PubSub.unsubscribe(this.pubsub_token1)
         PubSub.unsubscribe(this.pubsub_token2)
+        PubSub.unsubscribe(this.pubsub_token3)
     },
 	render :function(){
 		return (

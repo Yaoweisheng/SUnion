@@ -581,15 +581,37 @@ header h3 {
 .page5 {
     width:7.5rem;
     margin-left:auto;
-    margin-right:auto
+    margin-right:auto;
 }
 .page5 .students .student {
-    border-bottom:6px solid #ccc;
+    /*border-bottom:6px solid #ccc;*/
 }
-.page5 .students .student .activity_img {
+.page5 .students .student .activity_img1 {
     width: 100%;
     height: 220px;
-    background: url("../img/new1.png") center no-repeat;
+    background: url("../img/news1.png") center no-repeat;
+    background-size: 100% 100%;
+    float: left;
+}
+.page5 .students .student .activity_img2 {
+    width: 100%;
+    height: 220px;
+    background: url("../img/news2.png") center no-repeat;
+    background-size: 100% 100%;
+    float: left;
+}
+.page5 .students .student .activity_img3 {
+    width: 100%;
+    height: 220px;
+    background: url("../img/news3.png") center no-repeat;
+    background-size: 100% 100%;
+    float: left;
+}
+.page5 .students .student .activity_img4 {
+    width: 100%;
+    height: 220px;
+    background: url("../img/news4.png") center no-repeat;
+    background-size: 100% 100%;
     float: left;
 }
 .page5 .students .student .activity_name {
@@ -597,6 +619,7 @@ header h3 {
     padding-left: 20px;
     padding-top: 230px;
     width: 5rem;
+    font-size: 18px;
 }
 .page5 .students .student .content {
     padding-left: 20px;
@@ -604,6 +627,7 @@ header h3 {
     padding-bottom: 10px;
     line-height: 25px;
     width: 95%;
+    font-size: 16px;
 }
 .page6 {
     width:7.5rem;

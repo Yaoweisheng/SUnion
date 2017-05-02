@@ -71,7 +71,7 @@ header h3 {
 }
 .page1 .weui-btn_primary {
     color: #fff;
-    background-color: #34373f;
+    background-color: #34393f;
     text-decoration: none;
     width: 20%;
 }
@@ -259,7 +259,7 @@ header h3 {
     width: 100%;
     /* padding: 15px 3.37rem; */
     display: block;
-    background-color: #34373f;
+    background-color: #34393f;
     text-decoration: none;
 }
 .page1 .information a.send:active {
@@ -796,7 +796,7 @@ header h3 {
     display: inline-block;
     width: 200px;
     height: 200px;
-    border: 1px solid #34373f;
+    border: 1px solid #34393f;
     border-radius: 50%;
     background-color: #34393f;
     background-image: -moz-linear-gradient(top,#34393f,#34393f);
@@ -818,6 +818,13 @@ header h3 {
     margin-left:auto;
     margin-right:auto;
 }
+.page10 .toBottom {
+    position: fixed;
+    right: 50%;
+    margin-right: -3.75rem;
+    z-index: 999;
+    display: block;
+}
 .page10 .username{
     color: #06AD13;
     flex: 1;
@@ -829,19 +836,33 @@ header h3 {
     bottom: 0;
 }
 .page10 .panel span {
-    color: #06AD13;
+    color: #34393f;
 }
 .page10 .panel form {
     margin: 0;
 }
 .page10 .panel textarea {
     width: 100%;
-    height: 130px;
+    height: 80px;
     resize: none;
     outline: none;
 }
-.page10 .fill {
-    height: 204.8px;
+.page10 .fill01 {
+    height: 200px;
+}
+.page10 .fill02 {
+    margin-bottom: 10px;
+    height: 1px;
+}
+.page10 .weui-btn_primary {
+    color: #fff;
+    background-color: #34393f;
+    text-decoration: none;
+}
+.page10 .weui-btn_primary:active {
+    color: #CBC9C9;
+    background-color: #5D616B;
+    text-decoration: none;
 }
 .page11 {
     width:7.5rem;

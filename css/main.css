@@ -12,8 +12,9 @@ a,address,article,aside,audio,blockquote,body,button,canvas,caption,dd,details,d
     font-family:inherit;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
-    box-sizing:border-box
+    box-sizing:border-box;
 }
+a{text-decoration : none}
 footer, header {
     margin-left:-3.75rem
 }
@@ -27,7 +28,7 @@ header {
     top:0;
     left:50%;
     z-index:999;
-    background-color:#34393f
+    background-color:#34393f;
 }
 .fixed {
     width:7.5rem;
@@ -41,7 +42,7 @@ header h3 {
     text-align:center;
     width:100%;
     line-height:.88rem;
-    color:#fff
+    color:#fff;
 }
 .h40 {
     width:100%;
@@ -59,16 +60,35 @@ header h3 {
     margin-left:auto;
     margin-right:auto
 }
+.page1 .search {
+    margin: 10px;
+}
+.page1 input[type="text"] {
+    width: 88%;
+    height: 30px;
+    line-height: 30px;
+    float: left;
+}
+.page1 .weui-btn_primary {
+    color: #fff;
+    background-color: #34373f;
+    text-decoration: none;
+}
+.page1 .weui-btn_primary:active {
+    color: #CBC9C9;
+    background-color: #5D616B;
+    text-decoration: none;
+}
 .page1 .course {
     margin: 10px;
 }
 .page1 .course label {
     color: #34393f;
-    line-height: 60px;
+    line-height: 30px;
     text-align: center;
     float: left;
     width: 25%;
-    height: 60px;
+    height: 30px;
     background-color: #fff;
     border: 1px solid #ccc;
     border-top-left-radius: 5px;
@@ -78,14 +98,14 @@ header h3 {
 .page1 .course .line {
     border-left: 1px solid #ccc;
     width: 1px;
-    margin-top: 5px;
+    margin-top: 3px;
     margin-left: -5px;
-    height: 50px;
+    height: 25px;
     float: left;
 }
 .page1 .course select {
-    line-height: 60px;
-    height: 60px;
+    line-height: 30px;
+    height: 30px;
     width: 75%;
     border-left: none;
     border-top-left-radius: 0;
@@ -112,7 +132,7 @@ header h3 {
 .page1 .students .student .student_name {
     color: #34393f;
     padding-left: 95px;
-    padding-top: 10px;
+    padding-top: 17px;
     width: 375px;
 }
 .page1 .students .student .student_checkbox {
@@ -125,7 +145,7 @@ header h3 {
 }
 .page1 .students .student .student_number {
     padding-left: 95px;
-    padding-top: 10px;
+    padding-top: 17px;
     width: 375px;
 }
 
@@ -144,6 +164,9 @@ header h3 {
     border-bottom: 1px solid #ccc;
     margin-top: 5px;
 }
+.page1 .infor {
+    text-align: center;
+}
 .page1 .information {
     color: #34393f;
     width:7.5rem;
@@ -151,7 +174,7 @@ header h3 {
     bottom:0;
     left:50%;
     z-index:999;
-    background-color:#fff
+    background-color:#fff;
 }
 .page1 .information .number_check {
     height: 20px;
@@ -189,13 +212,21 @@ header h3 {
     resize: none;
 }
 .page1 .information .send {
-    height: 50px;
-    background-color: #34393f;
+    height: 40px;
     color: #fff;
     text-align: center;
-    line-height: 50px;
+    line-height: 40px;
+    width: 100%;
+    /* padding: 15px 3.37rem; */
+    display: block;
+    background-color: #34373f;
+    text-decoration: none;
 }
-
+.page1 .information a.send:active {
+    color: #CBC9C9;
+    background-color: #5D616B;
+    text-decoration: none;
+}
 
 .page2 {
     width:7.5rem;
@@ -273,59 +304,24 @@ header h3 {
 }
 .page2 .weui-cell {
     color: #000;
-    background-color: #f4f8f9
+    background-color: #f4f8f9;
 }
-.page2 .students .student .student_img {
-    width: 1.5rem;
-    height: 1.5rem;
-    background: url("../img/student_img.png") center 20% no-repeat;
-    background-size: 80%;
+.page2 .students ul {
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+}
+.page2 .students ul li {
+    margin: 10px 15px 5px 15px;
+}
+.page2 .students ul .time {
+    font-size: 12px;
+    color: #ccc;
+}
+.page2 .students ul .message .mess {
     float: left;
 }
-.page2 .students .student .student_name {
-    color: #34393f;
-    padding-left: 5px;
-    padding-top: 5px;
-    width: 200px;
-}
-.page2 .students .student .student_detail {
-    margin-left: auto;
-    margin-right: 11.250px;
-    /* margin-top: .15rem; */
-    width: 112px;
-    text-align: center;
-    height: 0;
-    line-height: 25px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 15px;
-    color: #999;
-    transition: all .5s;
-    -moz-transition: all .5s;
-    -webkit-transition: all .5s;
-    -o-transition: all .5s;
-}
-.page2 .students .student .student_detail.show {
-    height: 25px;
-    border: 1px solid #ccc;
-}
-.page2 .students .student .student_number {
-    padding-left: .1rem;
-    padding-top: .1rem;
-    width: 5rem;
-}
-.page2 .students .student .message {
-    margin-left: 10px;
-    margin-top: 10px;
-    line-height: 25px;
-    font-size: 15px;
-    /* margin-bottom: .15rem; */
-}
-.page2 .students .student .line {
-    width: 100%;
-    height: 0;
-    border-bottom: 0.01rem solid #ccc;
-    padding-top: 0.1rem;
+.page2 .students ul .message .con {
+    margin-left: 70px;
 }
 .page2 .weui-cells {
     margin-top: 0;
@@ -459,7 +455,7 @@ header h3 {
     bottom:0;
     left:50%;
     z-index:999;
-    background-color:#fff
+    background-color:#fff;
 }
 .page3 .information .information_content{
     height: 2rem;
@@ -529,7 +525,7 @@ header h3 {
     bottom:0;
     left:50%;
     z-index:999;
-    background-color:#fff
+    background-color:#fff;
 }
 .page4 .information .send {
     height:.77rem;
@@ -952,7 +948,7 @@ header h3 {
     background-color: #f4f8f9;
     /*border: 1px solid red;*/
     padding: 0;
-    color: #90989f
+    color: #90989f;
 }
 .page12 .timetable .table th.number {
     /* text-align: center; */
@@ -987,7 +983,7 @@ header h3 {
     left: 50%;
     z-index: 999;
     height: 40px;
-    background-color: #fff
+    background-color: #fff;
 }
 .page12 footer .send {
     height: 40px;

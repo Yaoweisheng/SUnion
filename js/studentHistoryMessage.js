@@ -3,8 +3,6 @@ var StudentHistoryMessage = React.createClass({
 	render: function(){
 		return (
 			<div >
-				<Header />
-				<div className="h40"></div>
 				<Time />
 				<Students />			
 			</div>);
@@ -60,27 +58,39 @@ var Search = React.createClass({
 });
 
 var Students = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    	
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	// students: [{"id":1,"sname":"曹辉","snumber":"1","colloge":"启新学院","clazz":"14电子信息实验班","headimageUrl":"img/student_img.png","inClasses":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}]
+	    	mess: [{"tname":"刘晓庆","content":"今天不上课啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦","time":"2017-04-11 16:13:22"}]
+	    };
+	},
 	render: function(){
+		// alert(this.state.mess[0].tname)
 		return (
 			<div className="students">
-				<Student />
-				<Student />	
-				<Student />	
-				<Student />				
+				{this.state.mess.map(function(m, index){
+					return <Student key={index} mess={m} />
+				})}		
 			</div>);
 	}
 });
 
 var Student = React.createClass({
 	render: function(){
+		// alert(this.props.mess.tname)
 		return (
-			<div className="student">
-				<div className="student_img"></div>
-				<div className="student_name">课程名称：××××</div>
-				<div className="student_number">任课教师：×××</div>
-				<div className="message">消息内容:发送信息发送信息发送信息发送信息发送信息发送信息发送信息发送信息</div>
-				<div className="line"></div>	
-			</div>);
+			<ul>
+				<li className="time">{this.props.mess.time}</li>
+				<li className="cname">课程名称：{this.props.mess.tname}</li>
+				<li className="tname">任课教师：{this.props.mess.tname}</li>
+				<li className="message"><div className="mess">消息内容：</div><div className="con">{this.props.mess.content}</div></li>
+				<li className="line"></li>	
+			</ul>);
 	}
 });
 

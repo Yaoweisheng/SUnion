@@ -360,7 +360,8 @@ var CourseTimes = React.createClass({
 		}
 	    return {
 	    	indexArray: array,
-	    	index: 0
+	    	index: 0,
+	    	weekIndex: -1, index: -1, toIndex: -1 
 	    };
 	},
 	componentDidMount: function () {
@@ -430,80 +431,35 @@ var CourseTimes = React.createClass({
 		})
 	},
 	render : function(){
-		var lis = []
-		for(var i = 0; i < this.state.indexArray.length; i++) {
-			// alert(i + this.state.indexArray[i].index)
-			// alert(this.props.indexArray[i].index)
-			if(this.state.indexArray[i].index != -1) {
-				var options1 = []
-		  		options1.push(<option key={-1} value="-1">起始节</option>)
-				for(var i = 0; i < this.props.course.total; i++) {
-		  			options1.push(<option key={i} value={i}>第{i+1}节</option>)
-		  		}
-				var options2 = []
-		  		options2.push(<option key={-1} value="-1">结束节</option>)
-				var index = this.state.indexArray[i].index != -1? this.state.index: 0
-				for(var i = index; i < this.props.course.total; i++) {
-					i /= 1;//声明i是数字
-		  			options2.push(<option key={i} value={i}>第{i+1}节</option>)
-		  		}
-				lis.push(<li key={i}>
-				<select className="sel01" value={this.state.indexArray[i].weekIndex} onChange={this.weekChange.bind(this, i)}>	
-		            <option value="-1">星期</option>
-		            {
-		            	weeks.map(function(week, index){
-		      				return <option key={index} value={index}>{week}</option>
-		      			})
-		            }
-        		</select>&nbsp;
-				<select className="sel02" value={this.state.indexArray[i].index} onChange={this.option1Change.bind(this, i)}>
-            		{options1}
-            	</select>
-            	<span>-</span>
-				<select className="sel02" value={this.state.indexArray[i].toIndex} onChange={this.option2Change.bind(this, i)}>
-            		{options2}
-            	</select>
-				{<div className="btn" onClick={this.delete}>删除</div>}
-			</li>)
-			}
-		}
-		var options1 = []
-  		options1.push(<option key={-1} value="-1">起始节</option>)
+		var options1 = [];
 		for(var i = 0; i < this.props.course.total; i++) {
-  			options1.push(<option key={i} value={i}>第{i+1}节</option>)
+  			options1.push(<option key={i} value={i}>第{i+1}节</option>);
   		}
-		var options2 = []
-  		options2.push(<option key={-1} value="-1">结束节</option>)
-		var index = this.state.indexArray[i].index != -1? this.state.index: 0
-		for(var i = index; i < this.props.course.total; i++) {
+		var options2 = [];
+		for(var i = this.state.index; i < this.props.course.total; i++) {
 			i /= 1;//声明i是数字
-  			options2.push(<option key={i} value={i}>第{i+1}节</option>)
+  			options2.push(<option key={i} value={i}>第{i+1}节</option>);
   		}
-		lis.push(
-			<li key={-1}>
-				<select className="sel01" value={-1} onChange={this.weekChange}>	
-		            <option value="-1">星期</option>
-		            {
-		            	weeks.map(function(week, index){
-		      				return <option key={index} value={index}>{week}</option>
-		      			})
-		            }
-        		</select>&nbsp;
-				<select className="sel02" value={-1} onChange={this.option1Change}>
-            		{options1}
-            	</select>
-            	<span>-</span>
-				<select className="sel02" value={-1} onChange={this.option2Change}>
-            		{options2}
-            	</select>
-			</li>)
 		// lis.push(<CourseTime key={-1} course={this.props.course} index={-1} data={{index:-1, toIndex:-1, weekIndex:-1}} />)
 		// lis.push(<CourseTime key={-1} course={this.props.course} index={this.state.indexArray.length} data={{index: -1, toIndex: -1, weekIndex: -1}} />)
 		return (
 			<div className="course_time">
 					<label>上课时间</label>
 					<ul>
-						{lis}
+						<li>
+							<select value={this.state.weekIndex}>
+							{weeks.map(function(week, index){
+								<option>{week}</option>
+							})}
+							</select>
+							<select value={this.state.index} onChange={this.option1Change}>
+			            		{options1}
+			            	</select>
+			            	<span>-</span>
+			            	<select value={this.state.toIndex} onChange={this.option2Change}>
+			            		{options2}
+			            	</select>
+						</li>
 					</ul>
 			</div>
 		);

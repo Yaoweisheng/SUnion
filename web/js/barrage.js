@@ -2,7 +2,7 @@
 var weeks = ["周日","周一","周二","周三","周四","周五","周六"];
 var getBarrage = function(i) {
 	// alert("func")
-	PubSub.publish('getBarrage', "这是个弹幕" + i)
+	PubSub.publish('getBarrage', "这是第" + i + "个催眠的弹幕")
 }
 var Index = React.createClass({
 	getInitialState: function() {
@@ -186,7 +186,7 @@ var Barrage = React.createClass({
 	    	color: 'rgb' + '(' + (Math.floor(0+Math.random()*200)) + ',' + (Math.floor(0+Math.random()*200)) + ',' + (Math.floor(0+Math.random()*200)) + ')',
 	    	right: "0px",
 	    	// top: (30 * this.props.index + 100) % 700 + "px"
-	    	top: (Math.floor((Math.random()*700) / 20) *20) + "px"
+	    	top: (30 + Math.floor((Math.random()*680) / 40) *40) + "px"
 	    };
 	},
     componentDidMount: function () {

@@ -3,6 +3,9 @@ body {
     font-family: 黑体;
     color: #34393f;
 }
+ul {
+	list-style: none;
+}
 select, input, textarea {
 	outline: none;
 }
@@ -317,9 +320,9 @@ select, input, textarea {
     -moz-transition: all 10s; /* Firefox 4 */
     -webkit-transition: all 10s; /* Safari and Chrome */
     -o-transition: all 10s; /* Opera */
-    height: 30px;
-    line-height: 30px;
-    font-size: 25px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 40px;
     display: block;
     width: auto;
     white-space:nowrap;
@@ -332,26 +335,24 @@ select, input, textarea {
 	height: 800px;
 }
 .page04 .message .content {
-	width: 60%;
-	/*margin: 20px 60px;*/
+	width: 40%;
+	margin: 20px;
+	float: left;
 	/*border: 1px solid;*/
-	position: absolute;
-	top: 20px;
-	left: 140px;
 }
 .page04 .message .content .header {
 	font-weight: 700;
 	margin-bottom: 10px;
 }
 .page04 .message .content textarea {
-	width: 90%;
+	width: 95%;
 	resize: none;
 	height: 200px;
 	border: 1px solid #34393f;
 	outline: none;
 }
 .page04 .message .content .btn {
-	width: 7%;
+	width: 10%;
 	color: #fff;
 	font-weight: 400;
 	background-color: #34393f;
@@ -363,12 +364,31 @@ select, input, textarea {
     background-repeat: repeat-x; 
     display: block;
 }
+.page04 .message .content .search {
+	/*text-align: center;*/
+}
+.page04 .message .content .search input {
+	width: 85%;
+	margin: 0
+}
+.page04 .message .content .search .btn {
+	width: 8%;
+	color: #fff;
+	font-weight: 400;
+	background-color: #34393f;
+    background-image: -moz-linear-gradient(top,#34393f,#34393f);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#34393f),to(#34393f));
+    background-image: -webkit-linear-gradient(top,#34393f,#34393f); 
+    background-image: -o-linear-gradient(top,#34393f,#34393f);
+    background-image: linear-gradient(to bottom,#34393f,#34393f); 
+    background-repeat: repeat-x; 
+    display: inline-block;
+}
 .page04 .message .list {
-	position: absolute;
-	top: 20px;
-	left: 60px;
 	width: 20%;
 	border: 1px solid;
+	float: left;
+	margin: 20px 20px auto 80px;
 }
 .page04 .message .list .students {
 	background: #34393f;
@@ -393,10 +413,145 @@ select, input, textarea {
 }
 .page04 .message .list .students ul li .infor{
 	float: left;
+	text-align: center;
+	width: 90%;
+	cursor: pointer;
 }
 .page04 .message .list .students ul li input[type="checkbox"]{
 	float: right;
 	margin-right: 10px; 
+}
+.page04 .his_mess {
+	width: 25%;
+	float: left;
+	margin: 20px 20px;
+}
+.page04 .his_mess .header {
+	background-color: #34393f;
+	color: #fff;
+}
+.page04 .his_mess .search {
+	position: relative;
+	margin: 5px;
+}
+.page04 .his_mess .search input {
+	margin:0;
+	width: 75%;
+}
+.page04 .his_mess .search .btn {
+	width: 10%;
+	color: #fff;
+	font-weight: 400;
+	background-color: #34393f;
+    background-image: -moz-linear-gradient(top,#34393f,#34393f);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#34393f),to(#34393f));
+    background-image: -webkit-linear-gradient(top,#34393f,#34393f); 
+    background-image: -o-linear-gradient(top,#34393f,#34393f);
+    background-image: linear-gradient(to bottom,#34393f,#34393f); 
+    background-repeat: repeat-x; 
+    display: inline-block;
+}
+.page04 .his_mess ul {
+	list-style: none;
+	margin: 5px;
+}
+.page04 .his_mess ul li {
+	border-bottom: 1px solid #ccc;
+}
+.page04 .his_mess ul li:hover {
+	background-color: #ccc;
+}
+.page04 .his_mess ul li:hover .time {
+	/*background-color: #ccc;*/
+	color: #000;
+}
+.page04 .his_mess ul li .time {
+	color: #ccc;
+}
+.page04 .his_mess ul li .btns {
+	height: 25px;
+}
+.page04 .his_mess ul li .btn {
+	height: 15px;
+	line-height: 15px;
+	font-size: 12px;
+	float: right;
+}
+.page04 .his_mess ul li .detail {
+	margin-bottom: 5px;
+	/* transition: all .5s;
+	    -moz-transition: height .5s;
+	    -webkit-transition: height .5s;
+	    -o-transition: height .5s; */
+}
+.page04 .his_mess ul li .detail img {
+	height: 38px;
+	width: 38px;
+	border: 1px solid transparent;
+	border-radius: 50%;
+	float: left;
+}
+.page04 .name {
+	width: 100px;
+	display: inline-block;
+	text-align: left;
+}
+.page04 .course {
+	width: 100%;
+	display: inline-block;
+	text-align: center;
+}
+.page04 .cou {
+	cursor: pointer;
+}
+.page04 .cou:hover {
+	background-color: #ccc;
+	color: #34393f;
+}
+.page04 .message .list .students ul li:hover {
+	background-color: #ccc;
+}
+.page04 .stu_detail {
+	margin-top: 10px;
+	width: 100%;
+	height: 300px;
+}
+.page04 ul {
+	list-style: none;
+	margin: 0
+}
+.page04 ul .course02 {
+	float: left;
+}
+.page04 ul .course03 {
+	margin-left: 125px;
+}
+.page04 .stu_detail li.s {
+	cursor: pointer;
+	border: 1px solid #34393f;
+	border-radius: 10px;
+	float: left;
+	width: 49%;
+}
+.page04 .stu_detail input {
+	float: right;
+	margin-right: 20px;
+}
+.page04 .stu_detail img {
+	width: 80px;
+	height: 80px;
+	border: 1px solid transparent;
+	border-radius: 50%;
+	float: left;
+}
+.page04 .his_mess ul li {
+	cursor: pointer;
+	display: block;
+	/*background-color: #fff;*/
+}
+.page04 .his_mess ul li.show {
+    /*background-color: #34393f;*/
+    /*color: #fff;*/
 }
 .page05 .content {
 	position: relative;
@@ -408,6 +563,7 @@ select, input, textarea {
 	top: 10px;
 	width: 50%;
 	text-align: center;
+	display: block;
 }
 .page05 .content .time table {
 	width: 100%;

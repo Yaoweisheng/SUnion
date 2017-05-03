@@ -1,42 +1,22 @@
 /*sendMessage.js*/
 var Index = React.createClass({
-	render : function(){
+	getDefaultProps: function() {
+	    return {
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    };
+	},
+	render:function(){
 		return (
-			<div>
+			<div >
 				<Top />
 				<Navbar />
 				<Message />
 				<Footer />
 			</div>
-			);
-	}
-});
 
-var Index = React.createClass({
-	getInitialState: function() {
-	    return {
-	    	start: false
-	    };
-	},
-    componentDidMount: function () {
-        this.pubsub_token = PubSub.subscribe('start', function (topic, start) {
-        	// alert("start")
-        	this.setState({start: start}, function(){
-        		// alert(this.state.start)
-        	})
-        }.bind(this))
-    },
-    componentWillUnmount: function () {
-        PubSub.unsubscribe(this.pubsub_token)
-    },
-	render : function(){
-		return (
-			<div>
-				<Top start={this.state.start} />
-				<Navbar start={this.state.start} />
-				<Barrages />
-				<Footer start={this.state.start} />
-			</div>
 			);
 	}
 });
@@ -52,18 +32,61 @@ var Top = React.createClass({
 		PubSub.publish("top_scroll", document.body.scrollTop > this.refs.top.clientHeight)
   	},
 	render:function(){
-		if(!this.props.start) {
-			return (
-				<div className="top" ref="top">
-					<div className="teacher">SUnion&nbsp;•&nbsp;老师</div>
-					<div className="teacherName">
-						<div>用户名：高娟娟</div>
-						<div>2017年4月29日</div>
-					</div>
+		return (
+			<div className="top" ref="top">
+				<div className="teacher">SUnion&nbsp;•&nbsp;老师</div>
+				<div className="teacherName">
+					<div>用户名：高娟娟</div>
+					<div>2017年4月29日</div>
 				</div>
-			);
+			</div>
+		);
+	}
+});
+
+var Navbar = React.createClass({
+	getDefaultProps: function() {
+	    return {
+	    	navTitles: ["发送消息", "上课点名", "课程预定", "学生信息查询", "空余时间", "弹幕发送"]
+	    };
+	},
+	getInitialState: function() {
+	    return {
+	    	fixed: false,
+	    	active: 0
+	    };
+	},
+	activeClick: function(index, event) {
+		this.setState({active: index})
+	},
+	componentDidMount: function () {
+		this.pubsub_token = PubSub.subscribe('top_scroll', function (topic, scroll) {
+			if(this.state.fixed != scroll) {
+				this.setState({fixed: scroll})
+			}
+		}.bind(this))
+	},
+	componentWillUnmount: function () {
+		PubSub.unsubscribe(this.pubsub_token)
+	},
+	render:function(){ 
+		var lis = []
+		for(var i = 0; i < this.props.navTitles.length; i++) {
+			lis.push(
+				<li key={i} className={this.state.active==i?"active":""} onClick={this.activeClick.bind(this, i)}>{this.props.navTitles[i]}</li>
+			)
 		}
-		else return null
+		return (
+			<div>
+				<div className={this.state.fixed?"navbar fixed": "navbar"}>
+					<div className="logo"></div>
+					<ul className="nav">
+						{lis}
+					</ul>
+				</div>
+				<div className="fill01" style={{height:this.state.fixed?"50px":"0px"}}></div>
+			</div>
+		);
 	}
 });
 
@@ -97,7 +120,7 @@ var List = React.createClass({
 				<Sendee />
 				<Sendee />
 			</div>
-			);
+		);
 	}
 });
 
@@ -140,11 +163,11 @@ var Students = React.createClass({
 var Student = React.createClass({
 	render : function(){
 		return (
-				<li>
-					<div className="infor">高娟娟201432933333333</div>
-					<input type="checkbox" name="" />
-				</li>
-			);
+			<li>
+				<div className="infor">高娟娟201432933333333</div>
+				<input type="checkbox" name="" />
+			</li>
+		);
 	}
 });
 
@@ -166,6 +189,6 @@ var Footer = React.createClass({
 });
 
 ReactDOM.render(
-  <SendMessage />,
+  <Index />,
   document.getElementsByClassName("page04")[0]
 );

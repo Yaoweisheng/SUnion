@@ -1,4 +1,5 @@
 /*freeTime.js*/
+var weeks = ["周日","周一","周二","周三","周四","周五","周六"];
 var getBarrage = function(i) {
 	// alert("func")
 	PubSub.publish('getBarrage', "这是个弹幕" + i)
@@ -113,7 +114,9 @@ var Barrages = React.createClass({
 	    	bas: [],
 	    	index: 0,
 	    	start: false,
-	    	texts: ["开启弹幕", "关闭弹幕"]
+	    	course: {"total":12,"classes":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]},
+	    	// course: ch.teacher.classes,
+	    	cId: -1
 	    };
 	},
     componentDidMount: function () {
@@ -140,6 +143,15 @@ var Barrages = React.createClass({
 			PubSub.publish("start", this.state.start)
 		})
 	},
+	classChange: function(event) {
+		this.setState(
+		{
+			cId: event.target.value,
+		},
+		function(){
+		}
+		)
+	},
 	render : function(){
 		return (
 			<div  className="barrage">
@@ -149,6 +161,18 @@ var Barrages = React.createClass({
 			 		})
 			 	}
 				<div className="barrageBtn">
+					{
+						!this.state.start?
+						<select value={this.state.cId} onChange={this.classChange}>
+							<option value={-1}>选择班级</option>
+							{
+		            			this.state.course.classes.map(function (c, index) {
+		    						return <option key={index} value={c.id}>{c.cname + " " + weeks[c.week] + " 第" + c.index + "节-第" + c.toIndex + "节"}</option>
+		  						})
+		            		}
+						</select>
+						:null
+					}
 					<div className="btn" onClick={this.click}>{this.state.start?"关闭弹幕":"开启弹幕"}</div>
 				</div>
 			</div>

@@ -94,7 +94,7 @@ var CallHistory = React.createClass({
 
 var Call = React.createClass({
 	call: function() {
-		$.ajax({
+		/*$.ajax({
 
 		    cache : false,
 
@@ -118,8 +118,8 @@ var Call = React.createClass({
 	    	success : function(data) {
 	    		PubSub.publish("submit_code", data)
 	    	}
-    	});
-	    // PubSub.publish("submit_code", 4001)
+    	});*/
+	    PubSub.publish("submit_code", 4000)
 	},
 	render: function(){
 		return (

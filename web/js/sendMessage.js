@@ -1,5 +1,5 @@
 /*sendMessage.js*/
-var SendMessage = React.createClass({
+var Index = React.createClass({
 	render : function(){
 		return (
 			<div>
@@ -12,51 +12,58 @@ var SendMessage = React.createClass({
 	}
 });
 
-var Top = React.createClass({
+var Index = React.createClass({
+	getInitialState: function() {
+	    return {
+	    	start: false
+	    };
+	},
+    componentDidMount: function () {
+        this.pubsub_token = PubSub.subscribe('start', function (topic, start) {
+        	// alert("start")
+        	this.setState({start: start}, function(){
+        		// alert(this.state.start)
+        	})
+        }.bind(this))
+    },
+    componentWillUnmount: function () {
+        PubSub.unsubscribe(this.pubsub_token)
+    },
 	render : function(){
 		return (
-			<div className="top">
-				<User />
-				<UserName />
+			<div>
+				<Top start={this.state.start} />
+				<Navbar start={this.state.start} />
+				<Barrages />
+				<Footer start={this.state.start} />
 			</div>
 			);
 	}
 });
 
-	var User = React.createClass({
-		render : function(){
+var Top = React.createClass({
+	componentDidMount: function () {
+    	window.addEventListener('scroll', this.handleScroll);
+	},
+	componentWillUnmount: function () {
+    	window.removeEventListener('scroll', this.handleScroll);
+	},
+	handleScroll: function (e) {
+		PubSub.publish("top_scroll", document.body.scrollTop > this.refs.top.clientHeight)
+  	},
+	render:function(){
+		if(!this.props.start) {
 			return (
+				<div className="top" ref="top">
 					<div className="teacher">SUnion&nbsp;•&nbsp;老师</div>
-				);
-		}
-	});
-
-	var UserName = React.createClass({
-		render : function(){
-			return( 
 					<div className="teacherName">
 						<div>用户名：高娟娟</div>
 						<div>2017年4月29日</div>
 					</div>
-				);
-		}
-	});
-
-var Navbar = React.createClass({
-	render:function(){
-		return (
-				<div className="navbar">
-					<div className="logo"></div>
-					<ul className="nav">
-						<li className="active">发送消息</li>
-						<li>上课点名</li>
-						<li>课程预定</li>
-						<li>学生信息查询</li>
-						<li>空余时间</li>
-						<li>弹幕发送</li>
-					</ul>
 				</div>
 			);
+		}
+		else return null
 	}
 });
 

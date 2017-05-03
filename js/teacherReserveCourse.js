@@ -522,11 +522,11 @@ var CourseDialog = React.createClass({
 	            		</select>
 			        </div>
 	                <div className="weui-dialog__bd">
-	                		<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+	                		<label></label>
 			            	<select className="sel02" value={this.state.index} onChange={this.option1Change}>
 			            		{options1}
 			            	</select>
-			            	<span>&nbsp;-&nbsp;</span>
+			            	<span>-</span>
 			            	<select className="sel02" value={this.state.toIndex} onChange={this.option2Change}>
 			            		{options2}
 			            	</select>

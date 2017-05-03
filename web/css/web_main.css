@@ -251,13 +251,15 @@ select, input, textarea {
 	font-weight: 400;
 	border: 1px solid #ccc;
 	color: #ccc;
-	padding: 5px 25px;
+	padding: 5px 30px;
 	border-radius: 5px;
 	width: auto;
+	z-index: 999;
 }
 .page03 .barrage {
 	position: relative;
 	margin-bottom: 10px;
+	height: 700px;
 }
 .page03 .barrage .header {
 	width: 100%;
@@ -306,6 +308,21 @@ select, input, textarea {
     background-image: -o-linear-gradient(top,#34393f,#34393f);
     background-image: linear-gradient(to bottom,#34393f,#34393f); 
     background-repeat: repeat-x; 
+}
+.page03 .ba {
+	position: fixed;
+	right: 0px;
+	top: 100px;
+    transition: all 10s;
+    -moz-transition: all 10s; /* Firefox 4 */
+    -webkit-transition: all 10s; /* Safari and Chrome */
+    -o-transition: all 10s; /* Opera */
+    height: 30px;
+    line-height: 30px;
+    font-size: 25px;
+    display: block;
+    width: auto;
+    white-space:nowrap;
 }
 .page04 .message {
 	position: relative;

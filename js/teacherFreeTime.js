@@ -484,7 +484,7 @@ var FreeDialog = React.createClass({
 			            	<select value={this.state.index} onChange={this.option1Change}>
 			            		{options1}
 			            	</select>
-			            	<span>&nbsp;-&nbsp;</span>
+			            	<span>-</span>
 			            	<select value={this.state.toIndex} onChange={this.option2Change}>
 			            		{options2}
 			            	</select></div>

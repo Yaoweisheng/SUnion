@@ -97,5 +97,5 @@ var Student = React.createClass({
 
 ReactDOM.render(
   <StudentHistoryMessage />,
-  document.getElementsByClassName("page2")[0]
+  document.getElementsByClassName("page14")[0]
 );

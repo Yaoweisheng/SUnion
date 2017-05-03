@@ -60,7 +60,7 @@ var Search = React.createClass({
             function(data,status){
                 PubSub.publish('stu_search', data)
         });*/
-        var data = [{"id":1,"sname":"曹辉","snumber":"1","colloge":"启新学院","clazz":"14电子信息实验班","headimageUrl":"img/student_img.png","inClasses":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}]
+        var data = [{"id":1,"sname":"曹辉","snumber":"1","colloge":"启新学院","clazz":"14电子信息实验班","headimageUrl":"img/news2.png","inClasses":[{"id":1,"cname":"算法设计基础","week":1,"index":1,"toIndex":2},{"id":6,"cname":"算法设计基础","week":1,"index":3,"toIndex":5}]}]
         PubSub.publish('stu_search', data)
     },
     render: function() {
@@ -131,7 +131,7 @@ var Select = React.createClass({
                     });*/
                     var data2 = {
                         cId: cId,
-                        students: [{"id":"2","sname":"张三","snumber":"2014339960011","headimageUrl":"img/student_img.png"},{"id":"6","sname":"李四","snumber":"2014339960015","headimageUrl":"img/student_img.png"}]
+                        students: [{"id":"2","sname":"张三","snumber":"2014339960011","headimageUrl":"img/news1.png"},{"id":"6","sname":"李四","snumber":"2014339960015","headimageUrl":"img/student_img.png"}]
                     }
                     // alert(data2.cId)
                     PubSub.publish('class_change', data2)
@@ -309,18 +309,14 @@ var Student = React.createClass({
                 )
         }
         return(
-            <div className="student">
-                <div className="stu" onClick={this.studentClick}>
-                    {/*<div className="student_img" style={{backgroundImage: 'url(' + this.props.stu.headimageUrl + ')'}}></div>*/}
-                    <div className="student_img"></div>
-                    <div className="student_name">学生姓名：{this.props.stu.sname}</div>
-                    
-                    <div className="student_number">学号：{this.props.stu.snumber}</div>
-                </div>
-                {/*<div className="student_detail" onClick={this.detail}>查看详情</div>*/}
-                <input className="student_checkbox" value={this.state.check} ref="checkbox" onClick={this.studentClick} onChange={this.change} checked={this.state.check?"checked":""} type="checkbox" name=""/>
-                <Line />
-            </div>
+                <ul>
+                    <li onClick={this.studentClick}>
+                        <input type="checkbox" name="" onClick={this.studentClick} onChange={this.change} checked={this.state.check?"checked":""} />
+                        <img className="select" src={this.props.stu.headimageUrl} />
+                        <div>姓名：{this.props.stu.sname}</div>
+                        <div>学号：{this.props.stu.snumber}</div>
+                    </li>
+                </ul>
         );
     }
 });

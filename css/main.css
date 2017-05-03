@@ -132,6 +132,13 @@ header h3 {
     border:1px solid transparent;
     border-radius: 50%; 
 }
+.page1 .students ul li img.select {
+    float: left;
+    width: 40px;
+    height: 40px;
+    border:1px solid transparent;
+    border-radius: 50%; 
+}
 .page1 .students ul li div {
     width: 90%;
 }
@@ -163,10 +170,10 @@ header h3 {
     margin-top: 4px;
     width: 90px;
     height: 90px;
-    background: url(../img/student_img.png) center no-repeat;
+    background: url(/SchoolAlliance/img/news2.png) center no-repeat;
     background-size: 100% 100%;
     float: left;
-    border-radius: 45px;
+    border-radius: 50%;
     border: 1px solid transparent;
 }
 .page1 .students .student .student_name {
@@ -267,7 +274,6 @@ header h3 {
     background-color: #5D616B;
     text-decoration: none;
 }
-
 .page2 {
     width:7.5rem;
     margin-left:auto;
@@ -317,7 +323,7 @@ header h3 {
     width: 15%;
     border: none;
     background-color: #fff;
-    color: #34393f;
+    color: #7FCA7F;
     font-size: 16px;
     margin-right: 0.1rem;
 }
@@ -334,7 +340,6 @@ header h3 {
 .page2 .weui-cells {
     width: 100%;
     transition: all .5s;
-    transition: all .5s;
     -moz-transition: height .5s; /* Firefox 4 */
     -webkit-transition: height .5s; /* Safari and Chrome */
     -o-transition: height .5s; /* Opera */
@@ -344,24 +349,59 @@ header h3 {
 }
 .page2 .weui-cell {
     color: #000;
-    background-color: #f4f8f9;
+    background-color: #f4f8f9
 }
-.page2 .students ul {
-    list-style: none;
-    border-bottom: 1px solid #ccc;
-}
-.page2 .students ul li {
-    margin: 10px 15px 5px 15px;
-}
-.page2 .students ul .time {
-    font-size: 12px;
-    color: #ccc;
-}
-.page2 .students ul .message .mess {
+.page2 .students .student .student_img {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url("../img/student_img.png") center 20% no-repeat;
+    background-size: 80%;
     float: left;
 }
-.page2 .students ul .message .con {
-    margin-left: 70px;
+.page2 .students .student .student_name {
+    color: #7FCA7F;
+    padding-left: 5px;
+    padding-top: 5px;
+    width: 200px;
+}
+.page2 .students .student .student_detail {
+    margin-left: auto;
+    margin-right: 11.250px;
+    /* margin-top: .15rem; */
+    width: 112px;
+    text-align: center;
+    height: 0;
+    line-height: 25px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #999;
+    transition: all .5s;
+    -moz-transition: all .5s;
+    -webkit-transition: all .5s;
+    -o-transition: all .5s;
+}
+.page2 .students .student .student_detail.show {
+    height: 25px;
+    border: 1px solid #ccc;
+}
+.page2 .students .student .student_number {
+    padding-left: .1rem;
+    padding-top: .1rem;
+    width: 5rem;
+}
+.page2 .students .student .message {
+    margin-left: 10px;
+    margin-top: 10px;
+    line-height: 25px;
+    font-size: 15px;
+    /* margin-bottom: .15rem; */
+}
+.page2 .students .student .line {
+    width: 100%;
+    height: 0;
+    border-bottom: 0.01rem solid #ccc;
+    padding-top: 0.1rem;
 }
 .page2 .weui-cells {
     margin-top: 0;
@@ -394,7 +434,7 @@ header h3 {
 .page3 .students .student .student_img {
     width: 1.5rem;
     height: 1.5rem;
-    background: url("../img/student_img.png") center no-repeat;
+    background: url("/SchoolAlliance/img/student_img.png") center no-repeat;
     background-size: 100% 100%;
     float: left;
 }
@@ -589,28 +629,28 @@ header h3 {
 .page5 .students .student .activity_img1 {
     width: 100%;
     height: 220px;
-    background: url("../img/news1.png") center no-repeat;
+    background: url("/SchoolAlliance/img/news1.png") center no-repeat;
     background-size: 100% 100%;
     float: left;
 }
 .page5 .students .student .activity_img2 {
     width: 100%;
     height: 220px;
-    background: url("../img/news2.png") center no-repeat;
+    background: url("/SchoolAlliance/img/news2.png") center no-repeat;
     background-size: 100% 100%;
     float: left;
 }
 .page5 .students .student .activity_img3 {
     width: 100%;
     height: 220px;
-    background: url("../img/news3.png") center no-repeat;
+    background: url("/SchoolAlliance/img/news3.png") center no-repeat;
     background-size: 100% 100%;
     float: left;
 }
 .page5 .students .student .activity_img4 {
     width: 100%;
     height: 220px;
-    background: url("../img/news4.png") center no-repeat;
+    background: url("/SchoolAlliance/img/news4.png") center no-repeat;
     background-size: 100% 100%;
     float: left;
 }
@@ -637,7 +677,7 @@ header h3 {
 .page6 .students .student .activity_img {
     width: 100%;
     height: 220px;
-    background: url("../img/new1.png") center no-repeat;
+    background: url("/SchoolAlliance/img/new1.png") center no-repeat;
     float: left;
 }
 .page6 .students .student .activity_name {
@@ -673,7 +713,7 @@ header h3 {
 .page6 .write .write_img {
     width: 20px;
     height: 20px;
-    background: url("../img/pen_img.png") center no-repeat;
+    background: url("/SchoolAlliance/img/pen_img.png") center no-repeat;
     float: right;
     margin-right: 5px;
 }
@@ -686,7 +726,7 @@ header h3 {
 .page6 .review .review_user .review_img {
     width: 55px;
     height: 55px;
-    background: url("../img/student_img.png") center no-repeat;
+    background: url("/SchoolAlliance/img/student_img.png") center no-repeat;
     float: left;
 }
 .page6 .review .review_user .review_name {
@@ -714,7 +754,7 @@ header h3 {
 .page6 .review .review_user .author .author_img {
     width: 30px;
     height: 30px;
-    background: url("../img/author_img.png") center no-repeat;
+    background: url("/SchoolAlliance/img/author_img.png") center no-repeat;
     float: left;
     margin-left: 70px;
     margin-top: 10px;
@@ -741,7 +781,7 @@ header h3 {
 .page7 .logo .logo_img {
     width: 250px;
     height: 270px;
-    background: url("../img/logo_img.png") center no-repeat;
+    background: url("/SchoolAlliance/img/logo_img.png") center no-repeat;
     margin-left: 150px;
     margin-top: 100px;
 }
@@ -836,7 +876,17 @@ header h3 {
     margin-top: .5rem;
     text-align: center;
 }
-
+.page9 {
+    width:7.5rem;
+    margin-left:auto;
+    margin-right:auto;
+}
+.page9 h3 {
+    text-align: center;
+}
+.page9 img {
+    width: 100%;
+}
 .page10 {
     width:7.5rem;
     margin-left:auto;
@@ -1003,7 +1053,7 @@ header h3 {
     /* top: 3rem; */
 }
 .page12 .timetable .table .add {
-    background: url("../img/add.jpg") no-repeat center;
+    background: url("/SchoolAlliance/img/add.jpg") no-repeat center;
     background-size: 100% 100%;
 }
 .page12 .timetable .table th {
@@ -1084,10 +1134,10 @@ header h3 {
     margin: 0;
 }
 .page12 .js_dialog select.sel01{
-    width: 178px;
+    width: 60%;
 }
 .page12 .js_dialog select.sel02{
-    width: 80px;
+    width: 30%;
 }
 .page12 .js_dialog select option{
     text-align: center;
@@ -1103,7 +1153,7 @@ header h3 {
 }
 .page12 .js_dialog input{
     float: left;
-    width: 178px;
+    width: 60%;
     height: 30px;
 }
 /*student*/
@@ -1144,4 +1194,130 @@ header h3 {
 }
 .page13 select {
     width: 60px;
+}
+.page9 {
+    width:7.5rem;
+    margin-left:auto;
+    margin-right:auto;
+}
+.page9 h3 {
+    text-align: center;
+}
+.page9 img {
+    width: 100%;
+}
+.page14 {
+    width:7.5rem;
+    margin-left:auto;
+    margin-right:auto
+}
+.page14 .time {
+    margin: 3px;
+}
+.page14 .time select {
+    height: 30px;
+    width: 30%;
+    outline: none;
+}
+.page14 .time .search {
+    line-height: 30px;
+    height: 30px;
+    width: 70%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    outline: none;
+    float: right;
+    margin: 0;
+}
+.page14 .time .search .text {
+    margin-left: 0.1rem;
+    height: 30px;
+    width: 80%;
+    border-radius: .1rem;
+    font-size: 16px;
+    min-height: 32px;
+    outline: none;
+    color: #333;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    transition: all 0.15s ease-in;
+    -webkit-transition: all 0.15s ease-in 0;
+    vertical-align: middle;
+}
+.page14 .time .search .submit {
+    height: 30px;
+    width: 15%;
+    border: none;
+    background-color: #fff;
+    color: #34393f;
+    font-size: 16px;
+    margin-right: 0.1rem;
+}
+.page14 .student.show {
+    background-color: #aabeff;
+    color: #fff;
+}
+.page14 .students .student.show .student_name {
+    color: #fff;
+}
+.page14 .students .student.show .line {
+    background-color: #f4f8f9
+}
+.page14 .weui-cells {
+    width: 100%;
+    transition: all .5s;
+    transition: all .5s;
+    -moz-transition: height .5s; /* Firefox 4 */
+    -webkit-transition: height .5s; /* Safari and Chrome */
+    -o-transition: height .5s; /* Opera */
+}
+.page14 .weui-cells.show {
+    height: auto;
+}
+.page14 .weui-cell {
+    color: #000;
+    background-color: #f4f8f9;
+}
+.page14 .students ul {
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+}
+.page14 .students ul li {
+    margin: 10px 15px 5px 15px;
+}
+.page14 .students ul .time {
+    font-size: 12px;
+    color: #ccc;
+}
+.page14 .students ul .message .mess {
+    float: left;
+}
+.page14 .students ul .message .con {
+    margin-left: 70px;
+}
+.page14 .weui-cells {
+    margin-top: 0;
+}
+.page14 img {
+    float: left;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    margin: -7px;
+    margin-right: 10px;
+}
+.page14 .name {
+    /* height: 16px; */
+    line-height: 12px;
+    font-size: 12px;
+}
+.page14 .weui-cell__ft {
+    font-size: 12px;
 }

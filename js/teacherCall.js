@@ -107,9 +107,10 @@ var Send = React.createClass({
 		// alert(this.state.check)
 		// this.setState({check: !this.state.check})
 		// alert(this.state.cId)
-		if(this.state.cId != -1){
+		// if(this.state.cId != -1){
 		    //微信API获取当前用户位置
-		}
+		    PubSub.publish("submit_code", 4000)
+		// }
 		
 	},
 	componentDidMount: function () {
@@ -149,6 +150,7 @@ var Tip = React.createClass({
 	},
 	componentDidMount: function () {
 		this.pubsub_token = PubSub.subscribe('submit_code', function (topic, data) {
+			alert(data)
 			this.setState({
 				success: data
 			})

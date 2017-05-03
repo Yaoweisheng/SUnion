@@ -150,7 +150,6 @@ var Content = React.createClass({
 		for(var i = 0; i < this.state.students.length; i++) {
 			students.push(
 				<li key={i}>
-					<div className="detail">详情</div>
 					<img src={this.state.students[i].headimageUrl} />
 					<div>姓名：{this.state.students[i].sname}</div>
 					<div>学号：{this.state.students[i].snumber}</div>

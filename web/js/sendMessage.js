@@ -279,7 +279,7 @@ var HisMess = React.createClass({
 					<input type="text" />
 					<div className="btn">搜索</div>
 				</div>
-				<ul>
+				<ul className="ul01">
 				{
 					this.props.messages.map(function(mess, index) {
 						return <Mess key={index} message={mess} index={index} />

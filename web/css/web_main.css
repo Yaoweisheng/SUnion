@@ -352,7 +352,7 @@ select, input, textarea {
 	outline: none;
 }
 .page04 .message .content .btn {
-	width: 10%;
+	width: 15%;
 	color: #fff;
 	font-weight: 400;
 	background-color: #34393f;
@@ -368,7 +368,7 @@ select, input, textarea {
 	/*text-align: center;*/
 }
 .page04 .message .content .search input {
-	width: 85%;
+	width: 80%;
 	margin: 0
 }
 .page04 .message .content .search .btn {
@@ -451,9 +451,12 @@ select, input, textarea {
     background-repeat: repeat-x; 
     display: inline-block;
 }
-.page04 .his_mess ul {
+.page04 .his_mess ul.ul01 {
 	list-style: none;
 	margin: 5px;
+	overflow: auto;
+	height: 400px;
+	overflow-x: hidden;
 }
 .page04 .his_mess ul li {
 	border-bottom: 1px solid #ccc;
@@ -518,7 +521,6 @@ select, input, textarea {
 }
 .page04 ul {
 	list-style: none;
-	margin: 0
 }
 .page04 ul .course02 {
 	float: left;
@@ -629,7 +631,7 @@ select, input, textarea {
 	width: 55%;
 }
 .page05 .infor .course_time select {
-	width: 18.3%;
+	width: 22.3%;
 }
 .page05 .infor .course_time ul .btn{
 	display: inline-block;
@@ -667,8 +669,13 @@ select, input, textarea {
     background-repeat: repeat-x; 
 }
 .page05 .infor .course_time ul {
-	list-style: none;
-	margin-left: 80px;
+    list-style: none;
+    margin-left: 100px;
+    overflow: auto;
+    height: 400px;
+    /* overflow-y: auto; */
+    overflow-x: hidden;
+    width: 57%;
 }
 .page06 .content {
 	width: 100%;
